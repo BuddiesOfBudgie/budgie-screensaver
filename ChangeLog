@@ -1,3 +1,11 @@
+2006-04-11  William Jon McCann  <mccann@jhu.edu>
+
+	* src/gnome-screensaver-preferences.c: (time_to_string_text):
+	Remove unneeded and buggy i18n string.
+
+	Patch from Benoît Dejean <benoit@placenet.org>
+	Fixes #337701
+
 2006-04-10  William Jon McCann  <mccann@jhu.edu>
 
 	* configure.ac: Post release version bump.
