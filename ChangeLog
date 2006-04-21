@@ -1,3 +1,10 @@
+2006-04-21  William Jon McCann  <mccann@jhu.edu>
+
+	* src/gs-listener-dbus.c (gs_listener_set_active): Don't reset
+	the throttle state when deactivating.
+
+	Fixes #338814
+
 2006-04-11  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gnome-screensaver-preferences.c: (time_to_string_text):

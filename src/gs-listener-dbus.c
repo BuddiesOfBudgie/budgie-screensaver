@@ -345,11 +345,6 @@ gs_listener_set_active (GSListener *listener,
 
         listener_set_active_internal (listener, active);
 
-        if (! active) {
-                /* if we are deactivating then reset the throttle */
-                gs_listener_set_throttle_enabled (listener, FALSE);
-        }
-
         return TRUE;
 }
 
