@@ -1521,11 +1521,12 @@ create_page_one (GSLockPlug *plug)
         plug->priv->password_entry = gtk_entry_new ();
         gtk_box_pack_start (GTK_BOX (hbox), plug->priv->password_entry, TRUE, TRUE, 0);
 
+        g_signal_connect (plug, "key_press_event",
+                          G_CALLBACK (entry_key_press), plug);
+
         /* button press handler used to inhibit popup menu */
         g_signal_connect (plug->priv->password_entry, "button_press_event",
                           G_CALLBACK (entry_button_press), NULL);
-        g_signal_connect (plug->priv->password_entry, "key_press_event",
-                          G_CALLBACK (entry_key_press), plug);
         gtk_entry_set_activates_default (GTK_ENTRY (plug->priv->password_entry), TRUE);
         gtk_entry_set_visibility (GTK_ENTRY (plug->priv->password_entry), FALSE);
 

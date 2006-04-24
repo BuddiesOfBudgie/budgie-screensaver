@@ -1,3 +1,13 @@
+2006-04-24  William Jon McCann  <mccann@jhu.edu>
+
+	* configure.ac (ALL_LINGUAS): Don't split over multiple lines.
+
+	* src/gs-lock-plug.c (create_page_one): 
+	Connect caps lock warning to toplevel instead
+	of entry box.
+
+	Fixes #338372
+
 2006-04-21  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-listener-dbus.c (gs_listener_set_active): Don't reset
