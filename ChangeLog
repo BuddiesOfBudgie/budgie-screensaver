@@ -1,3 +1,10 @@
+2006-04-28  William Jon McCann  <mccann@jhu.edu>
+
+	* src/gs-manager.c: (gs_manager_set_lock_active),
+	(activate_lock_timeout), (manager_show_window):
+	Don't explicitly deactivate the lock when showing windows.
+	The active flag will be reset when the manager is deactivated.
+
 2006-04-26  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-window-x11.c: (maybe_request_unlock),
