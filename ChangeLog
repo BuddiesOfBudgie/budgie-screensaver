@@ -1,5 +1,11 @@
 2006-05-02  William Jon McCann  <mccann@jhu.edu>
 
+	* src/gs-watcher-x11.c (gs_watcher_init): Shorten
+	pointer poll interval to one second.  Backported from
+	HEAD.
+
+2006-05-02  William Jon McCann  <mccann@jhu.edu>
+
 	* src/gs-fade.c: (gs_fade_out_iter), (gs_fade_stop),
 	(gs_fade_finish), (fade_out_timer), (gs_fade_set_timeout),
 	(gs_fade_start), (gs_fade_async_callback), (gs_fade_async),
