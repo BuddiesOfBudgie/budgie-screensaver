@@ -73,6 +73,9 @@ struct GSFadePrivate
         guint            num_steps;
         guint            timer_id;
 
+        gdouble          alpha_per_iter;
+        gdouble          current_alpha;
+
         int              fade_type;
 
         int              num_screens;
@@ -154,10 +157,12 @@ xf86_whack_gamma (int              screen,
 {
         Bool status;
 
-        if (ratio < 0)
+        if (ratio < 0) {
                 ratio = 0;
-        if (ratio > 1)
+        }
+        if (ratio > 1) {
                 ratio = 1;
+        }
 
         if (info->size == 0) {
                 /* we only have a gamma number, not a ramp. */
@@ -169,12 +174,15 @@ xf86_whack_gamma (int              screen,
                 g2.blue  = info->vmg.blue  * ratio;
 
 # ifdef XF86_MIN_GAMMA
-                if (g2.red < XF86_MIN_GAMMA)
+                if (g2.red < XF86_MIN_GAMMA) {
                         g2.red = XF86_MIN_GAMMA;
-                if (g2.green < XF86_MIN_GAMMA)
+                }
+                if (g2.green < XF86_MIN_GAMMA) {
                         g2.green = XF86_MIN_GAMMA;
-                if (g2.blue < XF86_MIN_GAMMA)
+                }
+                if (g2.blue < XF86_MIN_GAMMA) {
                         g2.blue = XF86_MIN_GAMMA;
+                }
 # endif
 
                 status = XF86VidModeSetGamma (GDK_DISPLAY (), screen, &g2);
@@ -224,23 +232,33 @@ static int
 check_gamma_extension (void)
 {
 #ifdef HAVE_XF86VMODE_GAMMA
-        int event, error, major, minor;
+        int      event;
+        int      error;
+        int      major;
+        int      minor;
+        gboolean res;
 
-        if (! XF86VidModeQueryExtension (GDK_DISPLAY (), &event, &error))
+        res = XF86VidModeQueryExtension (GDK_DISPLAY (), &event, &error);
+        if (! res) {
                 return FADE_TYPE_NONE;  /* display doesn't have the extension. */
+        }
 
-        if (! safe_XF86VidModeQueryVersion (GDK_DISPLAY (), &major, &minor))
+        res = safe_XF86VidModeQueryVersion (GDK_DISPLAY (), &major, &minor);
+        if (! res) {
                 return FADE_TYPE_NONE;  /* unable to get version number? */
+        }
 
         if (major < XF86_VIDMODE_GAMMA_MIN_MAJOR || 
             (major == XF86_VIDMODE_GAMMA_MIN_MAJOR &&
-             minor < XF86_VIDMODE_GAMMA_MIN_MINOR))
+             minor < XF86_VIDMODE_GAMMA_MIN_MINOR)) {
                 return FADE_TYPE_NONE;  /* extension is too old for gamma. */
+        }
 
         if (major < XF86_VIDMODE_GAMMA_RAMP_MIN_MAJOR || 
             (major == XF86_VIDMODE_GAMMA_RAMP_MIN_MAJOR &&
-             minor < XF86_VIDMODE_GAMMA_RAMP_MIN_MINOR))
+             minor < XF86_VIDMODE_GAMMA_RAMP_MIN_MINOR)) {
                 return FADE_TYPE_GAMMA_NUMBER;  /* extension is too old for gamma ramps. */
+        }
 
         /* Copacetic */
         return FADE_TYPE_GAMMA_RAMP;
@@ -274,6 +292,7 @@ gamma_info_init (GSFade *fade)
 #ifdef HAVE_XF86VMODE_GAMMA
         int              screen;
         xf86_gamma_info *info;
+        gboolean         res;
 
 # ifndef HAVE_XF86VMODE_GAMMA_RAMP
         if (FADE_TYPE_GAMMA_RAMP == fade->priv->fade_type) {
@@ -293,8 +312,11 @@ gamma_info_init (GSFade *fade)
                 if (FADE_TYPE_GAMMA_NUMBER == fade->priv->fade_type) {
                         /* only have gamma parameter, not ramps. */
 
-                        if (! XF86VidModeGetGamma (GDK_DISPLAY (), screen, &info [screen].vmg))
+                        res = XF86VidModeGetGamma (GDK_DISPLAY (), screen, &info [screen].vmg);
+                        if (! res) {
                                 goto FAIL;
+                        }
+                        gs_debug ("Initialized gamma fade");
                 }
 
 # ifdef HAVE_XF86VMODE_GAMMA_RAMP
@@ -302,10 +324,14 @@ gamma_info_init (GSFade *fade)
                 else if (FADE_TYPE_GAMMA_RAMP == fade->priv->fade_type) {
                         /* have ramps */
 
-                        if (! XF86VidModeGetGammaRampSize (GDK_DISPLAY (), screen, &info [screen].size))
+                        res = XF86VidModeGetGammaRampSize (GDK_DISPLAY (), screen, &info [screen].size);
+                        if (! res) {
                                 goto FAIL;
-                        if (info [screen].size <= 0)
+                        }
+
+                        if (info [screen].size <= 0) {
                                 goto FAIL;
+                        }
 
                         info [screen].r = (unsigned short *)
                                 calloc (info[screen].size, sizeof (unsigned short));
@@ -314,16 +340,20 @@ gamma_info_init (GSFade *fade)
                         info [screen].b = (unsigned short *)
                                 calloc (info[screen].size, sizeof (unsigned short));
 
-                        if (! (info [screen].r && info [screen].g && info [screen].b))
+                        if (! (info [screen].r && info [screen].g && info [screen].b)) {
                                 goto FAIL;
+                        }
 
-                        if (! XF86VidModeGetGammaRamp (GDK_DISPLAY (),
+                        res = XF86VidModeGetGammaRamp (GDK_DISPLAY (),
                                                        screen,
                                                        info [screen].size,
                                                        info [screen].r,
                                                        info [screen].g,
-                                                       info [screen].b))
+                                                       info [screen].b);
+                        if (! res) {
                                 goto FAIL;
+                        }
+                        gs_debug ("Initialized gamma ramp fade");
                 }
 # endif /* HAVE_XF86VMODE_GAMMA_RAMP */
                 else if (FADE_TYPE_NONE == fade->priv->fade_type) {
@@ -349,12 +379,15 @@ gamma_info_free (GSFade *fade)
                 int screen;
 
                 for (screen = 0; screen < fade->priv->num_screens; screen++) {
-                        if (fade->priv->gamma_info [screen].r)
+                        if (fade->priv->gamma_info [screen].r) {
                                 g_free (fade->priv->gamma_info[screen].r);
-                        if (fade->priv->gamma_info [screen].g)
+                        }
+                        if (fade->priv->gamma_info [screen].g) {
                                 g_free (fade->priv->gamma_info[screen].g);
-                        if (fade->priv->gamma_info [screen].b)
+                        }
+                        if (fade->priv->gamma_info [screen].b) {
                                 g_free (fade->priv->gamma_info[screen].b);
+                        }
                 }
 
                 g_free (fade->priv->gamma_info);
@@ -408,37 +441,51 @@ gs_fade_set_alpha (GSFade *fade,
 }
 
 static gboolean
-gs_fade_iter (GSFade *fade)
+gs_fade_out_iter (GSFade *fade)
 {
         gboolean ret;
-        gdouble  alpha;
 
-        fade->priv->step++;
-
-        if (fade->priv->step > fade->priv->num_steps) {
+        if (fade->priv->current_alpha < 0.01) {
                 return FALSE;
         }
 
-        alpha = 1.0 - (gdouble)fade->priv->step / (gdouble)fade->priv->num_steps;
+        fade->priv->current_alpha -= fade->priv->alpha_per_iter;
 
-        ret = gs_fade_set_alpha (fade, alpha);
+        ret = gs_fade_set_alpha (fade, fade->priv->current_alpha);
 
         return ret;
+}
+
+static gboolean
+gs_fade_stop (GSFade *fade)
+{
+        if (fade->priv->timer_id > 0) {
+                g_source_remove (fade->priv->timer_id);
+                fade->priv->timer_id = 0;
+        }
+
+        fade->priv->step = 0;
+        fade->priv->active = FALSE;
+
+        return TRUE;
 }
 
 static void
 gs_fade_finish (GSFade *fade)
 {
+        gs_fade_stop (fade);
+
         g_signal_emit (fade, signals [FADED], 0);
-        gs_fade_set_active (fade, FALSE);
+
+        fade->priv->active = FALSE;
 }
 
 static gboolean
-fade_timer (GSFade *fade)
+fade_out_timer (GSFade *fade)
 {
         gboolean res;
 
-        res = gs_fade_iter (fade);
+        res = gs_fade_out_iter (fade);
 
         /* if failed then fade is complete */
         if (! res) {
@@ -457,66 +504,7 @@ gs_fade_get_active (GSFade *fade)
         return fade->priv->active;
 }
 
-static gboolean
-gs_fade_start (GSFade *fade)
-{
-        guint steps_per_sec = 30;
-        guint msecs_per_step;
-
-        if (fade->priv->timer_id > 0) {
-                g_warning ("Fade is already active");
-                return FALSE;
-        }
-
-        fade->priv->step = 0;
-        fade->priv->num_steps = (fade->priv->timeout / 1000) * steps_per_sec;
-
-        msecs_per_step = 1000 / steps_per_sec;
-
-        fade->priv->timer_id = g_timeout_add (msecs_per_step, (GSourceFunc)fade_timer, fade);
-
-        return TRUE;
-}
-
-static gboolean
-gs_fade_stop (GSFade *fade)
-{
-        if (fade->priv->timer_id > 0) {
-                g_source_remove (fade->priv->timer_id);
-                fade->priv->timer_id = 0;
-        }
-
-        fade->priv->step = 0;
-
-        return TRUE;
-}
-
-gboolean
-gs_fade_set_active (GSFade  *fade,
-                    gboolean active)
-{
-        g_return_val_if_fail (GS_IS_FADE (fade), FALSE);
-
-        gs_debug ("Setting fade: %s", (active ? "ON" : "OFF"));
-
-        if (fade->priv->fade_type == FADE_TYPE_NONE) {
-                return FALSE;
-        }
-
-        if (fade->priv->active != active) {
-                fade->priv->active = active;
-
-                if (active) {
-                        gs_fade_start (fade);
-                } else {
-                        gs_fade_stop (fade);
-                }
-        }
-
-        return TRUE;
-}
-
-void
+static void
 gs_fade_set_timeout (GSFade   *fade,
                      guint     timeout)
 {
@@ -526,47 +514,132 @@ gs_fade_set_timeout (GSFade   *fade,
 }
 
 static void
-gs_fade_now_faded_callback (GSFade *fade,
-                            int    *flag)
+gs_fade_start (GSFade *fade,
+               guint   timeout)
+{
+        guint steps_per_sec = 30;
+        guint msecs_per_step;
+
+        g_return_if_fail (GS_IS_FADE (fade));
+
+        if (fade->priv->timer_id > 0) {
+                gs_fade_stop (fade);
+        }
+
+        fade->priv->active = TRUE;
+
+        gs_fade_set_timeout (fade, timeout);
+
+        if (fade->priv->fade_type != FADE_TYPE_NONE) {
+                guint num_steps;
+
+                num_steps = (fade->priv->timeout / 1000) * steps_per_sec;
+                msecs_per_step = 1000 / steps_per_sec;
+                fade->priv->alpha_per_iter = 1.0 / (gdouble)num_steps;
+
+                fade->priv->timer_id = g_timeout_add (msecs_per_step, (GSourceFunc)fade_out_timer, fade);
+        } else {
+                gs_fade_finish (fade);
+        }
+}
+
+typedef struct
+{
+        GSFadeDoneFunc done_cb;
+        gpointer       data;
+} FadedCallbackData;
+
+static void
+gs_fade_async_callback (GSFade            *fade,
+                        FadedCallbackData *cdata)
+{
+        g_signal_handlers_disconnect_by_func (fade,
+                                              gs_fade_async_callback, 
+                                              cdata);
+
+        if (cdata->done_cb) {
+                cdata->done_cb (fade, cdata->data);
+        }
+
+        g_free (cdata);
+}
+
+void
+gs_fade_async (GSFade        *fade,
+               guint          timeout,
+               GSFadeDoneFunc func,
+               gpointer       data)
+{
+        g_return_if_fail (GS_IS_FADE (fade));
+
+        /* if fade is active then pause it */
+        if (fade->priv->active) {
+                gs_fade_stop (fade);
+        }
+
+        if (func) {
+                FadedCallbackData *cb_data;
+
+                cb_data = g_new0 (FadedCallbackData, 1);
+                cb_data->done_cb = func;
+                cb_data->data = data;
+
+                g_signal_connect (fade, "faded",
+                                  G_CALLBACK (gs_fade_async_callback),
+                                  cb_data);
+        }
+
+        gs_fade_start (fade, timeout);
+}
+
+static void
+gs_fade_sync_callback (GSFade *fade,
+                       int    *flag)
 {
         *flag = TRUE;
         g_signal_handlers_disconnect_by_func (fade,
-                                              gs_fade_now_faded_callback, 
+                                              gs_fade_sync_callback,
                                               flag);
 }
 
 void
-gs_fade_now (GSFade *fade)
+gs_fade_sync (GSFade        *fade,
+              guint          timeout)
 {
         int      flag = FALSE;
-        gboolean res;
 
         g_return_if_fail (GS_IS_FADE (fade));
 
-        if (fade->priv->fade_type == FADE_TYPE_NONE)
-                return;
-
-        res = gs_fade_set_active (fade, TRUE);
-        if (! res) {
-                return;
+        /* if fade is active then pause it */
+        if (fade->priv->active) {
+                gs_fade_stop (fade);
         }
 
         g_signal_connect (fade, "faded",
-                          G_CALLBACK (gs_fade_now_faded_callback),
+                          G_CALLBACK (gs_fade_sync_callback),
                           &flag);
 
-        while (! flag)
+        gs_fade_start (fade, timeout);
+
+        while (! flag) {
                 gtk_main_iteration ();
+        }
 }
 
 void
 gs_fade_reset (GSFade *fade)
 {
+        g_return_if_fail (GS_IS_FADE (fade));
+
+        gs_debug ("Resetting fade");
+
         if (fade->priv->active) {
                 gs_fade_stop (fade);
         }
 
-        gs_fade_set_alpha (fade, 1.0);
+        fade->priv->current_alpha = 1.0;
+
+        gs_fade_set_alpha (fade, fade->priv->current_alpha);
 }
 
 static void
@@ -628,6 +701,7 @@ gs_fade_init (GSFade *fade)
         fade->priv = GS_FADE_GET_PRIVATE (fade);
 
         fade->priv->timeout = 1000;
+        fade->priv->current_alpha = 1.0;
 
         fade->priv->fade_type = check_gamma_extension ();
 
