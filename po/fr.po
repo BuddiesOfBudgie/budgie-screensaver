@@ -8,10 +8,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver 2.14.1\n"
+"Project-Id-Version: gnome-screensaver 2.14.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-08 12:02+0200\n"
-"PO-Revision-Date: 2006-04-08 12:02+0200\n"
+"POT-Creation-Date: 2006-05-06 20:44+0200\n"
+"PO-Revision-Date: 2006-05-06 20:44+0200\n"
 "Last-Translator: Benoît Dejean <benoit@placenet.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -161,13 +161,16 @@ msgstr ""
 "ou bien « random » pour l'activer en utilisant un thème aléatoire."
 
 #: ../data/gnome-screensaver.schemas.in.h:18
-#, fuzzy
 msgid ""
 "This key specifies the list of themes to be used by the screensaver. It's "
 "ignored when \"mode\" key is \"blank-only\", should provide the theme name "
 "when \"mode\" is \"single\", and should provide a list of themes when \"mode"
 "\" is \"random\"."
-msgstr "> /tmp/seconds.diff"
+msgstr ""
+"Cette clef spécifie la liste des thèmes utiliser par l'écran de veille. Elle "
+"est ignorée lorsque que la clef « mode » est « blank-only ». Lorsque "
+"« mode » est « single » elle fournit le nom du thème et lorsque « mode » est "
+"« random » elle fournit une liste de thèmes."
 
 #: ../data/gnome-screensaver.schemas.in.h:19
 msgid "Time before activation"
@@ -219,7 +222,7 @@ msgstr "Carrés « Pop Art »"
 
 #: ../savers/floaters.c:1165
 msgid "show paths that images follow"
-msgstr ""
+msgstr "afficher le chemin que les images suivent"
 
 #: ../savers/floaters.c:1172
 msgid "occasionally rotate images as they move"
@@ -731,15 +734,15 @@ msgstr "Impossible de devenir un démon"
 msgid "Enable debugging code"
 msgstr "Activer le code de debug"
 
-#: ../src/gs-listener-dbus.c:1221
+#: ../src/gs-listener-dbus.c:1216
 msgid "failed to register with the message bus"
 msgstr "l'enregistrement sur le bus de message a échoué"
 
-#: ../src/gs-listener-dbus.c:1231
+#: ../src/gs-listener-dbus.c:1226
 msgid "not connected to the message bus"
 msgstr "non connecté au bus de message"
 
-#: ../src/gs-listener-dbus.c:1240
+#: ../src/gs-listener-dbus.c:1235
 msgid "screensaver already running in this session"
 msgstr "L'économiseur d'écran est déjà ouvert pour cette session"
 
@@ -779,11 +782,11 @@ msgstr "%s@%s"
 msgid "_Password:"
 msgstr "_Mot de passe :"
 
-#: ../src/gs-lock-plug.c:1590
+#: ../src/gs-lock-plug.c:1591
 msgid "S_witch to user:"
 msgstr "_Basculer vers l'utilisateur :"
 
-#: ../src/gs-lock-plug.c:1637
+#: ../src/gs-lock-plug.c:1638
 msgid "Log _Out"
 msgstr "_Clore la session"
 
