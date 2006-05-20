@@ -1,3 +1,7 @@
+2006-05-20  Ahmad Riza H Nst  <rizahnst@eriagempita.co.id>
+
+	* configure.ac: Added id (indonesian) in to ALL_LINGUAS line.
+
 2006-05-18  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-window-x11.c (get_env_vars): Add RUNNING_UNDER_GDM
