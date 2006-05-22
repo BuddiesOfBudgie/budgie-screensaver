@@ -5,14 +5,15 @@
 # Eric Maeker <eric.maeker@free.fr>, 2005.
 # Davy Defaud <davy.defaud@posteasy.com>, 2005.
 # Benoît Dejean <benoit@placenet.org>, 2006. 
+# Robert-André Mauchin <zebob.m@gmail.com>, 2006.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-screensaver 2.14.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-06 20:44+0200\n"
-"PO-Revision-Date: 2006-05-06 20:44+0200\n"
-"Last-Translator: Benoît Dejean <benoit@placenet.org>\n"
+"POT-Creation-Date: 2006-05-22 19:10+0200\n"
+"PO-Revision-Date: 2006-05-20 13:27+0200\n"
+"Last-Translator: Robert-André Mauchin <zebob.m@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +59,7 @@ msgstr "Économiseurs d'écran"
 
 #: ../data/gnome-screensaver.schemas.in.h:1
 msgid "Activate when idle"
-msgstr "Activer quand oisif"
+msgstr "Activer quand inactif"
 
 #: ../data/gnome-screensaver.schemas.in.h:2
 msgid "Allow logout"
@@ -106,7 +107,7 @@ msgid ""
 msgstr ""
 "Définir à VRAI pour offrir une option dans la boîte de dialogue de "
 "déverrouillage pour se déconnecter après un certain délai. Le délai est "
-"spécifié dans la clé « logout_delay »."
+"indiqué dans la clé « logout_delay »."
 
 #: ../data/gnome-screensaver.schemas.in.h:12
 msgid ""
@@ -140,7 +141,7 @@ msgstr ""
 msgid ""
 "The number of minutes of inactivity before the session is considered idle."
 msgstr ""
-"Le nombre de minutes d'inactivité avant que la session ne soit considérer "
+"Le nombre de minutes d'inactivité avant que la session ne soit considérée "
 "comme inactive."
 
 #: ../data/gnome-screensaver.schemas.in.h:16
@@ -167,7 +168,7 @@ msgid ""
 "when \"mode\" is \"single\", and should provide a list of themes when \"mode"
 "\" is \"random\"."
 msgstr ""
-"Cette clef spécifie la liste des thèmes utiliser par l'écran de veille. Elle "
+"Cette clé indique la liste des thèmes utilisés par l'écran de veille. Elle "
 "est ignorée lorsque que la clef « mode » est « blank-only ». Lorsque "
 "« mode » est « single » elle fournit le nom du thème et lorsque « mode » est "
 "« random » elle fournit une liste de thèmes."
@@ -275,7 +276,7 @@ msgstr "%s. Pour en savoir d'avantage, faites --help\n"
 #: ../savers/floaters.c:1247
 msgid "You must specify one image.  See --help for usage information.\n"
 msgstr ""
-"Vous deveez spécifiez une image. Pour en savoir d'avantage, faites --help\n"
+"Vous devez préciser une image. Pour en savoir d'avantage, faites --help\n"
 
 #: ../savers/slideshow.c:47
 msgid "Location to get images from"
@@ -299,7 +300,7 @@ msgstr "Nom"
 
 #: ../src/cut-n-paste/fusa-display.c:128
 msgid "The name of the X11 display this object refers to."
-msgstr "Le nom du serveur X11 auquel ce réfère cet objet."
+msgstr "Le nom du serveur X11 auquel se réfère cet objet."
 
 #: ../src/cut-n-paste/fusa-display.c:134
 #: ../src/cut-n-paste/fusa-user-menu-item.c:164
@@ -372,7 +373,7 @@ msgstr ""
 
 #: ../src/cut-n-paste/fusa-manager.c:1294 ../src/cut-n-paste/gdmcomm.c:495
 msgid "Virtual terminals not supported."
-msgstr "Les terminaux virtuels ne sont pas supportés."
+msgstr "Les terminaux virtuels ne sont pas pris en charge."
 
 #: ../src/cut-n-paste/fusa-manager.c:1297
 msgid "Invalid virtual terminal number."
@@ -380,7 +381,7 @@ msgstr "Numéro de terminal virtuel non valide."
 
 #: ../src/cut-n-paste/fusa-manager.c:1300 ../src/cut-n-paste/gdmcomm.c:499
 msgid "Trying to update an unsupported configuration key."
-msgstr "Essaie de mettre à jour une clé de configuration non supportée."
+msgstr "Essaie de mettre à jour une clé de configuration non prise en charge."
 
 #: ../src/cut-n-paste/fusa-manager.c:1303
 msgid "~/.Xauthority file badly configured or missing."
@@ -390,7 +391,7 @@ msgstr "Le fichier ~/.Xauthority n'est pas correctement configuré ou absent."
 msgid "Too many messages were sent to the display manager, and it hung up."
 msgstr ""
 "Trop de messages ont été envoyés au gestionnaire de connexions et il vient "
-"de planter."
+"de se bloquer."
 
 #: ../src/cut-n-paste/fusa-manager.c:1310
 msgid "The display manager sent an unknown error message."
@@ -494,7 +495,7 @@ msgstr "Le serveur X n'est pas disponible, gdm est probablement mal configuré."
 
 #: ../src/cut-n-paste/gdmcomm.c:497
 msgid "Trying to change to an invalid virtual terminal number."
-msgstr "Essaie de changer à un numéro non valide de terminal virtuel."
+msgstr "Essaie de changer vers un numéro de terminal virtuel non valide ."
 
 #: ../src/cut-n-paste/gdmcomm.c:501
 msgid ""
@@ -507,7 +508,7 @@ msgstr ""
 
 #: ../src/cut-n-paste/gdmcomm.c:505
 msgid "Too many messages were sent to gdm and it hung upon us."
-msgstr "Trop de messages ont été envoyés à gdm et il vient de planter."
+msgstr "Trop de messages ont été envoyés à gdm et il vient de se bloquer."
 
 #: ../src/cut-n-paste/gdmcomm.c:508
 msgid "Unknown error occured."
@@ -549,11 +550,11 @@ msgstr "Proportion du téléchargement effectuée"
 
 #: ../src/file-transfer-dialog.c:217
 msgid "Current URI index"
-msgstr "Index de ressource courant"
+msgstr "Index de ressource actuel"
 
 #: ../src/file-transfer-dialog.c:218
 msgid "Current URI index - starts from 1"
-msgstr "Index de ressource courant (commence à 1)"
+msgstr "Index de ressource actuel (commence à 1)"
 
 #: ../src/file-transfer-dialog.c:225
 msgid "Total URIs"
@@ -561,7 +562,7 @@ msgstr "Nombre de ressources"
 
 #: ../src/file-transfer-dialog.c:226
 msgid "Total number of URIs"
-msgstr "Nombre de ressources"
+msgstr "Nombre total de ressources"
 
 #: ../src/file-transfer-dialog.c:327 ../src/file-transfer-dialog.c:369
 msgid "Copying files"
@@ -789,59 +790,3 @@ msgstr "_Basculer vers l'utilisateur :"
 #: ../src/gs-lock-plug.c:1638
 msgid "Log _Out"
 msgstr "_Clore la session"
-
-#~ msgid "0 seconds"
-#~ msgstr "0 seconde"
-
-#~ msgid "    "
-#~ msgstr "    "
-
-#~ msgid "<b>_Screensaver</b>"
-#~ msgstr "<b>_Économiseur d'écran</b>"
-
-#~ msgid "_Activate after:"
-#~ msgstr "_Activer après:"
-
-#~ msgid "Allow monitor power management"
-#~ msgstr "Autoriser la gestion d'énergie du moniteur"
-
-#~ msgid "Set this to TRUE to allow the screensaver to power down the monitor."
-#~ msgstr ""
-#~ "Définir à VRAI pour autoriser l'économiseur d'écran à éteindre le "
-#~ "moniteur."
-
-#~ msgid ""
-#~ "The number of minutes after the screensaver activation until the monitor "
-#~ "goes into standby power mode."
-#~ msgstr ""
-#~ "Le nombre de minutes après l'activation de l'économiseur d'écran avant "
-#~ "que le moniteur ne passe en mode de veille."
-
-#~ msgid ""
-#~ "The number of minutes after the screensaver activation until the monitor "
-#~ "goes into suspend power mode."
-#~ msgstr ""
-#~ "Le nombre de minutes après l'activation de l'économiseur d'écran avant "
-#~ "que le moniteur ne passe en suspension d'énergie."
-
-#~ msgid ""
-#~ "The number of minutes after the screensaver activation until the monitor "
-#~ "powers off."
-#~ msgstr ""
-#~ "Le nombre de minutes après l'activation de l'économiseur d'écran avant "
-#~ "que le moniteur ne s'éteigne."
-
-#~ msgid "Time before power off"
-#~ msgstr "Délai avant extinction"
-
-#~ msgid "Time before standby"
-#~ msgstr "Délai avant mise en veille"
-
-#~ msgid "Time before suspend"
-#~ msgstr "Délai avant suspension"
-
-#~ msgid "Disabled"
-#~ msgstr "Désactivé"
-
-#~ msgid "Welcome to %s"
-#~ msgstr "Bienvenue sur %s"
