@@ -1,4 +1,27 @@
 ===============
+Version 2.14.2
+===============
+
+  gnome-screensaver
+
+        * Don't reset throttle when deactivating
+	* Make button presses and scroll events request an unlock
+        * Don't explicitly deactivate the lock when showing windows.
+        * Create a real async API for fading to fix flashing.
+        * Shorten pointer poll interval to one second.
+        * Add RUNNING_UNDER_GDM to env var whitelist.
+
+  Translators
+
+        * Lukas Novotny (cs)
+        * Francisco Javier F. Serrador (es)
+        * Ivar Smolin (et)
+        * Robert-André Mauchin (fr)
+        * Vladimer Sichinava (ka)
+        * Chao-Hsiung Liao (zh_HK)
+        * Chao-Hsiung Liao (zh_TW)
+
+===============
 Version 2.14.1
 ===============
 
