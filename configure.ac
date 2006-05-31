@@ -1248,7 +1248,7 @@ echo "
         Power management enabled: ${have_dpms}
         User switching enabled:   ${enable_user_switching}
         PAM support:              ${have_pam}
-        Have shadow passords:     ${have_shadow}
+        Have shadow passwords:    ${have_shadow}
         Have adjunct shadow:      ${have_shadow_adjunct}
         Have enhanced shadow:     ${have_shadow_enhanced}
         Have HPUX shadow:         ${have_shadow_hpux}
