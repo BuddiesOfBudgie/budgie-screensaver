@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2004-2005 William Jon McCann <mccann@jhu.edu>
+ * Copyright (C) 2004-2006 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -159,11 +159,17 @@ listener_lock_cb (GSListener *listener,
                   GSMonitor  *monitor)
 {
         gboolean res;
+        gboolean locked;
 
+        /* set lock flag before trying to activate screensaver
+           in case something tries to react to the ActiveChanged signal */
+
+        gs_manager_get_lock_active (monitor->priv->manager, &locked);
+        gs_manager_set_lock_active (monitor->priv->manager, TRUE);
         res = gs_listener_set_active (monitor->priv->listener, TRUE);
-        if (res) {
-                gs_manager_set_lock_active (monitor->priv->manager, TRUE);
-        } else {
+        if (! res) {
+                /* If we've failed then restore lock status */
+                gs_manager_set_lock_active (monitor->priv->manager, locked);
                 gs_debug ("Unable to lock the screen");
         }
 }
