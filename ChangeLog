@@ -1,3 +1,8 @@
+2006-06-05  Ahmad Riza H Nst  <rizahnst@eriagempita.co.id>
+
+	* configure.ac: Added id.po in to ALL_LINGUAS line (added before,
+			but currently disappeared, so re-added)
+
 2006-06-01  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-listener-dbus.c: (gs_listener_send_signal_active_changed):
