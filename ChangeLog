@@ -1,3 +1,9 @@
+2006-06-09  Elijah Newren  <newren gmail com>
+
+	* configure.ac: Remove id from ALL_LINGUAS.  Will contact Ahmad
+	and i18n shortly to try to ensure it doesn't get added back unless
+	it is accompanied with the actual translation.  #344432.
+
 2006-06-06  Pawan Chitrakar  <pchitrakar@gmail.com>
 
 	* configure.ac: Added ne in ALL_LINGUAS
