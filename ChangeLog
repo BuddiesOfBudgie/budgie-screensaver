@@ -1,3 +1,9 @@
+2006-06-10  Christian Rose  <menthos@menthos.com>
+
+	* configure.ac: Added id to ALL_LINGUAS again. Triple-checked that
+	id.po actually exists on this branch now. Will contact the
+	responsible translator to make sure this does not happen again.
+
 2006-06-09  Elijah Newren  <newren gmail com>
 
 	* configure.ac: Remove id from ALL_LINGUAS.  Will contact Ahmad
