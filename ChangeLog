@@ -1,3 +1,11 @@
+2006-06-16  William Jon McCann  <mccann@jhu.edu>
+
+	* savers/gs-theme-window.c: (force_no_pixmap_background),
+	(gs_theme_window_init):
+	* src/gs-window-x11.c: (force_no_pixmap_background),
+	(gs_window_init):
+	Override gtk theme background.  Fixes #344936
+
 2006-06-10  Christian Rose  <menthos@menthos.com>
 
 	* configure.ac: Added id to ALL_LINGUAS again. Triple-checked that
