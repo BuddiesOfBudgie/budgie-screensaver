@@ -1,3 +1,7 @@
+2006-06-28  Yair Hershkovitz  <yairhr@gmail.com>
+
+	* configure.ac: Added he to ALL_LINGUAS
+
 2006-06-19  Raivis Dejus  <orvils@gmail.com>
 
 	* configure.ac: Added lv in ALL_LINGUAS
