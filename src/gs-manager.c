@@ -138,6 +138,71 @@ select_theme (GSManager *manager)
         return theme;
 }
 
+
+static GSJob *
+lookup_job_for_window (GSManager *manager,
+                       GSWindow  *window)
+{
+        GSJob *job;
+
+        if (manager->priv->jobs == NULL) {
+                return NULL;
+        }
+
+        job = g_hash_table_lookup (manager->priv->jobs, window);
+
+        return job;
+}
+
+static void
+manager_maybe_stop_job_for_window (GSManager *manager,
+                                   GSWindow  *window)
+{
+        GSJob *job;
+
+        job = lookup_job_for_window (manager, window);
+
+        if (job == NULL) {
+                gs_debug ("Job not found for window");
+                return;
+        }
+
+        gs_job_stop (job);
+}
+
+static void
+manager_maybe_start_job_for_window (GSManager *manager,
+                                    GSWindow  *window)
+{
+        GSJob *job;
+
+        job = lookup_job_for_window (manager, window);
+
+        if (job == NULL) {
+                gs_debug ("Job not found for window");
+                return;
+        }
+
+        if (! manager->priv->dialog_up) {
+                if (! manager->priv->throttle_enabled) {
+                        if (! gs_job_is_running (job)) {
+                                if (! gs_window_is_obscured (window)) {
+                                        gs_debug ("Starting job for window");
+                                        gs_job_start (job);
+                                } else {
+                                        gs_debug ("Window is obscured deferring start of job");
+                                }
+                        } else {
+                                gs_debug ("Not starting job because job is running");
+                        }
+                } else {
+                        gs_debug ("Not starting job because throttled");
+                }
+        } else {
+                gs_debug ("Not starting job because dialog is up");
+        }
+}
+
 static void
 cycle_job (GSWindow  *window,
            GSJob     *job,
@@ -149,7 +214,7 @@ cycle_job (GSWindow  *window,
 
         gs_job_stop (job);
         gs_job_set_theme (job, theme, NULL);
-        gs_job_start (job);
+        manager_maybe_start_job_for_window (manager, window);
 }
 
 static void
@@ -168,7 +233,7 @@ throttle_job (GSWindow  *window,
         if (manager->priv->throttle_enabled) {
                 gs_job_stop (job);
         } else {
-                gs_job_start (job);
+                manager_maybe_start_job_for_window (manager, window);
         }
 }
 
@@ -188,7 +253,7 @@ resume_job (GSWindow  *window,
         if (gs_job_is_running (job)) {
                 gs_job_suspend (job, FALSE);
         } else {
-                gs_job_start (job);
+                manager_maybe_start_job_for_window (manager, window);
         }
 }
 
@@ -443,6 +508,8 @@ gs_manager_cycle (GSManager *manager)
 {
         g_return_val_if_fail (manager != NULL, FALSE);
         g_return_val_if_fail (GS_IS_MANAGER (manager), FALSE);
+
+        gs_debug ("cycling jobs");
 
         if (! manager->priv->active) {
                 return FALSE;
@@ -838,37 +905,10 @@ window_dialog_down_cb (GSWindow  *window,
                 gtk_widget_set_sensitive (GTK_WIDGET (l->data), TRUE);
         }
 
+        manager->priv->dialog_up = FALSE;
+
         if (! manager->priv->throttle_enabled) {
                 manager_resume_jobs (manager);
-        }
-
-        manager->priv->dialog_up = FALSE;
-}
-
-static void
-manager_maybe_start_job_for_window (GSManager *manager,
-                                    GSWindow  *window)
-{
-        GSJob *job;
-
-        if (manager->priv->jobs == NULL) {
-                return;
-        }
-
-        job = g_hash_table_lookup (manager->priv->jobs, window);
-
-        if (job == NULL) {
-                gs_debug ("Job not found for window");
-                return;
-        }
-
-        if (! manager->priv->dialog_up) {
-                if (! manager->priv->throttle_enabled) {
-                        if (! gs_job_is_running (job)) {
-                                gs_debug ("Starting job for window");
-                                gs_job_start (job);
-                        }
-                }
         }
 }
 
@@ -1061,6 +1101,35 @@ window_activity_cb (GSWindow  *window,
 }
 
 static void
+maybe_set_window_throttle (GSManager *manager,
+                           GSWindow  *window,
+                           gboolean   throttled)
+{
+        if (throttled) {
+                manager_maybe_stop_job_for_window (manager, window);
+        } else {
+                manager_maybe_start_job_for_window (manager, window);
+        }
+}
+
+static void
+window_obscured_cb (GSWindow   *window,
+                    GParamSpec *pspec,
+                    GSManager  *manager)
+{
+        gboolean obscured;
+
+        obscured = gs_window_is_obscured (window);
+        gs_debug ("Handling window obscured: %s", obscured ? "obscured" : "unobscured");
+
+        maybe_set_window_throttle (manager, window, obscured);
+
+        if (! obscured) {
+                gs_manager_request_unlock (manager);
+        }
+}
+
+static void
 disconnect_window_signals (GSManager *manager,
                            GSWindow  *window)
 {
@@ -1071,6 +1140,7 @@ disconnect_window_signals (GSManager *manager,
         g_signal_handlers_disconnect_by_func (window, window_show_cb, manager);
         g_signal_handlers_disconnect_by_func (window, window_map_cb, manager);
         g_signal_handlers_disconnect_by_func (window, window_map_event_cb, manager);
+        g_signal_handlers_disconnect_by_func (window, window_obscured_cb, manager);
         g_signal_handlers_disconnect_by_func (window, window_unmap_cb, manager);
         g_signal_handlers_disconnect_by_func (window, window_grab_broken_cb, manager);
 }
@@ -1102,6 +1172,8 @@ connect_window_signals (GSManager *manager,
                                  G_CALLBACK (window_map_cb), manager, G_CONNECT_AFTER);
         g_signal_connect_object (window, "map_event",
                                  G_CALLBACK (window_map_event_cb), manager, G_CONNECT_AFTER);
+        g_signal_connect_object (window, "notify::obscured",
+                                 G_CALLBACK (window_obscured_cb), manager, G_CONNECT_AFTER);
         g_signal_connect_object (window, "unmap",
                                  G_CALLBACK (window_unmap_cb), manager, G_CONNECT_AFTER);
         g_signal_connect_object (window, "grab_broken_event",

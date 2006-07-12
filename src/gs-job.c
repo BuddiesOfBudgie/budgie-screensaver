@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
  *
- * Copyright (C) 2004-2005 William Jon McCann <mccann@jhu.edu>
+ * Copyright (C) 2004-2006 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -430,7 +430,8 @@ gs_job_died (GSJob *job)
 {
         if (job->priv->pid > 0) {
                 int exit_status;
-                        
+
+                gs_debug ("Waiting on process %d", job->priv->pid);
                 exit_status = wait_on_child (job->priv->pid);
 
                 job->priv->status = GS_JOB_DEAD;
@@ -443,6 +444,8 @@ gs_job_died (GSJob *job)
 
         g_spawn_close_pid (job->priv->pid);
         job->priv->pid = 0;
+
+        gs_debug ("Job died");
 }
 
 static void
@@ -751,6 +754,8 @@ gs_job_start (GSJob *job)
         g_return_val_if_fail (job != NULL, FALSE);
         g_return_val_if_fail (GS_IS_JOB (job), FALSE);
 
+        gs_debug ("starting job");
+
         if (job->priv->pid) {
                 g_warning ("Cannot restart active job.");
                 return FALSE;
@@ -805,6 +810,8 @@ gs_job_stop (GSJob *job)
         g_return_val_if_fail (job != NULL, FALSE);
         g_return_val_if_fail (GS_IS_JOB (job), FALSE);
 
+        gs_debug ("stopping job");
+
         if (! job->priv->pid) {
                 return FALSE;
         }
@@ -830,6 +837,8 @@ gs_job_suspend (GSJob   *job,
 {
         g_return_val_if_fail (job != NULL, FALSE);
         g_return_val_if_fail (GS_IS_JOB (job), FALSE);
+
+        gs_debug ("suspending job");
 
         if (! job->priv->pid) {
                 return FALSE;
