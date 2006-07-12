@@ -32,6 +32,7 @@
 #include <gtk/gtk.h>
 
 #include "gs-window.h"
+#include "gs-marshal.h"
 #include "subprocs.h"
 #include "gs-debug.h"
 
@@ -40,7 +41,6 @@ static void gs_window_init       (GSWindow      *window);
 static void gs_window_finalize   (GObject       *object);
 
 static gboolean popup_dialog_idle (GSWindow *window);
-static gboolean gs_window_request_unlock_idle (GSWindow *window);
 
 enum {
         DIALOG_RESPONSE_CANCEL,
@@ -64,7 +64,6 @@ struct GSWindowPrivate
         GtkWidget *box;
         GtkWidget *socket;
 
-        guint      request_unlock_idle_id;
         guint      popup_dialog_idle_id;
 
         guint      dialog_map_signal_id;
@@ -86,6 +85,7 @@ struct GSWindowPrivate
 };
 
 enum {
+        ACTIVITY,
         DEACTIVATED,
         DIALOG_UP,
         DIALOG_DOWN,
@@ -389,21 +389,6 @@ static void
 add_popup_dialog_idle (GSWindow *window)
 {
         window->priv->popup_dialog_idle_id = g_idle_add ((GSourceFunc)popup_dialog_idle, window);
-}
-
-static void
-remove_request_unlock_idle (GSWindow *window)
-{
-        if (window->priv->request_unlock_idle_id != 0) {
-                g_source_remove (window->priv->request_unlock_idle_id);
-                window->priv->request_unlock_idle_id = 0;
-        }
-}
-
-static void
-add_request_unlock_idle (GSWindow *window)
-{
-        window->priv->request_unlock_idle_id = g_idle_add ((GSourceFunc)gs_window_request_unlock_idle, window);
 }
 
 static gboolean
@@ -1218,16 +1203,6 @@ gs_window_get_property (GObject    *object,
         }
 }
 
-static gboolean
-gs_window_request_unlock_idle (GSWindow *window)
-{
-        gs_window_request_unlock (window);
-
-        window->priv->request_unlock_idle_id = 0;
-
-        return FALSE;
-}
-
 static void
 queue_key_event (GSWindow    *window,
                  GdkEventKey *event)
@@ -1246,20 +1221,19 @@ queue_key_event (GSWindow    *window,
 }
 
 static gboolean
-maybe_request_unlock (GSWindow *window)
+maybe_handle_activity (GSWindow *window)
 {
-        gboolean ret;
+        gboolean handled;
 
-        ret = FALSE;
+        handled = FALSE;
 
-        /* if we don't already have a socket then request an unlock */
+        /* if we already have a socket then don't bother */
         if (! window->priv->socket
-            && (window->priv->request_unlock_idle_id == 0)) {
-                add_request_unlock_idle (window);
-                ret = TRUE;
+            && GTK_WIDGET_IS_SENSITIVE (GTK_WIDGET (window))) {
+                g_signal_emit (window, signals [ACTIVITY], 0, &handled);
         }
 
-        return ret;
+        return handled;
 }
 
 static gboolean
@@ -1270,16 +1244,7 @@ gs_window_real_key_press_event (GtkWidget   *widget,
 
         /*g_message ("KEY PRESS state: %u keyval %u", event->state, event->keyval);*/
 
-        /* if we don't already have a socket then request an unlock */
-        if (! GS_WINDOW (widget)->priv->socket) {
-                maybe_request_unlock (GS_WINDOW (widget));
-
-                catch_events = TRUE;
-        } else {
-                if (! GTK_WIDGET_VISIBLE (GS_WINDOW (widget)->priv->socket)) {
-                        catch_events = TRUE;
-                }
-        }
+        catch_events = maybe_handle_activity (GS_WINDOW (widget));
 
         /* Catch all keypresses up until the lock dialog is shown */
         if (catch_events) {
@@ -1316,7 +1281,7 @@ gs_window_real_motion_notify_event (GtkWidget      *widget,
                         ABS (window->priv->last_y - event->y));
 
         if (distance > min_distance) {
-                maybe_request_unlock (window);
+                maybe_handle_activity (window);
 
                 window->priv->last_x = -1;
                 window->priv->last_y = -1;
@@ -1332,7 +1297,7 @@ gs_window_real_button_press_event (GtkWidget      *widget,
         GSWindow *window;
 
         window = GS_WINDOW (widget);
-        maybe_request_unlock (window);
+        maybe_handle_activity (window);
 
         return FALSE;
 }
@@ -1344,7 +1309,7 @@ gs_window_real_scroll_event (GtkWidget      *widget,
         GSWindow *window;
 
         window = GS_WINDOW (widget);
-        maybe_request_unlock (window);
+        maybe_handle_activity (window);
 
         return FALSE;
 }
@@ -1433,6 +1398,16 @@ gs_window_class_init (GSWindowClass *klass)
 
         g_type_class_add_private (klass, sizeof (GSWindowPrivate));
 
+        signals [ACTIVITY] =
+                g_signal_new ("activity",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GSWindowClass, activity),
+                              NULL,
+                              NULL,
+                              gs_marshal_BOOLEAN__VOID,
+                              G_TYPE_BOOLEAN,
+                              0);
         signals [DEACTIVATED] =
                 g_signal_new ("deactivated",
                               G_TYPE_FROM_CLASS (object_class),
@@ -1566,7 +1541,6 @@ gs_window_finalize (GObject *object)
         g_free (window->priv->logout_command);
 
         remove_watchdog_timer (window);
-        remove_request_unlock_idle (window);
         remove_popup_dialog_idle (window);
 
         if (window->priv->timer) {
