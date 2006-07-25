@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gnome-screensaver GNOME 2.14\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-17 14:56+0100\n"
-"PO-Revision-Date: 2006-04-16 20:49+0300\n"
+"PO-Revision-Date: 2006-07-16 11:28+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr "E_kraanisäästja aktiveerimine kui seanss on jõude"
 
 #: ../data/gnome-screensaver-preferences.glade.h:4
 msgid "_Lock screen when screensaver is active"
-msgstr "Ekraani _lukustamine kui seanss on jõude"
+msgstr "Ekraani _lukustamine kui ekraanisäästja on aktiivne"
 
 #: ../data/gnome-screensaver-preferences.glade.h:5
 msgid "_Screensaver"
