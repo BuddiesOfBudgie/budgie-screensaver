@@ -1,3 +1,8 @@
+2006-07-26  William Jon McCann  <mccann@jhu.edu>
+
+	* src/gs-window-x11.c (gs_window_class_init):
+	Fix typo in property name.
+
 2006-07-18  William Jon McCann  <mccann@jhu.edu>
 
 	* src/test-window.c: (window_activity_cb),
