@@ -1,3 +1,13 @@
+2006-07-27  William Jon McCann  <mccann@jhu.edu>
+
+	* src/gnome-screensaver-preferences.c (theme_installer_run)
+	(drag_data_received_cb):
+	Unbreak DnD of .desktop files.  Doesn't really work anyway
+	in this version.
+
+	* src/file-transfer-dialog.c (create_titled_label):
+	Sync with control center copy.  Fix crash.
+
 2006-07-26  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-window-x11.c (gs_window_class_init):
