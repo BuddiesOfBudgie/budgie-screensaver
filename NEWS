@@ -1,4 +1,26 @@
 ===============
+Version 2.14.3
+===============
+
+  gnome-screensaver
+
+        * Turn off themes when screen is not visible
+        * Switch user when double clicking in treeview
+        * Don't reset throttle when deactivating
+        * Make activation wait for fade to complete.
+        * Override gtk+ theme background style
+        * Prevent theme flickering from watchdog timer
+
+  Translators
+
+        * Ivar Smolin (et)
+        * Christophe Merlet (RedFox) (fr)
+        * Yaniv Abir (he)
+        * ahmad riza h nst (id)
+        * Raivis Dejus (lv)
+        * Shyam Krishna Bal (ne)
+
+===============
 Version 2.14.2
 ===============
 
