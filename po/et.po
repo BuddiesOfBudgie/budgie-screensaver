@@ -10,7 +10,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver HEAD\n"
+"Project-Id-Version: gnome-screensaver 2.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-15 09:55+0200\n"
 "PO-Revision-Date: 2006-10-12 23:25+0300\n"
