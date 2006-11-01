@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gnome-screensaver 2.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-15 09:55+0200\n"
-"PO-Revision-Date: 2006-10-12 23:25+0300\n"
+"PO-Revision-Date: 2006-10-29 22:07+0200\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "<b>Hoiatus: ekraanilukustus ei toimi root kasutaja jaoks.</b>"
 
 #: ../data/gnome-screensaver-preferences.glade.h:3
 msgid "Regard the computer as _idle after:"
-msgstr "Seansi _jõudeoleku määramine peale:"
+msgstr "Seanss määratakse _jõude olevaks pärast ajavahemikku:"
 
 #: ../data/gnome-screensaver-preferences.glade.h:4
 msgid "Screensaver Preferences"
@@ -51,11 +51,11 @@ msgstr "Ekraanisäästja eelvaade"
 
 #: ../data/gnome-screensaver-preferences.glade.h:6
 msgid "_Activate screensaver when computer is idle"
-msgstr "E_kraanisäästja aktiveerimine kui arvuti on jõude"
+msgstr "Kui arvuti on jõude, siis aktiveeritakse e_kraanisäästja"
 
 #: ../data/gnome-screensaver-preferences.glade.h:7
 msgid "_Lock screen when screensaver is active"
-msgstr "Ekraani _lukustamine kui ekraanisäästja on aktiivne"
+msgstr "Ekraanisäästja aktiveerimisel ekraan _lukustatakse"
 
 #: ../data/gnome-screensaver-preferences.glade.h:8
 msgid "_Preview"
@@ -215,9 +215,9 @@ msgid ""
 "\" is \"random\"."
 msgstr ""
 "Selle võtmega määratakse ekraanisäästja poolt kasutatavate teemade loetelu. "
-"Kui võtme \"mode\" väärtus on \"blank-only\", siis seda eiratakse, kui "
-"\"mode\" väärtus on \"single\", siis peab siin olema teema nimi ja kui "
-"\"mode\" väärtus on \"random\", siis aga teemade loetelu."
+"Kui võtme \"mode\" väärtus on \"blank-only\", siis seda eiratakse, kui \"mode"
+"\" väärtus on \"single\", siis peab siin olema teema nimi ja kui \"mode\" "
+"väärtus on \"random\", siis aga teemade loetelu."
 
 #: ../data/gnome-screensaver.schemas.in.h:25
 msgid "Time before activation"
@@ -521,8 +521,8 @@ msgid ""
 "You might in fact be using a different display manager, such as KDM (KDE "
 "Display Manager) or xdm."
 msgstr ""
-"Sa võid kasutada teist kuvahaldurit, näiteks KDM-i (KDE kuvahaldur) või "
-"XDM-i."
+"Sa võid kasutada teist kuvahaldurit, näiteks KDM-i (KDE kuvahaldur) või XDM-"
+"i."
 
 #: ../src/cut-n-paste/gdmcomm.c:419
 msgid ""
@@ -581,8 +581,7 @@ msgstr ""
 #: ../src/cut-n-paste/gdmcomm.c:488
 msgid ""
 "The X server is not available, it is likely that gdm is badly configured."
-msgstr ""
-"X-server pole saadaval või on halvasti seadistatud."
+msgstr "X-server pole saadaval või on halvasti seadistatud."
 
 #: ../src/cut-n-paste/gdmcomm.c:497
 msgid "Trying to change to an invalid virtual terminal number."
@@ -689,7 +688,7 @@ msgstr "Kui ekraanisäästja on aktiivne, siis graafilise demo vahetamine"
 
 #: ../src/gnome-screensaver-command.c:69
 msgid "Turn the screensaver on (blank the screen)"
-msgstr "Ekraanisäästja sisselülitamine (ekraani puhastamine)"
+msgstr "Ekraanisäästja sisselülitamine (ekraani tühjendamine)"
 
 #: ../src/gnome-screensaver-command.c:71
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
@@ -823,7 +822,7 @@ msgstr "Tõrge autentimisel."
 
 #: ../src/gnome-screensaver-preferences.c:439
 msgid "Blank screen"
-msgstr "Ekraani puhastamine"
+msgstr "Tühi ekraan"
 
 #: ../src/gnome-screensaver-preferences.c:445
 msgid "Random"
