@@ -1,20 +1,24 @@
-# translation of gnome-screensaver.pot to Arabic
+# translation of gnome-screensaver.gnome-2-16.po to Arabic
+#
+#
 # Djihed Afifi <djihed@gmail.com>, 2006.
-#
-#
+# Khaled Hosny <khaledhosny@eglug.org>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver\n"
+"Project-Id-Version: gnome-screensaver.gnome-2-16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 00:53+0000\n"
-"PO-Revision-Date: 2006-10-05 21:07-0000\n"
-"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
-"Language-Team: Arabic <support@arabeyes.org>\n"
+"POT-Creation-Date: 2006-11-10 21:40+0000\n"
+"PO-Revision-Date: 2006-11-10 06:30+0200\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
+"Language-Team: Arabic <support@eglug.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : "
 "3\n"
+"\n"
+"\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: ../data/gnome-screensaver-preferences.desktop.in.h:1
 msgid "Screensaver"
@@ -233,7 +237,7 @@ msgid "<span size=\"x-large\">%R</span>"
 msgstr "<span size=\"x-large\">%R</span>"
 
 #: ../data/lock-dialog-default.glade.h:5 ../src/gnome-screensaver-dialog.c:172
-#: ../src/gnome-screensaver-dialog.c:173
+#: ../src/gnome-screensaver-dialog.c:173 ../src/gs-auth-pam.c:150
 msgid "Password:"
 msgstr "كلمة المرور:"
 
@@ -407,7 +411,7 @@ msgstr "مدير الشاشة غير مشتغل أو قديم جدا."
 
 #: ../src/cut-n-paste/fusa-manager.c:1463
 msgid "The configured limit of flexible servers has been reached."
-msgstr "تم بلوغ الحد المعدّ للنوادل المرنة."
+msgstr "تم بلوغ الحد المعدّ للخوادم المرنة."
 
 #: ../src/cut-n-paste/fusa-manager.c:1466
 msgid "There was an unknown error starting X."
@@ -415,7 +419,7 @@ msgstr "حصل خطأ مجهول عند بدأ X."
 
 #: ../src/cut-n-paste/fusa-manager.c:1469
 msgid "The X server failed to finish starting."
-msgstr "نادل X فشل في نهاية الإشتغال."
+msgstr "خادم X فشل في نهاية الإشتغال."
 
 #: ../src/cut-n-paste/fusa-manager.c:1472
 msgid "There are too many X sessions running."
@@ -423,11 +427,11 @@ msgstr "عدد كبير جدا من جلسات X مشتغلة."
 
 #: ../src/cut-n-paste/fusa-manager.c:1475
 msgid "The nested X server (Xnest) cannot connect to your current X server."
-msgstr "نادل X المعشش (Xnest) لا يستطيع الإتصال بنادل X الخاص بك."
+msgstr "خادم X المعشش (Xnest) لا يستطيع الإتصال بخادم X الخاص بك."
 
 #: ../src/cut-n-paste/fusa-manager.c:1478
 msgid "The X server in the GDM configuration could not be found."
-msgstr "نادل X الموجود في إعداد جي دي ام غير موجود."
+msgstr "خادم X الموجود في إعداد جي دي ام غير موجود."
 
 #: ../src/cut-n-paste/fusa-manager.c:1481 ../src/cut-n-paste/gdmcomm.c:492
 msgid ""
@@ -530,15 +534,15 @@ msgstr "لا يمكن الاتصال بـ gdm، ربما تشغل اصدارة �
 
 #: ../src/cut-n-paste/gdmcomm.c:469
 msgid "The allowed limit of flexible X servers reached."
-msgstr "الحد الممكن لنوادل X المرنة المسموح به، تحقق."
+msgstr "الحد الممكن لخوادم X المرنة المسموح به، تحقق."
 
 #: ../src/cut-n-paste/gdmcomm.c:471
 msgid "There were errors trying to start the X server."
-msgstr "كان هناك أخطاء هند محاولة تشغيل نادل X."
+msgstr "كان هناك أخطاء هند محاولة تشغيل خادم X."
 
 #: ../src/cut-n-paste/gdmcomm.c:473
 msgid "The X server failed.  Perhaps it is not configured well."
-msgstr "فشل نادل X. ربما لم يعد بسلامة."
+msgstr "فشل خادم X. ربما لم يعد بسلامة."
 
 #: ../src/cut-n-paste/gdmcomm.c:476
 msgid "Too many X sessions running."
@@ -549,7 +553,7 @@ msgid ""
 "The nested X server (Xnest) cannot connect to your current X server.  You "
 "may be missing an X authorization file."
 msgstr ""
-"لا يمكن لنادل X المعشش (Xnest) الاتصال بنادلك X الحالي. ربما تفتقد لبعض "
+"لا يمكن لخادم X المعشش (Xnest) الاتصال بخادمك X الحالي. ربما تفتقد لبعض "
 "ملفات التحقق."
 
 #: ../src/cut-n-paste/gdmcomm.c:483
@@ -557,13 +561,13 @@ msgid ""
 "The nested X server (Xnest) is not available, or gdm is badly configured.\n"
 "Please install the Xnest package in order to use the nested login."
 msgstr ""
-"نادل X المعشش (Xnest) غير موجود، أو gdm معد سيئا.\n"
+"خادم X المعشش (Xnest) غير موجود، أو gdm معد سيئا.\n"
 "رجاء تثببت رزمة Xnest لتستعمل التسجيل المعشش."
 
 #: ../src/cut-n-paste/gdmcomm.c:488
 msgid ""
 "The X server is not available, it is likely that gdm is badly configured."
-msgstr "نادل X غير متاح، ربما لم يعد gdm بصحة."
+msgstr "خادم X غير متاح، ربما لم يعد gdm بصحة."
 
 #: ../src/cut-n-paste/gdmcomm.c:497
 msgid "Trying to change to an invalid virtual terminal number."
@@ -728,7 +732,7 @@ msgstr "أظهر زر تغيير المستخدم"
 
 #. login: is whacked always translate to Username:
 #: ../src/gnome-screensaver-dialog.c:169 ../src/gnome-screensaver-dialog.c:170
-#: ../src/gnome-screensaver-dialog.c:171 ../src/gs-auth-pam.c:380
+#: ../src/gnome-screensaver-dialog.c:171 ../src/gs-auth-pam.c:404
 msgid "Username:"
 msgstr "اسم المستخدم:"
 
@@ -792,7 +796,7 @@ msgstr "عفوا، كلمتا السر لا تتطابقان"
 msgid "Checking..."
 msgstr "جاري فحص..."
 
-#: ../src/gnome-screensaver-dialog.c:289 ../src/gs-auth-pam.c:320
+#: ../src/gnome-screensaver-dialog.c:289 ../src/gs-auth-pam.c:344
 msgid "Authentication failed."
 msgstr "أخفق التّوثيق."
 
@@ -883,25 +887,25 @@ msgstr "لا تصبح خادم"
 msgid "Enable debugging code"
 msgstr "مكّن التنقيح"
 
-#: ../src/gs-auth-pam.c:262
+#: ../src/gs-auth-pam.c:286
 #, c-format
 msgid "Unable to establish service %s: %s\n"
 msgstr "لا يمكن تنصيب الخدمة %s:·%s\n"
 
-#: ../src/gs-auth-pam.c:288
+#: ../src/gs-auth-pam.c:312
 #, c-format
 msgid "Can't set PAM_TTY=%s"
 msgstr "لا يمكن ضبط PAM_TTY=%s"
 
-#: ../src/gs-auth-pam.c:318
+#: ../src/gs-auth-pam.c:342
 msgid "Incorrect password."
 msgstr "كلمة السر غير صحيحة."
 
-#: ../src/gs-auth-pam.c:334
+#: ../src/gs-auth-pam.c:358
 msgid "Not permitted to gain access at this time."
 msgstr "منع المستخدم من النفاذ الآن"
 
-#: ../src/gs-auth-pam.c:340
+#: ../src/gs-auth-pam.c:364
 msgid "No longer permitted to access the system."
 msgstr "لم يعد يسمح بالنفاذ إلى النظام"
 
