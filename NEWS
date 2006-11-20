@@ -1,4 +1,26 @@
 ===============
+Version 2.16.2
+===============
+
+  gnome-screensaver
+
+        * Add missing g_locale_to_utf8 for PAM messages
+
+  gnome-screensaver-preferences
+
+        * Don't show expander column
+        * Use correct sort order
+
+  Translators
+
+        * Khaled Hosny (ar)
+        * Gil Forcada (ca)
+        * Jakub Friedl (cs)
+        * Ivar Smolin (et)
+        * Ignacio Casal Quinteiro (gl)
+        * Andrzej Polaty%Gń%@ski (pl)
+
+===============
 Version 2.16.1
 ===============
 

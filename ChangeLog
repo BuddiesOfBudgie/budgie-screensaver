@@ -1,3 +1,9 @@
+==== 2.16.2 ====
+
+2006-11-20  William Jon McCann  <mccann@jhu.edu>
+
+	* NEWS: Updated for 2.16.2 release.
+
 2006-11-09  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gnome-screensaver-dialog.c: (auth_message_handler):
