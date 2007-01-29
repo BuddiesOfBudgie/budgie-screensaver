@@ -1,3 +1,20 @@
+
+===============
+Version 2.16.3
+===============
+
+  gnome-screensaver
+
+        * Fixed #373702, crashes on blanking with an X Window System error (William Jon McCann)
+        * Fixed #382757, Crash when creating a Pictures folder while preview is open (William Jon McCann)
+        * Fixed #392780, Pass DBUS_SESSION_BUS_ADDRESS into hack environment (William Jon McCann)
+
+  Translators
+
+        * Updated nb: Kjartan Maraas
+        * Updated ar: Kjartan Maraas
+
+
 ===============
 Version 2.16.2
 ===============

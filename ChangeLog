@@ -1,3 +1,9 @@
+==== 2.16.3 ====
+
+2007-01-29  William Jon McCann  <mccann@jhu.edu>
+
+	* NEWS: Update for 2.16.3 release
+
 2007-01-05  William Jon McCann  <mccann@jhu.edu>
 
 	* src/gs-job.c (get_env_vars):
