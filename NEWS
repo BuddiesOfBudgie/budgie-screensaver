@@ -1,4 +1,17 @@
 ===============
+Version 2.18.2
+===============
+
+  gnome-screensaver
+
+        * Fixed #428199, Make fast-user-switching work with gdm configurations involving multiple X servers (William Jon McCann)
+
+  Translators
+
+        * Updated be@latin: Ihar Hrachyshka
+
+
+===============
 Version 2.18.1
 ===============
 

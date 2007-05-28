@@ -1,3 +1,9 @@
+==== 2.18.2 ====
+
+2007-05-28  William Jon McCann  <mccann@jhu.edu>
+
+	* NEWS: Update for 2.18.2
+
 2007-04-24  Christian Kirbach  <Christian.Kirbach@googlemail.com>
 
 	* src/gs-fade.c: (gamma_info_init):
