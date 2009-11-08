@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gnome-screensaver HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "screensaver&component=general\n"
-"POT-Creation-Date: 2009-08-31 21:58+0000\n"
+"POT-Creation-Date: 2009-09-16 13:20+0000\n"
 "PO-Revision-Date: 2009-09-16 16:21+0300\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
@@ -544,7 +544,7 @@ msgstr "Comandă de invocat pentru butonul de ieșire din sesiune"
 
 #: ../src/gnome-screensaver-dialog.c:64
 msgid "Show the switch user button"
-msgstr "Afişează butonul de schimbare a utilizatorului"
+msgstr "Afișează butonul de schimbare a utilizatorului"
 
 #: ../src/gnome-screensaver-dialog.c:66
 msgid "Message to show in the dialog"
@@ -773,4 +773,3 @@ msgstr "%U pe %h"
 #: ../src/gs-lock-plug.c:1561
 msgid "_Password:"
 msgstr "_Parolă:"
-
