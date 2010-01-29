@@ -46,7 +46,7 @@ main (int argc, char **argv)
         error = NULL;
 
         if (!gtk_init_with_args (&argc, &argv, NULL, NULL, NULL, &error)) {
-		g_printerr (_("%s. See --help for usage information.\n"),
+		g_printerr ("%s. See --help for usage information.\n",
 			    error->message);
 		g_error_free (error);
 	        exit (1);
