@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver HEAD\n"
+"Project-Id-Version: gnome-screensaver 2.30\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "screensaver&component=general\n"
-"POT-Creation-Date: 2009-08-21 03:05+0000\n"
+"POT-Creation-Date: 2010-04-23 19:08+0000\n"
 "PO-Revision-Date: 2009-09-14 08:57+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -268,6 +268,10 @@ msgstr "Popkunstilik pulseerivate värvidega ruudustik."
 msgid "Pop art squares"
 msgstr "Popkunstist inspireeritud ruudud"
 
+#, c-format
+msgid "%s. See --help for usage information.\n"
+msgstr "%s. Lähema teabe saamiseks kasuta --help võtit.\n"
+
 msgid "Show paths that images follow"
 msgstr "Piltide liikumisteede näitamine"
 
@@ -297,10 +301,6 @@ msgstr "Kasutatav lähtepilt"
 #.
 msgid "image - floats images around the screen"
 msgstr "pilt - hõljub ekraanil ringi"
-
-#, c-format
-msgid "%s. See --help for usage information.\n"
-msgstr "%s. Lähema teabe saamiseks kasuta --help võtit.\n"
 
 #, c-format
 msgid "You must specify one image.  See --help for usage information.\n"
