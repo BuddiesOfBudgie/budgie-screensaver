@@ -1,4 +1,11 @@
 ===============
+Version  2.30.2
+===============
+
+Brown paper-bag release. Fix unclosed quote in sed in configure.ac.
+
+
+===============
 Version  2.30.1
 ===============
 
