@@ -1,4 +1,53 @@
 ===============
+Version  2.30.1
+===============
+
+Non-maintainer release. Translation updates and fixes for systems that don't
+support fading, properly grabbing input after wake from suspend, starting DBUS
+if needed, and building without XF86VMODE.
+
+Shortlog below:
+
+Carles Ferrando (1):
+      Updated Catalan (Valencian) translation
+
+Chris Coulson (1):
+      Don't crash on systems that don't support XF86VM or XRANDR gamma fade
+
+Gil Forcada (1):
+      Minor fix in Catalan translation
+
+Ivar Smolin (1):
+      Estonian translation updated
+
+Jordi Serratosa (1):
+      Fixes to Catalan translation
+
+Manoj Kumar Giri (1):
+      Updated Oriya Translation
+
+Matthias Clasen (1):
+      Bump version
+
+Olav Vitters (1):
+      Fix doap file
+
+Ray Strode (1):
+      Add session service activation file
+
+Rudols Mazurs (1):
+      Updated Latvian translation.
+
+William Jon McCann (2):
+      Properly handle monitor configuration changes
+      Fix building without XF86VMODE gamma
+
+Wouter Bolsterlee (3):
+      Dutch translation updated by Wouter Bolsterlee
+      Fix compiler warning by adding GTK_WIDGET() cast
+
+
+===============
 Version  2.30.0
 ===============
 
