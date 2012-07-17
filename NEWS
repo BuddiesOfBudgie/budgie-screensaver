@@ -1,4 +1,12 @@
 ==============
+Version  3.4.4
+==============
+- Revert reversion from 3.4.3
+  It wasn't causing problems for users.
+- Revert background color setting patch.
+  It is causing problems for users.
+
+==============
 Version  3.4.3
 ==============
 
