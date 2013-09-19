@@ -8,22 +8,23 @@
 # Vladimir Melo <vladimirmelo@foresightlinux.org>, 2008.
 # André Gondim <andregondim@ubuntu.com>, 2009.
 # Krix Apolinário <krixapolinario@gmail.com>, 2009.
-# Antonio Fernandes C. Neto <fernandes@pelivre.org>, 2010.
+# Antonio Fernandes C. Neto <fernandesn@gnome.org>, 2010, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-screensaver\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-27 17:40-0400\n"
-"PO-Revision-Date: 2011-03-25 21:40-0300\n"
-"Last-Translator: Rodrigo Padula de Oliveira <contato@rodrigopadula.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"screensaver&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-21 15:51+0000\n"
+"PO-Revision-Date: 2013-09-18 15:55-0300\n"
+"Last-Translator: Antonio Fernandes C. Neto <fernandesn@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: Brazil\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -123,7 +124,8 @@ msgstr "Você precisa alterar sua senha imediatamente (a senha expirou)"
 
 #: ../src/gnome-screensaver-dialog.c:189
 msgid "You are required to change your password immediately (root enforced)"
-msgstr "Você precisa alterar sua senha imediatamente (determinação do root)"
+msgstr ""
+"Você precisa alterar sua senha imediatamente (determinação do administrador)"
 
 #: ../src/gnome-screensaver-dialog.c:190
 msgid "Your account has expired; please contact your system administrator"
@@ -190,12 +192,12 @@ msgid "Enable debugging code"
 msgstr "Habilitar depuração de código"
 
 #: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "Executa o protetor de tela e bloqueia programa"
-
-#: ../src/gnome-screensaver.desktop.in.in.h:2
 msgid "Screensaver"
 msgstr "Proteção de tela"
+
+#: ../src/gnome-screensaver.desktop.in.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Executa o protetor de tela e bloqueia programa"
 
 #: ../src/gs-auth-pam.c:397
 #, c-format
@@ -219,33 +221,25 @@ msgstr "Dessa vez o acesso não é permitido."
 msgid "No longer permitted to access the system."
 msgstr "Não é mais permitido ter acesso ao sistema."
 
-#: ../src/gs-listener-dbus.c:1148
+#: ../src/gs-listener-dbus.c:1284
 msgid "failed to register with the message bus"
 msgstr "falha ao registrar no barramento de mensagens"
 
-#: ../src/gs-listener-dbus.c:1158
+#: ../src/gs-listener-dbus.c:1294
 msgid "not connected to the message bus"
 msgstr "não conectado ao barramento de mensagens"
 
-#: ../src/gs-listener-dbus.c:1167 ../src/gs-listener-dbus.c:1197
+#: ../src/gs-listener-dbus.c:1303 ../src/gs-listener-dbus.c:1333
 msgid "screensaver already running in this session"
 msgstr "proteção de tela já ativa nesta sessão"
 
-#: ../src/gs-lock-plug.c:256
+#: ../src/gs-lock-plug.c:255
 msgid "Time has expired."
 msgstr "Tempo expirado."
 
-#: ../src/gs-lock-plug.c:287
-msgid "You have the Caps & Num Lock keys on."
-msgstr "As teclas Caps e Num Lock estão ativadas."
-
-#: ../src/gs-lock-plug.c:290
+#: ../src/gs-lock-plug.c:286
 msgid "You have the Caps Lock key on."
 msgstr "A tecla Caps Lock está ativada."
-
-#: ../src/gs-lock-plug.c:293
-msgid "You have the Num Lock key on."
-msgstr "A tecla Num Lock está ativada."
 
 #: ../src/gs-lock-plug.c:1350
 msgid "S_witch User…"
@@ -259,19 +253,21 @@ msgstr "_Encerrar sessão"
 msgid "_Unlock"
 msgstr "_Desbloquear"
 
-#: ../src/gs-lock-plug.c:1401
+#: ../src/gs-lock-plug.c:1405
 msgid "_Password:"
 msgstr "_Senha:"
 
-#. Translators, this is the 24h date format used in the panel clock
-#: ../src/gs-window-x11.c:2199
-msgid "%a %R"
-msgstr "%a %R"
+#~ msgid "You have the Caps & Num Lock keys on."
+#~ msgstr "As teclas Caps e Num Lock estão ativadas."
 
-#. Translators, this is the 12h date format used in the panel clock
-#: ../src/gs-window-x11.c:2202
-msgid "%a %l:%M %p"
-msgstr "%a %l:%M %p"
+#~ msgid "You have the Num Lock key on."
+#~ msgstr "A tecla Num Lock está ativada."
+
+#~ msgid "%a %R"
+#~ msgstr "%a %R"
+
+#~ msgid "%a %l:%M %p"
+#~ msgstr "%a %l:%M %p"
 
 #~ msgid "Set your screensaver preferences"
 #~ msgstr "Defina suas preferências de proteção de tela"
