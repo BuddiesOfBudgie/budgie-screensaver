@@ -1,7 +1,7 @@
 # gnome-screensaver Korean message translation.
 # This file is distributed under the same license as the gnome-screensaver package.
 # Young-Ho Cha <ganadist@gmail.com>, 2006.
-# Changwoo Ryu <cwryu@debian.org>, 2006, 2007, 2008, 2009, 2010, 2011.
+# Changwoo Ryu <cwryu@debian.org>, 2006-2011, 2014.
 #
 msgid ""
 msgstr ""
@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "screensaver&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2011-03-15 12:22+0000\n"
-"PO-Revision-Date: 2011-03-19 23:08+0900\n"
+"PO-Revision-Date: 2014-03-12 00:40+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -173,13 +173,15 @@ msgstr "확인하는 중…"
 msgid "Authentication failed."
 msgstr "인증이 실패했습니다."
 
+# 옵션 설명, 문장으로 번역
 #: ../src/gnome-screensaver.c:57
 msgid "Don't become a daemon"
-msgstr "데몬이 되지 않았습니다"
+msgstr "데몬이 되지 않습니다"
 
+# 옵션 설명, 문장으로 번역
 #: ../src/gnome-screensaver.c:58
 msgid "Enable debugging code"
-msgstr "디버깅 코드 사용"
+msgstr "디버깅 코드를 사용합니다"
 
 #: ../src/gnome-screensaver.desktop.in.in.h:1
 msgid "Launch screensaver and locker program"
