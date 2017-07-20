@@ -22,6 +22,7 @@ INCLUDES =							\
 	-DSAVERDIR=\""$(saverdir)"\"				\
 	-DGTKBUILDERDIR=\"$(pkgdatadir)\"				\
 	-DPAM_SERVICE_NAME=\""gnome-screensaver"\"		\
+	-DGNOME_DESKTOP_USE_UNSTABLE_API    \
 	$(WARN_CFLAGS)						\
 	$(AUTH_CFLAGS)						\
 	$(DEBUG_CFLAGS)						\
