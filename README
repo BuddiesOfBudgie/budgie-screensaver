@@ -1,0 +1,14 @@
+budgie-screensaver
+==================
+
+Yes I hate myself for creating this, but this is basically a fork of gnome-screensaver
+which is completely dead, and we need a drop-in replacement of gnome-screensaver
+with fixed bugs to use for Budgie.
+
+Upstream previously indicated[1] the only way to go is a fork, they're not
+planning on taking patches.
+
+TL;DR Emergency fork to hold up Budgie 10, we'll do something less insane when
+it comes to Budgie 11.
+
+[1] https://mail.gnome.org/archives/desktop-devel-list/2016-July/msg00030.html
