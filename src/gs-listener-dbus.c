@@ -83,6 +83,7 @@ struct GSListenerPrivate
 
 enum {
         LOCK,
+        CONFIG_LOCK,
         QUIT,
         SIMULATE_USER_ACTIVITY,
         ACTIVE_CHANGED,
@@ -872,6 +873,17 @@ listener_dbus_handle_system_message (DBusConnection *connection,
                         }
 
                         return DBUS_HANDLER_RESULT_HANDLED;
+                } else if (dbus_message_is_signal (message, SYSTEMD_LOGIND_INTERFACE, "PrepareForSleep")) {
+                        gboolean active;
+                        if (dbus_message_get_args (message, NULL,
+                                    DBUS_TYPE_BOOLEAN, &active,
+                                    DBUS_TYPE_INVALID) && active) {
+                                gs_debug ("systemd notified that system is about to sleep");
+                                g_signal_emit (listener, signals [CONFIG_LOCK], 0);
+                        } else {
+                                gs_debug ("cannot parse PrepareForSleep");
+                        }
+                        return DBUS_HANDLER_RESULT_HANDLED;
                 } else if (dbus_message_is_signal (message, DBUS_INTERFACE_PROPERTIES, "PropertiesChanged")) {
 
                         if (_listener_message_path_is_our_session (listener, message)) {
@@ -1203,6 +1215,16 @@ gs_listener_class_init (GSListenerClass *klass)
                               g_cclosure_marshal_VOID__VOID,
                               G_TYPE_NONE,
                               0);
+        signals [CONFIG_LOCK] =
+                g_signal_new ("config-lock",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (GSListenerClass, config_lock),
+                              NULL,
+                              NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
         signals [QUIT] =
                 g_signal_new ("quit",
                               G_TYPE_FROM_CLASS (object_class),
@@ -1386,6 +1408,12 @@ gs_listener_acquire (GSListener *listener,
                                             ",sender='"SYSTEMD_LOGIND_SERVICE"'"
                                             ",interface='"DBUS_INTERFACE_PROPERTIES"'"
                                             ",member='PropertiesChanged'",
+                                            NULL);
+                        dbus_bus_add_match (listener->priv->system_connection,
+                                            "type='signal'"
+                                            ",sender='"SYSTEMD_LOGIND_SERVICE"'"
+                                            ",interface='"SYSTEMD_LOGIND_INTERFACE"'"
+                                            ",member='PrepareForSleep'",
                                             NULL);
 
                         return (res != -1);
