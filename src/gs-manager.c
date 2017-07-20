@@ -555,13 +555,8 @@ background_settings_change_event_cb (GSettings *settings,
                                      gint       n_keys,
                                      GSManager   *manager)
 {
-#if 0
-        /* FIXME: since we bind user settings instead of system ones,
-         *        watching for changes is no longer valid.
-         */
         gnome_bg_load_from_preferences (manager->priv->bg,
                                         manager->priv->settings);
-#endif
 
         return FALSE;
 }
@@ -570,23 +565,8 @@ static GSettings *
 get_system_settings (void)
 {
         GSettings *settings;
-        gchar **keys;
-        gchar **k;
 
-        /* FIXME: we need to bind system settings instead of user but
-         *        that's currently impossible, not implemented yet.
-         *        Hence, reset to system default values.
-         */
-        /* TODO: Ideally we would like to bind some other key, screensaver-specific. */
         settings = g_settings_new ("org.gnome.desktop.background");
-
-        g_settings_delay (settings);
-
-        keys = g_settings_list_keys (settings);
-        for (k = keys; *k; k++) {
-                g_settings_reset (settings, *k);
-        }
-        g_strfreev (keys);
 
         return settings;
 }
@@ -1268,7 +1248,7 @@ gs_manager_activate (GSManager *manager)
         manager->priv->active = TRUE;
 
         /* fade to black and show windows */
-        do_fade = TRUE;
+        do_fade = FALSE;
         if (do_fade) {
                 manager->priv->fading = TRUE;
                 gs_debug ("fading out");

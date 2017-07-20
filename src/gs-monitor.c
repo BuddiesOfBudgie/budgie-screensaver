@@ -28,6 +28,8 @@
 
 #include <glib.h>
 #include <glib-object.h>
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
 
 #include "gnome-screensaver.h"
 
@@ -190,7 +192,7 @@ gs_monitor_lock_screen (GSMonitor *monitor)
 static void
 gs_monitor_simulate_user_activity (GSMonitor *monitor)
 {
-        /* FIXME: reset the xsync timer? */
+        XResetScreenSaver (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()));
 
         /* request that the manager unlock -
            will pop up a dialog if necessary */

@@ -533,6 +533,14 @@ gs_auth_thread_func (int auth_operation_fd)
         case PAM_SUCCESS:
                 break;
         case PAM_NEW_AUTHTOK_REQD:
+                status2 = pam_chauthtok (pam_handle, PAM_CHANGE_EXPIRED_AUTHTOK);
+
+                if (status2 != PAM_SUCCESS) {
+                    g_message ("pam_acct_mgmt (...) ==> %d (%s)\n",
+                           status2,
+                           PAM_STRERROR (pam_handle, status2));
+		    status = status2;
+                }
                 break;
         case PAM_AUTHINFO_UNAVAIL:
                 break;

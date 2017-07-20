@@ -28,6 +28,7 @@
 #include <unistd.h>
 
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
@@ -1079,7 +1080,24 @@ listener_dbus_filter_function (DBusConnection *connection,
                 g_timeout_add (10000, (GSourceFunc)reinit_dbus, listener);
         } else if (dbus_message_is_signal (message,
                                            DBUS_INTERFACE_DBUS,
-                                           "NameOwnerChanged")) {
+                                           "NameLost")) {
+                const char *name;
+                DBusError error;
+                dbus_error_init (&error);
+
+                if (!dbus_message_get_args (message, &error,
+                                            DBUS_TYPE_STRING, &name,
+                                            DBUS_TYPE_INVALID)) {
+                    g_warning("Got NameLost, but couldn't read name");
+                    dbus_error_free (&error);
+                } else {
+                    if (strcmp (name, GS_INTERFACE) == 0) { // We've been replaced
+                        g_message ("Lost the name, shutting down.");
+                        dbus_connection_unref (connection);
+                        listener->priv->connection = NULL;
+                        gtk_main_quit ();
+                    }
+                }
         } else {
                 return listener_dbus_handle_session_message (connection, message, user_data, FALSE);
         }
@@ -1294,7 +1312,6 @@ gs_listener_acquire (GSListener *listener,
                              _("not connected to the message bus"));
                 return FALSE;
         }
-
         if (screensaver_is_running (listener->priv->connection)) {
                 g_set_error (error,
                              GS_LISTENER_ERROR,
@@ -1316,7 +1333,7 @@ gs_listener_acquire (GSListener *listener,
 
         res = dbus_bus_request_name (listener->priv->connection,
                                      GS_SERVICE,
-                                     DBUS_NAME_FLAG_DO_NOT_QUEUE,
+                                     DBUS_NAME_FLAG_DO_NOT_QUEUE | DBUS_NAME_FLAG_ALLOW_REPLACEMENT,
                                      &buserror);
         if (dbus_error_is_set (&buserror)) {
                 g_set_error (error,
@@ -1342,7 +1359,7 @@ gs_listener_acquire (GSListener *listener,
                             "type='signal'"
                             ",interface='"DBUS_INTERFACE_DBUS"'"
                             ",sender='"DBUS_SERVICE_DBUS"'"
-                            ",member='NameOwnerChanged'",
+                            ",member='NameLost'",
                             NULL);
 
         if (listener->priv->system_connection != NULL) {

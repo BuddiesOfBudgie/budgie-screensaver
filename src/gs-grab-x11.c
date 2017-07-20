@@ -377,7 +377,7 @@ gs_grab_move_keyboard (GSGrab    *grab,
 }
 
 static void
-gs_grab_nuke_focus (void)
+gs_grab_move_focus (GdkWindow *window)
 {
         Window focus = 0;
         int    rev = 0;
@@ -388,7 +388,7 @@ gs_grab_nuke_focus (void)
 
         XGetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), &focus, &rev);
 
-        XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), None, RevertToNone, CurrentTime);
+        XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_WINDOW_XID (window), RevertToNone, CurrentTime);
 
         gdk_error_trap_pop_ignored ();
 }
@@ -469,7 +469,7 @@ gs_grab_grab_window (GSGrab    *grab,
         if (kstatus != GDK_GRAB_SUCCESS) {
                 if (!focus_fuckus) {
                         focus_fuckus = TRUE;
-                        gs_grab_nuke_focus ();
+                        gs_grab_move_focus (window);
                         goto AGAIN;
                 }
         }

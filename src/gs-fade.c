@@ -208,7 +208,13 @@ xf86_whack_gamma (int              screen,
                         g2.blue = XF86_MIN_GAMMA;
                 }
 
+                gdk_error_trap_push ();	   
                 status = XF86VidModeSetGamma (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), screen, &g2);
+                gdk_flush ();
+                if (gdk_error_trap_pop ()) {
+                        gs_debug ("Failed to set gamma. Bailing out and aborting fade");
+                        return FALSE;        
+                }
         } else {
 
 # ifdef HAVE_XF86VMODE_GAMMA_RAMP
@@ -225,7 +231,13 @@ xf86_whack_gamma (int              screen,
                         b[i] = gamma_info->b[i] * ratio;
                 }
 
+                gdk_error_trap_push ();
                 status = XF86VidModeSetGammaRamp (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), screen, gamma_info->size, r, g, b);
+                gdk_flush ();
+                if (gdk_error_trap_pop ()) {
+                        gs_debug ("Failed to set gamma. Bailing out and aborting fade");
+                        return FALSE;        
+                }
 
                 g_free (r);
                 g_free (g);
@@ -235,8 +247,6 @@ xf86_whack_gamma (int              screen,
                 abort ();
 # endif /* !HAVE_XF86VMODE_GAMMA_RAMP */
         }
-
-        gdk_flush ();
 
         return status;
 }
@@ -409,6 +419,10 @@ check_gamma_extension (GSFade *fade, int screen_idx)
         screen_priv = &fade->priv->screen_priv[screen_idx];
 
 #ifdef HAVE_XF86VMODE_GAMMA
+	if (g_getenv("LTSP_CLIENT")) {
+		return FADE_TYPE_NONE;  /* We're on an LTSP Client, bad idea to fade at all */
+	}
+
         res = XF86VidModeQueryExtension (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), &event, &error);
         if (! res)
                 goto fade_none;
@@ -567,6 +581,10 @@ check_randr_extension (GSFade *fade, int screen_idx)
         GdkDisplay *display = gdk_display_get_default ();
         GdkScreen *screen = gdk_display_get_screen (display, screen_idx);
         struct GSFadeScreenPrivate *screen_priv;
+        GnomeRRCrtc **crtcs;
+        GnomeRRCrtc *crtc;
+        gboolean res;
+        int gamma_size;
 
         screen_priv = &fade->priv->screen_priv[screen_idx];
 
@@ -575,6 +593,19 @@ check_randr_extension (GSFade *fade, int screen_idx)
         if (!screen_priv->rrscreen) {
                 screen_priv->fade_type = FADE_TYPE_NONE;
                 return;
+        }
+
+        crtcs = gnome_rr_screen_list_crtcs (screen_priv->rrscreen);
+
+        while (*crtcs)
+        {
+                crtc = *crtcs;
+                res = gnome_rr_crtc_get_gamma (crtc, &gamma_size, NULL, NULL, NULL);
+                if (res == FALSE || gamma_size == 0) {
+                        screen_priv->fade_type = FADE_TYPE_NONE;
+                        return;                
+                }
+                crtcs++;
         }
 
         screen_priv->fade_type = FADE_TYPE_XRANDR;
@@ -823,6 +854,8 @@ void
 gs_fade_reset (GSFade *fade)
 {
         int i;
+        struct GSFadeScreenPrivate *screen_priv;
+
         g_return_if_fail (GS_IS_FADE (fade));
 
         gs_debug ("Resetting fade");
@@ -835,8 +868,12 @@ gs_fade_reset (GSFade *fade)
 
         gs_fade_set_alpha (fade, fade->priv->current_alpha);
 
-        for (i = 0; i < fade->priv->num_screens; i++)
-                fade->priv->screen_priv[i].fade_finish (fade, i);
+        for (i = 0; i < fade->priv->num_screens; i++) {
+                screen_priv = &fade->priv->screen_priv[i];
+                if (screen_priv->fade_type != FADE_TYPE_NONE) {
+                        screen_priv->fade_finish (fade, i);
+                }
+        }
 }
 
 static void

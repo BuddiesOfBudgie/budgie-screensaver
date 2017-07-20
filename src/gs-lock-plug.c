@@ -147,28 +147,60 @@ gs_lock_plug_style_set (GtkWidget *widget,
 static void
 do_user_switch (GSLockPlug *plug)
 {
-        GAppInfo *app;
-        GAppLaunchContext *context;
-        GError  *error;
-        char    *command;
+        GError  *error = NULL;
 
-        command = g_strdup_printf ("%s %s",
-                                   GDM_FLEXISERVER_COMMAND,
-                                   GDM_FLEXISERVER_ARGS);
+        /* If running under LightDM switch to the greeter using dbus */
+        if (g_getenv("XDG_SEAT_PATH")) {
+                GDBusConnection *bus;
+                GVariant *result = NULL;
 
-        error = NULL;
-        context = (GAppLaunchContext*)gdk_app_launch_context_new ();
-        app = g_app_info_create_from_commandline (command, "gdmflexiserver", 0, &error);
-        if (app)
-                g_app_info_launch (app, NULL, context, &error);
+                bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+                if (error)
+                        g_warning ("Failed to get system bus: %s", error->message);
+                g_clear_error (&error);
 
-        g_free (command);
-        g_object_unref (context);
-        g_object_unref (app);
+                if (bus)
+                    result = g_dbus_connection_call_sync (bus,
+                                                          "org.freedesktop.DisplayManager",
+                                                          g_getenv ("XDG_SEAT_PATH"),
+                                                          "org.freedesktop.DisplayManager.Seat",
+                                                          "SwitchToGreeter",
+                                                          g_variant_new ("()"),
+                                                          G_VARIANT_TYPE ("()"),
+                                                          G_DBUS_CALL_FLAGS_NONE,
+                                                          -1,
+                                                          NULL,
+                                                          &error);
+                if (error)
+                        g_warning ("Failed to switch to greeter: %s", error->message);
+                g_clear_error (&error);
 
-        if (error != NULL) {
-                gs_debug ("Unable to start GDM greeter: %s", error->message);
-                g_error_free (error);
+                if (result)
+                        g_variant_unref (result);
+        } else {
+
+                GAppInfo *app;
+                GAppLaunchContext *context;
+                char    *command;
+
+                command = g_strdup_printf ("%s %s",
+                                           GDM_FLEXISERVER_COMMAND,
+                                           GDM_FLEXISERVER_ARGS);
+
+                error = NULL;
+                context = (GAppLaunchContext*)gdk_app_launch_context_new ();
+                app = g_app_info_create_from_commandline (command, "gdmflexiserver", 0, &error);
+                if (app)
+                        g_app_info_launch (app, NULL, context, &error);
+
+                g_free (command);
+                g_object_unref (context);
+                g_object_unref (app);
+
+                if (error != NULL) {
+                        gs_debug ("Unable to start GDM greeter: %s", error->message);
+                        g_error_free (error);
+                }
         }
 }
 
@@ -1022,7 +1054,7 @@ gs_lock_plug_set_switch_enabled (GSLockPlug *plug,
         if (switch_enabled) {
                 gboolean found;
                 found = is_program_in_path (GDM_FLEXISERVER_COMMAND);
-                if (found) {
+                if (found || g_getenv("XDG_SEAT_PATH")) {
                         gtk_widget_show (plug->priv->auth_switch_button);
                 } else {
                         gs_debug ("Waring: GDM flexiserver command not found: %s", GDM_FLEXISERVER_COMMAND);

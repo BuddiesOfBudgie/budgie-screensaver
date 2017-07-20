@@ -134,6 +134,11 @@ else
         AC_SUBST(DBUS_CFLAGS)
 fi
 
+# Find out where the session service file goes
+# The sad sed hack is recomended by section 27.10 of the automake manual.
+DBUS_SESSION_SERVICE_DIR=`pkg-config --variable session_bus_services_dir dbus-1 | sed -e 's,/usr/share,${datarootdir},g'`
+AC_SUBST(DBUS_SESSION_SERVICE_DIR)
+
 dnl ---------------------------------------------------------------------------
 dnl - Where should we put documentation ?
 dnl ---------------------------------------------------------------------------
@@ -601,7 +606,7 @@ AC_ARG_WITH(systemd,
             [with_systemd=$withval], [with_systemd=auto])
 
 PKG_CHECK_MODULES(SYSTEMD,
-                  [libsystemd-login],
+                  [libsystemd],
                   [have_systemd=yes], [have_systemd=no])
 
 if test "x$with_systemd" = "xauto" ; then
@@ -762,6 +767,7 @@ po/Makefile.in
 src/Makefile
 src/gnome-screensaver.desktop.in
 data/Makefile
+data/org.gnome.ScreenSaver.service
 doc/Makefile
 doc/gnome-screensaver.xml
 ])

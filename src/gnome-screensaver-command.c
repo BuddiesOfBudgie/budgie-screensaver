@@ -260,8 +260,12 @@ do_command (GDBusConnection *connection)
         }
 
         if (do_lock) {
-                reply = screensaver_send_message_void (connection, "Lock", FALSE);
-                g_assert (reply == NULL);
+                reply = screensaver_send_message_void (connection, "Lock", TRUE);
+                if (reply == NULL) {
+                        g_message ("Did not receive a reply from the screensaver.");
+                        goto done;
+                }
+                g_object_unref (reply);
         }
 
         if (do_activate) {
