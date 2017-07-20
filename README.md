@@ -14,3 +14,7 @@ it comes to Budgie 11.
 The overwhelming majority of the patches are ported from Ubuntu's package-fork of
 gnome-screensaver to allow a simple drop-in replacement for the gnome-screensaver
 package.
+
+
+**UNLESS ANYONE WANTS THIS AS A PACKAGE, WE'LL JUST APPLY THE PATCHES BACK ON
+TOP OF OUR OWN gnome-screensaver PACKAGE**
