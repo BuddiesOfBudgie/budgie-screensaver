@@ -564,11 +564,7 @@ background_settings_change_event_cb (GSettings *settings,
 static GSettings *
 get_system_settings (void)
 {
-        GSettings *settings;
-
-        settings = g_settings_new ("org.gnome.desktop.background");
-
-        return settings;
+        return g_settings_new ("org.gnome.desktop.screensaver");
 }
 
 static void
@@ -1113,13 +1109,8 @@ gs_manager_finalize (GObject *object)
 
         g_return_if_fail (manager->priv != NULL);
 
-        if (manager->priv->bg != NULL) {
-                g_object_unref (manager->priv->bg);
-        }
-        if (manager->priv->settings != NULL) {
-                g_settings_revert (manager->priv->settings);
-                g_object_unref (manager->priv->settings);
-        }
+        g_clear_object (&manager->priv->bg);
+        g_clear_object (&manager->priv->settings);
 
         g_free (manager->priv->logout_command);
         g_free (manager->priv->keyboard_command);
