@@ -1662,11 +1662,16 @@ delete_handler (GSLockPlug  *plug,
 static void
 gs_lock_plug_init (GSLockPlug *plug)
 {
+        GtkStyleContext *context = NULL;
+
         gs_profile_start (NULL);
 
         plug->priv = GS_LOCK_PLUG_GET_PRIVATE (plug);
 
         clear_clipboards (plug);
+
+        context = gtk_widget_get_style_context (GTK_WIDGET (plug));
+        gtk_style_context_add_class (context, "lock-dialog");
 
         plug->priv->frame = gtk_frame_new (NULL);
         gtk_frame_set_shadow_type (GTK_FRAME (plug->priv->frame), GTK_SHADOW_OUT);
