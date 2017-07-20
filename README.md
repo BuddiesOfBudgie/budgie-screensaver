@@ -10,3 +10,7 @@ planning on taking patches.
 
 TL;DR Emergency fork to hold up Budgie 10, we'll do something less insane when
 it comes to Budgie 11.
+
+The overwhelming majority of the patches are ported from Ubuntu's package-fork of
+gnome-screensaver to allow a simple drop-in replacement for the gnome-screensaver
+package.
