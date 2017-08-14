@@ -218,8 +218,10 @@ listener_config_lock_cb (GSListener *listener,
         if (! monitor->priv->prefs->lock_disabled) {
                 /* Unlike the Ubuntu implementation that uses a patched gsettings
                  * desktop schemas, we'll mandate that we lock on suspend */
-                gs_debug ("Locking the screen suspend");
-                gs_monitor_lock_screen (monitor);
+                if (monitor->priv->prefs->lock_enabled) {
+                        gs_debug ("Locking the screen suspend");
+                        gs_monitor_lock_screen (monitor);
+                }
         } else {
                 gs_debug ("Locking disabled by the administrator");
         }
