@@ -793,11 +793,7 @@ apply_background_to_window (GSManager *manager,
         width = monitor_geometry.width;
         height = monitor_geometry.height;
         gs_debug ("Creating background w:%d h:%d", width, height);
-        surface = gnome_bg_create_surface (manager->priv->bg,
-                                           gdk_window,
-                                           width,
-                                           height,
-                                           FALSE);
+        surface = gnome_bg_create_surface (manager->priv->bg, gdk_window, width, height);
         gs_window_set_background_surface (window, surface);
         cairo_surface_destroy (surface);
 }
