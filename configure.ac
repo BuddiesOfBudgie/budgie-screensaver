@@ -768,7 +768,7 @@ po/Makefile.in
 src/Makefile
 src/gnome-screensaver.desktop.in
 data/Makefile
-data/org.gnome.ScreenSaver.service
+data/us.getsol.budgie-screensaver.service
 doc/Makefile
 doc/gnome-screensaver.xml
 ])
