@@ -1,8 +1,8 @@
 NULL =
 
 man_MANS = 				\
-	gnome-screensaver.1		\
-	gnome-screensaver-command.1	\
+	budgie-screensaver.1		\
+	budgie-screensaver-command.1	\
 	$(NULL)
 
 @INTLTOOL_XML_NOMERGE_RULE@
@@ -12,7 +12,7 @@ dbussessionservice_DATA = org.gnome.ScreenSaver.service
 
 EXTRA_DIST = 				\
 	$(man_MANS)			\
-	gnome-screensaver		\
+	budgie-screensaver		\
 	org.gnome.ScreenSaver.service.in\
 	$(NULL)
 
@@ -32,12 +32,12 @@ install-data-hook:
 		chmod 755 $(DESTDIR)$(PAM_PREFIX)/pam.d; \
 	   fi; \
 	   if test $$system = Linux; then \
-		if test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/gnome-screensaver; then \
-		     $(INSTALL_DATA) gnome-screensaver $(DESTDIR)$(PAM_PREFIX)/pam.d/gnome-screensaver; \
+		if test '!' -f $(DESTDIR)$(PAM_PREFIX)/pam.d/budgie-screensaver; then \
+		     $(INSTALL_DATA) budgie-screensaver $(DESTDIR)$(PAM_PREFIX)/pam.d/budgie-screensaver; \
 		fi; \
 		if test "x$(PAM_PREFIX)" != "x/etc/pam.d"; then \
 	             echo "***" ; \
-	             echo "***  Warning: gnome-screensaver has been compiled with support for" ; \
+	             echo "***  Warning: budgie-screensaver has been compiled with support for" ; \
 	             echo "***           Pluggable Authentication Modules (PAM).  However, you may need to" ; \
 	             echo "***           manually install $(PAM_PREFIX)/pam.d/gnome-screensaver" ; \
 	             echo "***           to /etc/pam.d/gnome-screensaver.  Otherwise, unlocking might" ; \

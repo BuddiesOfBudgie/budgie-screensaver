@@ -1,9 +1,9 @@
 dnl -*- mode: m4 -*-
 
 AC_PREREQ(2.60)
-AC_INIT([gnome-screensaver],
+AC_INIT([budgie-screensaver],
         [3.6.1],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-screensaver])
+        [https://github.com/getsolus/budgie-screensaver])
 
 AC_CONFIG_SRCDIR(src/gnome-screensaver.c)
 
@@ -29,7 +29,7 @@ AC_SUBST(VERSION)
 # Save flags to aclocal
 ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
 
-GETTEXT_PACKAGE=gnome-screensaver
+GETTEXT_PACKAGE=budgie-screensaver
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Name of default gettext domain])
 
@@ -55,34 +55,34 @@ AC_CHECK_FUNCS(getresuid)
 AC_TYPE_UID_T
 
 AC_CHECK_FUNCS([setresuid setenv unsetenv clearenv])
-PKG_CHECK_MODULES(GNOME_SCREENSAVER,
+PKG_CHECK_MODULES(BUDGIE_SCREENSAVER,
         x11 >= $X11_REQUIRED_VERSION
         gtk+-3.0 >= $GTK_REQUIRED_VERSION
         dbus-glib-1 >= $DBUS_REQUIRED_VERSION
         gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
         gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION)
-AC_SUBST(GNOME_SCREENSAVER_CFLAGS)
-AC_SUBST(GNOME_SCREENSAVER_LIBS)
+AC_SUBST(BUDGIE_SCREENSAVER_CFLAGS)
+AC_SUBST(BUDGIE_SCREENSAVER_LIBS)
 
-PKG_CHECK_MODULES(GNOME_SCREENSAVER_DIALOG,
+PKG_CHECK_MODULES(BUDGIE_SCREENSAVER_DIALOG,
         gthread-2.0
         gtk+-3.0 >= $GTK_REQUIRED_VERSION
         gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION)
-AC_SUBST(GNOME_SCREENSAVER_DIALOG_CFLAGS)
-AC_SUBST(GNOME_SCREENSAVER_DIALOG_LIBS)
+AC_SUBST(BUDGIE_SCREENSAVER_DIALOG_CFLAGS)
+AC_SUBST(BUDGIE_SCREENSAVER_DIALOG_LIBS)
 
-PKG_CHECK_MODULES(GNOME_SCREENSAVER_CAPPLET,
+PKG_CHECK_MODULES(BUDGIE_SCREENSAVER_CAPPLET,
         gio-2.0 >= $GLIB_REQUIRED_VERSION
         gtk+-3.0 >= $GTK_REQUIRED_VERSION
         gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION)
-AC_SUBST(GNOME_SCREENSAVER_CAPPLET_CFLAGS)
-AC_SUBST(GNOME_SCREENSAVER_CAPPLET_LIBS)
+AC_SUBST(BUDGIE_SCREENSAVER_CAPPLET_CFLAGS)
+AC_SUBST(BUDGIE_SCREENSAVER_CAPPLET_LIBS)
 
-PKG_CHECK_MODULES(GNOME_SCREENSAVER_COMMAND,
+PKG_CHECK_MODULES(BUDGIE_SCREENSAVER_COMMAND,
         gio-2.0 >= $GLIB_REQUIRED_VERSION
         gobject-2.0 >= $GLIB_REQUIRED_VERSION)
-AC_SUBST(GNOME_SCREENSAVER_COMMAND_CFLAGS)
-AC_SUBST(GNOME_SCREENSAVER_COMMAND_LIBS)
+AC_SUBST(BUDGIE_SCREENSAVER_COMMAND_CFLAGS)
+AC_SUBST(BUDGIE_SCREENSAVER_COMMAND_LIBS)
 
 AC_PATH_XTRA
 
@@ -97,9 +97,9 @@ GNOME_COMPILE_WARNINGS(yes)
 
 SAVER_MODULES="gthread-2.0 gtk+-3.0 >= $GTK_REQUIRED_VERSION"
 
-PKG_CHECK_MODULES(GNOME_SCREENSAVER_SAVER, $SAVER_MODULES)
-AC_SUBST(GNOME_SCREENSAVER_SAVER_CFLAGS)
-AC_SUBST(GNOME_SCREENSAVER_SAVER_LIBS)
+PKG_CHECK_MODULES(BUDGIE_SCREENSAVER_SAVER, $SAVER_MODULES)
+AC_SUBST(BUDGIE_SCREENSAVER_SAVER_CFLAGS)
+AC_SUBST(BUDGIE_SCREENSAVER_SAVER_LIBS)
 
 # Find out the version of DBUS we're using
 
@@ -147,9 +147,9 @@ AC_ARG_WITH(doc-dir,
               [AC_HELP_STRING([--with-doc-dir=<dir>],
               [directory to install documentation])])
 if ! test -z "$with_doc_dir"; then
-   DOCDIR="$with_doc_dir/gnome-screensaver-$VERSION"
+   DOCDIR="$with_doc_dir/budgie-screensaver-$VERSION"
 else
-   DOCDIR="$datadir/doc/gnome-screensaver-$VERSION"
+   DOCDIR="$datadir/doc/budgie-screensaver-$VERSION"
 fi
 AC_SUBST(DOCDIR)
 
@@ -766,20 +766,20 @@ AC_OUTPUT([
 Makefile
 po/Makefile.in
 src/Makefile
-src/gnome-screensaver.desktop.in
+src/budgie-screensaver.desktop.in
 data/Makefile
 data/org.gnome.ScreenSaver.service
 doc/Makefile
-doc/gnome-screensaver.xml
+doc/budgie-screensaver.xml
 ])
 
 echo "
-                    gnome-screensaver $VERSION
+                    budgie-screensaver $VERSION
                     ========================
 
 	prefix:                   ${prefix}
 	exec_prefix:              ${exec_prefix}
-        libdir:                   ${EXPANDED_LIBDIR}
+        libdir:                   f${EXPANDED_LIBDIR}
         bindir:                   ${EXPANDED_BINDIR}
         sysconfdir:               ${EXPANDED_SYSCONFDIR}
         localstatedir:            ${EXPANDED_LOCALSTATEDIR}
@@ -787,7 +787,7 @@ echo "
 	source code location:	  ${srcdir}
 	compiler:		  ${CC}
 	cflags:		          ${CFLAGS}
-        Base libs:                ${GNOME_SCREENSAVER_LIBS}
+        Base libs:                ${BUDGIE_SCREENSAVER_LIBS}
         Extension libs:           ${SAVER_LIBS}
         Maintainer mode:          ${USE_MAINTAINER_MODE}
         Docs enabled:             ${enable_docbook_docs}

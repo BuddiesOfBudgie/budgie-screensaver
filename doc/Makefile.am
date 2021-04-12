@@ -1,22 +1,22 @@
 NULL =
 
 SPEC_XML_FILES =			\
-	gnome-screensaver.xml		\
+	budgie-screensaver.xml		\
 	dbus-interface.xml		\
 	$(NULL)
 
 if DOCBOOK_DOCS_ENABLED
 
 htmldocdir = $(DOCDIR)/spec
-htmldoc_DATA = gnome-screensaver.html
+htmldoc_DATA = budgie-screensaver.html
 
-gnome-screensaver.html : dbus-interface.xml
-	$(XMLTO) html-nochunks -m config.xsl gnome-screensaver.xml
+budgie-screensaver.html : dbus-interface.xml
+	$(XMLTO) html-nochunks -m config.xsl budgie-screensaver.xml
 
 endif # DOCBOOK_DOCS_ENABLED
 
 EXTRA_DIST =				\
-	gnome-screensaver.xml.in	\
+	budgie-screensaver.xml.in	\
 	config.xsl			\
 	docbook.css			\
 	$(SPEC_XML_FILES)
@@ -24,6 +24,6 @@ EXTRA_DIST =				\
 
 clean-local:
 	rm -f *~
-	rm -f gnome-screensaver.html
+	rm -f budgie-screensaver.html
 
 -include $(top_srcdir)/git.mk

@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME=gnome-screensaver
+PKG_NAME=budgie-screensaver
 
 (test -f $srcdir/configure.ac \
   && test -f $srcdir/autogen.sh \

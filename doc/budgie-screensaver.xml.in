@@ -3,16 +3,16 @@
 
 <book id="index">
   <bookinfo>
-    <title>GNOME Screensaver @VERSION@ Documentation</title>
+    <title>Budgie Screensaver @VERSION@ Documentation</title>
     <releaseinfo>Version @VERSION@</releaseinfo>
-    <date>6 June, 2006</date>
+    <date>12 April, 2021</date>
     <authorgroup>
       <author>
-        <firstname>William Jon</firstname>
-        <surname>McCann</surname>
+        <firstname>Josh</firstname>
+        <surname>Strobl</surname>
         <affiliation>
           <address>
-            <email>mccann@jhu.edu</email>
+            <email>joshua@streambits.io</email>
           </address>
         </affiliation>
       </author>
