@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=us.getsol.budgie-screensaver
-Exec=@EXPANDED_BINDIR@/gnome-screensaver --no-daemon

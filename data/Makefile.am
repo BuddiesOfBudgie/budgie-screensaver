@@ -8,12 +8,12 @@ man_MANS = 				\
 @INTLTOOL_XML_NOMERGE_RULE@
 
 dbussessionservicedir = $(DBUS_SESSION_SERVICE_DIR)
-dbussessionservice_DATA = us.getsol.budgie-screensaver.service
+dbussessionservice_DATA = org.gnome.ScreenSaver.service
 
 EXTRA_DIST = 				\
 	$(man_MANS)			\
 	gnome-screensaver		\
-	us.getsol.budgie-screensaver.service.in\
+	org.gnome.ScreenSaver.service.in\
 	$(NULL)
 
 DISTCLEANFILES = 			\
