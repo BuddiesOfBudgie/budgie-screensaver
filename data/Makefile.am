@@ -39,8 +39,8 @@ install-data-hook:
 	             echo "***" ; \
 	             echo "***  Warning: budgie-screensaver has been compiled with support for" ; \
 	             echo "***           Pluggable Authentication Modules (PAM).  However, you may need to" ; \
-	             echo "***           manually install $(PAM_PREFIX)/pam.d/gnome-screensaver" ; \
-	             echo "***           to /etc/pam.d/gnome-screensaver.  Otherwise, unlocking might" ; \
+	             echo "***           manually install $(PAM_PREFIX)/pam.d/budgie-screensaver" ; \
+	             echo "***           to /etc/pam.d/budgie-screensaver.  Otherwise, unlocking might" ; \
 	             echo "***           not work." ; \
 	             echo "***" ; \
 	             echo "***           Note: If you are using SuSE/Novell you may have to modify this file." ; \
@@ -49,9 +49,9 @@ install-data-hook:
 	   fi; \
 	   if test $$system = SunOS; then \
 	        echo "***" ; \
-	        echo "***  Warning: gnome-screensaver has been compiled with support for" ; \
+	        echo "***  Warning: budgie-screensaver has been compiled with support for" ; \
 	        echo "***           Pluggable Authentication Modules (PAM).  However, you" ; \
-	        echo "***           need to manually add authentication for gnome-screensaver in" ; \
+	        echo "***           need to manually add authentication for budgie-screensaver in" ; \
 	        echo "***           $(PAM_PREFIX)/pam.conf or /etc/pam.conf." ; \
 	        echo "***           Otherwise, unlocking might not work." ; \
 	        echo "***" ; \
