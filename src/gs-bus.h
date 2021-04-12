@@ -47,9 +47,9 @@
 #define DBUS_INTERFACE                  "org.freedesktop.DBus"
 
 /* Gnome Screensaver */
-#define GS_SERVICE                      "org.gnome.ScreenSaver"
-#define GS_PATH                         "/org/gnome/ScreenSaver"
-#define GS_INTERFACE                    "org.gnome.ScreenSaver"
+#define GS_SERVICE                      "us.getsol.budgie-screensaver"
+#define GS_PATH                         "/us/getsol/budgie-screensaver"
+#define GS_INTERFACE                    "us.getsol.budgie-screensaver"
 
 /* Gnome Session Manager */
 #define GSM_SERVICE                     "org.gnome.SessionManager"
