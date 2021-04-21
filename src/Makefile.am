@@ -3,14 +3,14 @@ AUTOMAKE_OPTIONS = 1.7
 
 NULL =
 
-saverdir = $(libexecdir)/gnome-screensaver
+saverdir = $(libexecdir)/budgie-screensaver
 
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
-	$(GNOME_SCREENSAVER_CFLAGS)				\
-	$(GNOME_SCREENSAVER_DIALOG_CFLAGS)			\
-	$(GNOME_SCREENSAVER_CAPPLET_CFLAGS)			\
+	$(BUDGIE_SCREENSAVER_CFLAGS)				\
+	$(BUDGIE_SCREENSAVER_DIALOG_CFLAGS)			\
+	$(BUDGIE_SCREENSAVER_CAPPLET_CFLAGS)			\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	-DPREFIX=\""$(prefix)"\" 				\
 	-DBINDIR=\""$(bindir)"\"				\
@@ -21,7 +21,7 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DSAVERDIR=\""$(saverdir)"\"				\
 	-DGTKBUILDERDIR=\"$(pkgdatadir)\"				\
-	-DPAM_SERVICE_NAME=\""gnome-screensaver"\"		\
+	-DPAM_SERVICE_NAME=\""budgie-screensaver"\"		\
 	-DGNOME_DESKTOP_USE_UNSTABLE_API    \
 	$(WARN_CFLAGS)						\
 	$(AUTH_CFLAGS)						\
@@ -33,12 +33,12 @@ INCLUDES =							\
 	$(NULL)
 
 bin_PROGRAMS = \
-	gnome-screensaver		\
-	gnome-screensaver-command	\
+	budgie-screensaver		\
+	budgie-screensaver-command	\
 	$(NULL)
 
 libexec_PROGRAMS = \
-	gnome-screensaver-dialog	\
+	budgie-screensaver-dialog	\
 	$(NULL)
 
 noinst_PROGRAMS = 	\
@@ -49,17 +49,17 @@ noinst_PROGRAMS = 	\
 	$(NULL)
 
 desktopdir = $(datadir)/applications
-desktop_in_files = gnome-screensaver.desktop.in
+desktop_in_files = budgie-screensaver.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-gnome_screensaver_command_SOURCES = 	\
+budgie_screensaver_command_SOURCES = 	\
 	gnome-screensaver-command.c	\
 	gs-bus.h			\
 	$(NULL)
 
-gnome_screensaver_command_LDADD =	\
-	$(GNOME_SCREENSAVER_COMMAND_LIBS)	\
+budgie_screensaver_command_LDADD =	\
+	$(BUDGIE_SCREENSAVER_COMMAND_LIBS)	\
 	$(NULL)
 
 AUTH_SOURCES =				\
@@ -75,7 +75,7 @@ test_fade_SOURCES = 			\
 	$(NULL)
 
 test_fade_LDADD =			\
-	$(GNOME_SCREENSAVER_LIBS)	\
+	$(BUDGIE_SCREENSAVER_LIBS)	\
 	$(SAVER_LIBS)			\
 	$(NULL)
 
@@ -90,7 +90,7 @@ test_passwd_SOURCES = 			\
 	$(NULL)
 
 test_passwd_LDADD =			\
-	$(GNOME_SCREENSAVER_DIALOG_LIBS)\
+	$(BUDGIE_SCREENSAVER_DIALOG_LIBS)\
 	$(AUTH_LIBS)			\
 	$(NULL)
 
@@ -106,7 +106,7 @@ test_watcher_SOURCES =			\
 	$(NULL)
 
 test_watcher_LDADD =			\
-	$(GNOME_SCREENSAVER_LIBS)	\
+	$(BUDGIE_SCREENSAVER_LIBS)	\
 	$(SAVER_LIBS)			\
 	$(NULL)
 
@@ -125,11 +125,11 @@ test_window_SOURCES =			\
 	$(NULL)
 
 test_window_LDADD =			\
-	$(GNOME_SCREENSAVER_LIBS)	\
+	$(BUDGIE_SCREENSAVER_LIBS)	\
 	$(SAVER_LIBS)			\
 	$(NULL)
 
-gnome_screensaver_dialog_SOURCES = 	\
+budgie_screensaver_dialog_SOURCES = 	\
 	gnome-screensaver-dialog.c	\
 	gs-lock-plug.c			\
 	gs-lock-plug.h			\
@@ -143,8 +143,8 @@ gnome_screensaver_dialog_SOURCES = 	\
 	$(AUTH_SOURCES)			\
 	$(NULL)
 
-gnome_screensaver_dialog_LDADD =	\
-	$(GNOME_SCREENSAVER_DIALOG_LIBS)\
+budgie_screensaver_dialog_LDADD =	\
+	$(BUDGIE_SCREENSAVER_DIALOG_LIBS)\
 	$(SAVER_LIBS)			\
 	$(AUTH_LIBS)			\
 	$(LIBGNOMEKBDUI_LIBS)		\
@@ -163,7 +163,7 @@ gs-marshal.c: gs-marshal.list
 gs-marshal.h: gs-marshal.list
 	@GLIB_GENMARSHAL@ $< --prefix=gs_marshal --header > $@
 
-gnome_screensaver_SOURCES =	\
+budgie_screensaver_SOURCES =	\
 	gnome-screensaver.c	\
 	gnome-screensaver.h	\
 	gs-bus.h		\
@@ -190,23 +190,23 @@ gnome_screensaver_SOURCES =	\
 	$(BUILT_SOURCES)	\
 	$(NULL)
 
-gnome_screensaver_LDADD =		\
-	$(GNOME_SCREENSAVER_LIBS)	\
+budgie_screensaver_LDADD =		\
+	$(BUDGIE_SCREENSAVER_LIBS)	\
 	$(SAVER_LIBS)			\
 	$(SYSTEMD_LIBS)                 \
 	$(NULL)
 
-gnome_screensaver_LDFLAGS = -export-dynamic
+budgie_screensaver_LDFLAGS = -export-dynamic
 
 EXTRA_DIST =				\
 	debug-screensaver.sh		\
 	gs-marshal.list			\
-	gnome-screensaver.desktop.in	\
+	budgie-screensaver.desktop.in	\
 	$(NULL)
 
 CLEANFILES = 				\
 	$(desktop_DATA) 		\
-	gnome-screensaver.desktop.in	\
+	budgie-screensaver.desktop.in	\
 	$(BUILT_SOURCES)
 
 MAINTAINERCLEANFILES =			\
@@ -216,13 +216,13 @@ MAINTAINERCLEANFILES =			\
 install-exec-hook:
 	@if [ "x@NEED_SETUID@" = "xyes" ]; then \
 	    echo "***" ; \
-	    echo "***  Warning: gnome-screensaver has been compiled with support for" ; \
+	    echo "***  Warning: budgie-screensaver has been compiled with support for" ; \
 	    echo "***           bsdauth(3) and must be installed as a setuid root" ; \
 	    echo "***           program in order for locking to work.  To do this, you" ; \
 	    echo "***           must run:" ; \
 	    echo "***" ; \
-	    echo "***           chown root $(DESTDIR)$(libexecdir)/gnome-screensaver-dialog" ; \
-	    echo "***           chmod +s $(DESTDIR)$(libexecdir)/gnome-screensaver-dialog" ; \
+	    echo "***           chown root $(DESTDIR)$(libexecdir)/budgie-screensaver-dialog" ; \
+	    echo "***           chmod +s $(DESTDIR)$(libexecdir)/budgie-screensaver-dialog" ; \
 	    echo "***" ; \
 	    echo "***           For now, it will be installed non-setuid, which" ; \
 	    echo "***           means that locking might not work." ; \
