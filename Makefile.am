@@ -14,12 +14,8 @@ SUBDIRS =			\
 EXTRA_DIST =			\
 	COPYING			\
 	COPYING.LIB		\
-	AUTHORS			\
-	INSTALL			\
-	README			\
 	ChangeLog		\
 	NEWS			\
-	HACKING			\
 	intltool-extract.in     \
 	intltool-merge.in       \
 	intltool-update.in	\
@@ -37,7 +33,6 @@ MAINTAINERCLEANFILES =		\
 	intltool-*.in		\
 	compile			\
 	configure		\
-	INSTALL			\
 	install-sh		\
 	missing			\
 	mkinstalldirs		\
