@@ -1,20 +1,17 @@
-budgie-screensaver
-==================
+# budgie-screensaver
 
-Yes I hate myself for creating this, but this is basically a fork of gnome-screensaver
-which is completely dead, and we need a drop-in replacement of gnome-screensaver
-with fixed bugs to use for Budgie.
+Budgie Screensaver is a fork of gnome-screensaver intended for use with Budgie Desktop and is similar in purpose to other screensavers such as MATE Screensaver.
 
-Upstream [previously indicated](https://mail.gnome.org/archives/desktop-devel-list/2016-July/msg00030.html) the only way to go is a fork, they're not
-planning on taking patches.
+This fork was born out of a need in Budgie 10 series to have a drop-in replacement of gnome-screensaver for use in Budgie, after upstream [indicated](https://mail.gnome.org/archives/desktop-devel-list/2016-July/msg00030.html) the appropriate continued use of gnome-screensaver is a fork, as they are not planning on taking patches. The overwhelming majority of patches are ported from Debian and/or Ubuntu's package-fork of gnome-screensaver to allow a simple drop-in replacement for the gnome-screensaver package. This repository and its respective software should largely be considered as being in "maintenance mode", only updating to resolve FTBFS issues or reflect changes in the GNOME Stack.
 
-TL;DR Emergency fork to hold up Budgie 10, we'll do something less insane when
-it comes to Budgie 11.
+## Compiling
 
-The overwhelming majority of the patches are ported from Ubuntu's package-fork of
-gnome-screensaver to allow a simple drop-in replacement for the gnome-screensaver
-package.
+Budgie Screensaver makes use of GNU Autotools for configuration, compilation, and installation. As such, the standard method is to:
 
+1. Use `autogen.sh` when `configure` is not available, otherwise use configure.
+2. `make`
+3. `make install`
 
-**UNLESS ANYONE WANTS THIS AS A PACKAGE, WE'LL JUST APPLY THE PATCHES BACK ON
-TOP OF OUR OWN gnome-screensaver PACKAGE**
+## LICENSE
+
+Budgie Screensaver is licensed under GPL-2.0-only.
