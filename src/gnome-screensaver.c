@@ -82,8 +82,20 @@ main (int    argc,
                 exit (1);
         }
 
+		gchar** env_vars = g_get_environ(); // Get our list of environment variables
+		gchar* desktop = g_environ_getenv(env_vars, "XDG_CURRENT_DESKTOP"); // Get the current desktop value
+
+		if (desktop != NULL) { // Got a value
+			if (!g_str_has_prefix(desktop, "Budgie")) { // Does not start with Budgie
+				g_message("Not running under Budgie, exiting.");
+				exit(1);
+			}
+		}
+
+		g_strfreev(env_vars); // Free our environment variables
+
         gs_debug_init (debug, FALSE);
-        gs_debug ("initializing gnome-screensaver %s", VERSION);
+        gs_debug ("initializing budgie-screensaver %s", VERSION);
 
         monitor = gs_monitor_new ();
 
@@ -106,7 +118,7 @@ main (int    argc,
 
         g_object_unref (monitor);
 
-        gs_debug ("gnome-screensaver finished");
+        gs_debug ("budgie-screensaver finished");
 
         gs_debug_shutdown ();
 

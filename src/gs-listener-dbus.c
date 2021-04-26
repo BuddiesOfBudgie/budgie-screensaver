@@ -1345,18 +1345,6 @@ gs_listener_acquire (GSListener *listener,
                 return FALSE;
         }
 
-		gchar** env_vars = g_get_environ(); // Get our list of environment variables
-		gchar* desktop = g_environ_getenv(env_vars, "XDG_CURRENT_DESKTOP"); // Get the current desktop value
-
-		if (desktop != NULL) { // Got a value
-			if (!g_str_has_prefix(desktop, "Budgie")) { // Does not start with Budgie
-				g_message("Not running under Budgie, exiting.");
-				return FALSE;
-			}
-		}
-
-		g_strfreev(env_vars); // Free our environment variables
-
 		if (g_find_program_in_path("pkill") != NULL) { // Have pkill
 			char *argv[5];
 			argv[0] =  "pkill";
