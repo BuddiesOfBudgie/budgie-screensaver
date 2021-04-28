@@ -1345,22 +1345,6 @@ gs_listener_acquire (GSListener *listener,
                 return FALSE;
         }
 
-		if (g_find_program_in_path("pkill") != NULL) { // Have pkill
-			char *argv[5];
-			argv[0] =  "pkill";
-			argv[1] = "-9";
-			argv[2] = "-f";
-			argv[3] = "'/usr/bin/gjs /usr/share/gnome-shell/org.gnome.ScreenSaver'";
-			argv[4] = NULL;
-
-			g_autoptr(GError) error = NULL;
-			gboolean kill_ret = g_spawn_sync(NULL, argv, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, NULL, NULL, &error);
-
-			if (!kill_ret) {
-				g_warning("Failed to kill gjs: %s", error->message);
-			}
-		}
-
         res = dbus_bus_request_name (listener->priv->connection, GS_SERVICE, DBUS_NAME_FLAG_REPLACE_EXISTING, &buserror);
         if (dbus_error_is_set (&buserror)) {
                 g_set_error (error,
