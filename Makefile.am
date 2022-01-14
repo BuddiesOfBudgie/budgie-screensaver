@@ -12,9 +12,8 @@ SUBDIRS =			\
 	$(NULL)
 
 EXTRA_DIST =			\
-	COPYING			\
-	COPYING.LIB		\
-	ChangeLog		\
+	LICENSE			\
+	LICENSE.LGPL2	\
 	NEWS			\
 	$(NULL)
 
@@ -39,6 +38,5 @@ MAINTAINERCLEANFILES =		\
 	aclocal.m4		\
 	acinclude.m4		\
 	$(NULL)
-
 
 -include $(top_srcdir)/git.mk
