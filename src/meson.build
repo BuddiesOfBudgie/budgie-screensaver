@@ -1,3 +1,8 @@
+add_global_arguments([
+	'-I' + meson.current_build_dir(),
+	'-Db_sanitize=address'
+], language: 'c')
+
 # Sources
 
 screensaver_command_sources = [
@@ -31,7 +36,7 @@ screensaver_sources = [
 
 screensaver_command_deps = [dep_glib, dep_gio]
 
-screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
+screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 

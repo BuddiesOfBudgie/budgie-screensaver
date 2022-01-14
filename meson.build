@@ -1,9 +1,12 @@
 project(
     'budgie-screensaver',
-    ['c'],
+    'c',
     version: '10.0',
     license: ['GPL-2.0'],
-    default_options: ['c_std=c11'],
+    default_options: [
+        'c_std=gnu11',
+        'warning_level=2',
+    ],
 )
 
 git = find_program('git', required: false)
@@ -20,6 +23,8 @@ dep_gtk3 = dependency('gtk+-3.0', version: '>= 2.99.3')
 dep_gnomedesktop = dependency('gnome-desktop-3.0', version: '>= 3.1.91')
 dep_gsettings = dependency('gsettings-desktop-schemas', version: '>= 3.1.91')
 
+c = meson.get_compiler('c')
+dep_pam = c.find_library('pam', required: true)
 
 # Inspired by https://github.com/GNOME/recipes/blob/master/meson.build
 package_version = meson.project_version()

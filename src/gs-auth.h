@@ -22,6 +22,7 @@
 #ifndef __GS_AUTH_H
 #define __GS_AUTH_H
 
+#include <sys/stat.h>
 #include <glib.h>
 
 G_BEGIN_DECLS

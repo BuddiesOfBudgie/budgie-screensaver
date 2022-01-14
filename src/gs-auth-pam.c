@@ -25,17 +25,16 @@
 #include "config.h"
 
 #include <stdlib.h>
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
+#include <stdio.h>
+#include <sys/stat.h>
 
 #include <fcntl.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
 #include <security/pam_appl.h>
+#include <security/pam_modutil.h>
+#include <security/pam_ext.h>
 #include <signal.h>
 #include <errno.h>
 
@@ -63,18 +62,7 @@
 # define PAM_NO_DELAY(pamh) /* */
 #endif /* !HAVE_PAM_FAIL_DELAY */
 
-
-/* On SunOS 5.6, and on Linux with PAM 0.64, pam_strerror() takes two args.
-   On some other Linux systems with some other version of PAM (e.g.,
-   whichever Debian release comes with a 2.2.5 kernel) it takes one arg.
-   I can't tell which is more "recent" or "correct" behavior, so configure
-   figures out which is in use for us.  Shoot me!
-*/
-#ifdef PAM_STRERROR_TWO_ARGS
 # define PAM_STRERROR(pamh, status) pam_strerror((pamh), (status))
-#else  /* !PAM_STRERROR_TWO_ARGS */
-# define PAM_STRERROR(pamh, status) pam_strerror((status))
-#endif /* !PAM_STRERROR_TWO_ARGS */
 
 static gboolean      verbose_enabled = FALSE;
 static pam_handle_t *pam_handle = NULL;
