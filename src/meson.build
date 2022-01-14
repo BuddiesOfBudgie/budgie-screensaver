@@ -44,3 +44,11 @@ executable(
     include_directories: extra_includes,
     install: true
 )
+
+executable(
+    'budgie-screensaver-dialog',
+    sources: screensaver_dialog_sources,
+    dependencies: screensaver_dialog_deps,
+    include_directories: extra_includes,
+    install: false
+)
