@@ -62,7 +62,8 @@ executable(
     sources: screensaver_dialog_sources,
     dependencies: screensaver_dialog_deps,
     include_directories: extra_includes,
-    install: false
+    install_dir: libexecdir,
+    install: true
 )
 
 executable(
@@ -70,6 +71,5 @@ executable(
     sources: screensaver_sources + screensaver_marshal_files,
     dependencies: screensaver_deps,
     include_directories: extra_includes,
-    install_dir: libexecdir,
     install: true
 )
