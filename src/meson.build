@@ -70,5 +70,6 @@ executable(
     sources: screensaver_sources + screensaver_marshal_files,
     dependencies: screensaver_deps,
     include_directories: extra_includes,
+    install_dir: libexecdir,
     install: true
 )
