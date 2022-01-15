@@ -43,6 +43,10 @@ screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 
+if with_systemd
+    screensaver_deps += dep_systemd
+endif
+
 # Output
 
 executable(

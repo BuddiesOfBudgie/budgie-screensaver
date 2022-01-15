@@ -23,6 +23,11 @@ dep_gtk3 = dependency('gtk+-3.0', version: '>= 2.99.3')
 dep_gnomedesktop = dependency('gnome-desktop-3.0', version: '>= 3.1.91')
 dep_gsettings = dependency('gsettings-desktop-schemas', version: '>= 3.1.91')
 
+with_systemd = get_option('with-systemd')
+if with_systemd
+    dep_systemd = dependency('libsystemd', version: '>= 209')
+endif
+
 c = meson.get_compiler('c')
 dep_pam = c.find_library('pam', required: true)
 
@@ -46,6 +51,10 @@ prefix = get_option('prefix')
 libexecdir = join_paths(prefix, get_option('libexecdir'))
 
 cdata.set_quoted('LIBEXECDIR', libexecdir)
+
+if with_systemd
+    cdata.set('WITH_SYSTEMD', 1)
+endif
 
 configure_file(
     output: 'config.h',
