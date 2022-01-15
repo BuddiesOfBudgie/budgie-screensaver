@@ -8,9 +8,9 @@ This fork was born out of a need in Budgie 10 series to have a drop-in replaceme
 
 Budgie Screensaver makes use of GNU Autotools for configuration, compilation, and installation. As such, the standard method is to:
 
-1. Use `autogen.sh` when `configure` is not available, otherwise use configure.
-2. `make`
-3. `make install`
+1. `meson build`
+2. `meson compile -C build`
+3. `sudo meson install -C build`
 
 ## LICENSE
 
