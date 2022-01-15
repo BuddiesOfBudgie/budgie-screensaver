@@ -41,15 +41,17 @@ if git.found()
     endif
 endif
 
+prefix = get_option('prefix')
+datadir = join_paths(prefix, get_option('datadir'))
+libexecdir = join_paths(prefix, get_option('libexecdir'))
+sysconfdir = get_option('sysconfdir')
+podir = join_paths(meson.source_root(), 'po')
+
 # create config.h
 cdata = configuration_data()
 
 cdata.set_quoted('VERSION', package_version)
 cdata.set_quoted('PAM_SERVICE_NAME', meson.project_name())
-
-prefix = get_option('prefix')
-libexecdir = join_paths(prefix, get_option('libexecdir'))
-
 cdata.set_quoted('LIBEXECDIR', libexecdir)
 
 if with_systemd
