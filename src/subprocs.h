@@ -23,11 +23,7 @@ G_BEGIN_DECLS
 
 void unblock_sigchld (void);
 
-#ifdef HAVE_SIGACTION
 sigset_t
-#else  /* !HAVE_SIGACTION */
-int
-#endif /* !HAVE_SIGACTION */
 block_sigchld (void);
 
 int  signal_pid           (int    pid,
