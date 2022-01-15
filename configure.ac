@@ -2,7 +2,7 @@ dnl -*- mode: m4 -*-
 
 AC_PREREQ(2.60)
 AC_INIT([budgie-screensaver],
-        [4.0],
+        [10.0],
         [https://github.com/BuddiesOfBudgie/budgie-screensaver])
 
 AC_CONFIG_SRCDIR(src/gnome-screensaver.c)
