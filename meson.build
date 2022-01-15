@@ -42,6 +42,11 @@ cdata = configuration_data()
 cdata.set_quoted('VERSION', package_version)
 cdata.set_quoted('PAM_SERVICE_NAME', meson.project_name())
 
+prefix = get_option('prefix')
+libexecdir = join_paths(prefix, get_option('libexecdir'))
+
+cdata.set_quoted('LIBEXECDIR', libexecdir)
+
 configure_file(
     output: 'config.h',
     configuration: cdata,

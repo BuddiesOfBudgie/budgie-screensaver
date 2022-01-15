@@ -3,6 +3,9 @@ add_global_arguments([
 	'-Db_sanitize=address'
 ], language: 'c')
 
+gnome = import('gnome')
+screensaver_marshal_files = gnome.genmarshal('gs-marshal', sources: 'gs-marshal.list', prefix: 'gs_marshal')
+
 # Sources
 
 screensaver_command_sources = [
@@ -56,4 +59,12 @@ executable(
     dependencies: screensaver_dialog_deps,
     include_directories: extra_includes,
     install: false
+)
+
+executable(
+    'budgie-screensaver',
+    sources: screensaver_sources + screensaver_marshal_files,
+    dependencies: screensaver_deps,
+    include_directories: extra_includes,
+    install: true
 )
