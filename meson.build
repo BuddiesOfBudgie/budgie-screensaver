@@ -71,7 +71,11 @@ extra_includes = [
 # Later changed to use intltool as we use _Key style files
 intltool = find_program('intltool-merge')
 
-# translations
+# translations first
 subdir('po')
 
+# then source
 subdir('src')
+
+# and finally data
+subdir('data')
