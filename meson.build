@@ -4,7 +4,7 @@ project(
     version: '10.0',
     license: ['GPL-2.0'],
     default_options: [
-        'c_std=gnu11',
+        'c_std=c11',
         'warning_level=2',
     ],
 )
