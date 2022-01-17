@@ -732,7 +732,7 @@ gs_auth_priv_init (void)
         const char file2 [] = "/etc/pam.conf";
         struct stat st;
 
-        if (g_stat (dir, &st) == 0 && st.st_mode & S_IFDIR) {
+        if (g_stat (dir, &st) == 0 && S_ISDIR(st.st_mode)) {
                 if (g_stat (file, &st) != 0) {
                         g_warning ("%s does not exist.\n"
                                    "Authentication via PAM is unlikely to work.",
