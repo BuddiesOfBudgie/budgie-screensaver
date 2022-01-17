@@ -1,8 +1,3 @@
-add_global_arguments([
-	'-I' + meson.current_build_dir(),
-	'-Db_sanitize=address'
-], language: 'c')
-
 gnome = import('gnome')
 screensaver_marshal_files = gnome.genmarshal('gs-marshal', sources: 'gs-marshal.list', prefix: 'gs_marshal')
 

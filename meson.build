@@ -63,6 +63,7 @@ configure_file(
     configuration: cdata,
 )
 
+# pull in the config.h file
 extra_includes = [
     include_directories('.'),
 ]
