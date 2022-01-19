@@ -20,8 +20,8 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <signal.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #ifdef HAVE_UNISTD_H
@@ -30,53 +30,38 @@
 #include <pwd.h>
 #include <sys/types.h>
 
-#include <login_cap.h>
 #include <bsd_auth.h>
+#include <login_cap.h>
 
 #include "gs-auth.h"
 #include "subprocs.h"
 
 static gboolean verbose_enabled = FALSE;
 
-GQuark
-gs_auth_error_quark (void)
-{
+GQuark gs_auth_error_quark(void) {
 	static GQuark quark = 0;
-	if (! quark) {
-		quark = g_quark_from_static_string ("gs_auth_error");
+	if (!quark) {
+		quark = g_quark_from_static_string("gs_auth_error");
 	}
 
 	return quark;
 }
 
-void
-gs_auth_set_verbose (gboolean enabled)
-{
+void gs_auth_set_verbose(gboolean enabled) {
 	verbose_enabled = enabled;
 }
 
-gboolean
-gs_auth_get_verbose (void)
-{
+gboolean gs_auth_get_verbose(void) {
 	return verbose_enabled;
 }
 
-gboolean
-gs_auth_verify_user (const char       *username,
-		     const char       *display, 
-		     GSAuthMessageFunc func,
-		     gpointer          data,
-		     GError          **error)
-{
+gboolean gs_auth_verify_user(const char* username, const char* display, GSAuthMessageFunc func, gpointer data, GError** error) {
 	int res;
-	char *password;
+	char* password;
 
 	/* ask for the password for user */
 	if (func != NULL) {
-		func (GS_AUTH_MESSAGE_PROMPT_ECHO_OFF,
-		    "Password: ",
-		    &password,
-		    data);
+		func(GS_AUTH_MESSAGE_PROMPT_ECHO_OFF, "Password: ", &password, data);
 	}
 
 	if (password == NULL) {
@@ -84,19 +69,15 @@ gs_auth_verify_user (const char       *username,
 	}
 
 	/* authenticate */
-	res = auth_userokay((char *)username, NULL, "auth-budgie-screensaver", password);
+	res = auth_userokay((char*) username, NULL, "auth-budgie-screensaver", password);
 
 	return res;
 }
 
-gboolean
-gs_auth_init (void)
-{
+gboolean gs_auth_init(void) {
 	return TRUE;
 }
 
-gboolean
-gs_auth_priv_init (void)
-{
+gboolean gs_auth_priv_init(void) {
 	return TRUE;
 }

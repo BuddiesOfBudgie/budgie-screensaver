@@ -22,10 +22,10 @@
 
 #include "config.h"
 
+#include <signal.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
-#include <signal.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -35,56 +35,42 @@
 #include "gs-debug.h"
 
 static gboolean debugging = FALSE;
-static FILE    *debug_out = NULL;
+static FILE* debug_out = NULL;
 
 /* Based on rhythmbox/lib/rb-debug.c */
 /* Our own funky debugging function, should only be used when something
  * is not going wrong, if something *is* wrong use g_warning.
  */
-void
-gs_debug_real (const char *func,
-	       const char *file,
-	       const int   line,
-	       const char *format, ...)
-{
+void gs_debug_real(const char* func, const char* file, const int line, const char* format, ...) {
 	va_list args;
-	char    buffer [1025];
-	char   *str_time;
-	time_t  the_time;
+	char buffer[1025];
+	char* str_time;
+	time_t the_time;
 
-	if (debugging == FALSE)
-		return;
+	if (debugging == FALSE) return;
 
-	va_start (args, format);
+	va_start(args, format);
 
-	g_vsnprintf (buffer, 1024, format, args);
+	g_vsnprintf(buffer, 1024, format, args);
 
-	va_end (args);
+	va_end(args);
 
-	time (&the_time);
-	str_time = g_new0 (char, 255);
-	strftime (str_time, 254, "%H:%M:%S", localtime (&the_time));
+	time(&the_time);
+	str_time = g_new0(char, 255);
+	strftime(str_time, 254, "%H:%M:%S", localtime(&the_time));
 
-	fprintf ((debug_out ? debug_out : stderr),
-		 "[%s] %s:%d (%s):\t %s\n",
-		 func, file, line, str_time, buffer);
+	fprintf((debug_out ? debug_out : stderr), "[%s] %s:%d (%s):\t %s\n", func, file, line, str_time, buffer);
 
-	if (debug_out)
-		fflush (debug_out);
+	if (debug_out) fflush(debug_out);
 
-	g_free (str_time);
+	g_free(str_time);
 }
 
-gboolean
-gs_debug_enabled (void)
-{
+gboolean gs_debug_enabled(void) {
 	return debugging;
 }
 
-void
-gs_debug_init (gboolean debug,
-	       gboolean to_file)
-{
+void gs_debug_init(gboolean debug, gboolean to_file) {
 	/* return if already initialized */
 	if (debugging == TRUE) {
 		return;
@@ -93,61 +79,53 @@ gs_debug_init (gboolean debug,
 	debugging = debug;
 
 	if (debug && to_file) {
-		const char path [50] = "gnome_screensaver_debug_XXXXXX";
-		int        fd;
+		const char path[50] = "gnome_screensaver_debug_XXXXXX";
+		int fd;
 
-		fd = g_file_open_tmp (path, NULL, NULL);
+		fd = g_file_open_tmp(path, NULL, NULL);
 
 		if (fd >= 0) {
-			debug_out = fdopen (fd, "a");
+			debug_out = fdopen(fd, "a");
 		}
 	}
 
-	gs_debug ("Debugging %s", (debug) ? "enabled" : "disabled");
+	gs_debug("Debugging %s", (debug) ? "enabled" : "disabled");
 }
 
-void
-gs_debug_shutdown (void)
-{
-	if (! debugging)
-		return;
+void gs_debug_shutdown(void) {
+	if (!debugging) return;
 
-	gs_debug ("Shutting down debugging");
+	gs_debug("Shutting down debugging");
 
 	debugging = FALSE;
 
 	if (debug_out != NULL) {
-		fclose (debug_out);
+		fclose(debug_out);
 		debug_out = NULL;
 	}
 }
 
-void
-_gs_profile_log (const char *func,
-		 const char *note,
-		 const char *format,
-		 ...)
-{
+void _gs_profile_log(const char* func, const char* note, const char* format, ...) {
 	va_list args;
-	char   *str;
-	char   *formatted;
+	char* str;
+	char* formatted;
 
 	if (format == NULL) {
-		formatted = g_strdup ("");
+		formatted = g_strdup("");
 	} else {
-		va_start (args, format);
-		formatted = g_strdup_vprintf (format, args);
-		va_end (args);
+		va_start(args, format);
+		formatted = g_strdup_vprintf(format, args);
+		va_end(args);
 	}
 
 	if (func != NULL) {
-		str = g_strdup_printf ("MARK: %s %s: %s %s", g_get_prgname(), func, note ? note : "", formatted);
+		str = g_strdup_printf("MARK: %s %s: %s %s", g_get_prgname(), func, note ? note : "", formatted);
 	} else {
-		str = g_strdup_printf ("MARK: %s: %s %s", g_get_prgname(), note ? note : "", formatted);
+		str = g_strdup_printf("MARK: %s: %s %s", g_get_prgname(), note ? note : "", formatted);
 	}
 
-	g_free (formatted);
+	g_free(formatted);
 
-	g_access (str, F_OK);
-	g_free (str);
+	g_access(str, F_OK);
+	g_free(str);
 }
