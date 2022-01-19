@@ -25,8 +25,8 @@
 
 G_BEGIN_DECLS
 
-gboolean attempt_gjs_screensaver_kill (gpointer data);
-void gnome_screensaver_quit (void);
+gboolean attempt_gjs_screensaver_kill(gpointer data);
+void gnome_screensaver_quit(void);
 
 G_END_DECLS
 

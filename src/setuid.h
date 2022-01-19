@@ -7,7 +7,7 @@
  * the above copyright notice appear in all copies and that both that
  * copyright notice and this permission notice appear in supporting
  * documentation.  No representations are made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or 
+ * software for any purpose.  It is provided "as is" without express or
  * implied warranty.
  */
 
@@ -16,9 +16,7 @@
 
 G_BEGIN_DECLS
 
-gboolean hack_uid (char **nolock_reason,
-		   char **orig_uid,
-		   char **uid_message);
+gboolean hack_uid(char** nolock_reason, char** orig_uid, char** uid_message);
 
 G_END_DECLS
 

@@ -25,47 +25,45 @@
 
 G_BEGIN_DECLS
 
-#define GS_TYPE_PREFS         (gs_prefs_get_type ())
-#define GS_PREFS(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GS_TYPE_PREFS, GSPrefs))
-#define GS_PREFS_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_PREFS, GSPrefsClass))
-#define GS_IS_PREFS(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GS_TYPE_PREFS))
-#define GS_IS_PREFS_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GS_TYPE_PREFS))
-#define GS_PREFS_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GS_TYPE_PREFS, GSPrefsClass))
+#define GS_TYPE_PREFS (gs_prefs_get_type())
+#define GS_PREFS(o) (G_TYPE_CHECK_INSTANCE_CAST((o), GS_TYPE_PREFS, GSPrefs))
+#define GS_PREFS_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_PREFS, GSPrefsClass))
+#define GS_IS_PREFS(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), GS_TYPE_PREFS))
+#define GS_IS_PREFS_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_PREFS))
+#define GS_PREFS_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_PREFS, GSPrefsClass))
 
 typedef struct GSPrefsPrivate GSPrefsPrivate;
 
-typedef struct
-{
-	GObject          parent;
+typedef struct {
+	GObject parent;
 
-	GSPrefsPrivate  *priv;
+	GSPrefsPrivate* priv;
 
-	guint            idle_activation_enabled : 1; /* whether to activate when idle */
-	guint            lock_enabled : 1;              /* whether to lock when active */
-	guint            logout_enabled : 1;    /* Whether to offer the logout option */
-	guint            lock_disabled : 1;     /* Whether locking the system is disabled */
-	guint            user_switch_disabled : 1;      /* Whether user switching is disabled */
-	guint            user_switch_enabled : 1;       /* Whether to offer the user switch option */
-	guint            keyboard_enabled : 1;  /* Whether to try to embed a keyboard */
-	guint            status_message_enabled : 1; /* show the status message in the lock */
+	guint idle_activation_enabled : 1; /* whether to activate when idle */
+	guint lock_enabled : 1;			   /* whether to lock when active */
+	guint logout_enabled : 1;		   /* Whether to offer the logout option */
+	guint lock_disabled : 1;		   /* Whether locking the system is disabled */
+	guint user_switch_disabled : 1;	   /* Whether user switching is disabled */
+	guint user_switch_enabled : 1;	   /* Whether to offer the user switch option */
+	guint keyboard_enabled : 1;		   /* Whether to try to embed a keyboard */
+	guint status_message_enabled : 1;  /* show the status message in the lock */
 
-	guint            lock_timeout;          /* how long after activation locking starts */
-	guint            logout_timeout;        /* how long until the logout option appears */
+	guint lock_timeout;	  /* how long after activation locking starts */
+	guint logout_timeout; /* how long until the logout option appears */
 
-	char            *logout_command;        /* command to use to logout */
-	char            *keyboard_command;      /* command to use to embed a keyboard */
+	char* logout_command;	/* command to use to logout */
+	char* keyboard_command; /* command to use to embed a keyboard */
 } GSPrefs;
 
-typedef struct
-{
-	GObjectClass     parent_class;
+typedef struct {
+	GObjectClass parent_class;
 
-	void            (* changed)        (GSPrefs *prefs);
+	void (*changed)(GSPrefs* prefs);
 } GSPrefsClass;
 
-GType       gs_prefs_get_type        (void);
-GSPrefs   * gs_prefs_new             (void);
-void        gs_prefs_load            (GSPrefs *prefs);
+GType gs_prefs_get_type(void);
+GSPrefs* gs_prefs_new(void);
+void gs_prefs_load(GSPrefs* prefs);
 
 G_END_DECLS
 

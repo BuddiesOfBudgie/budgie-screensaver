@@ -22,8 +22,8 @@
 #ifndef __GS_AUTH_H
 #define __GS_AUTH_H
 
-#include <sys/stat.h>
 #include <glib.h>
+#include <sys/stat.h>
 
 G_BEGIN_DECLS
 
@@ -41,25 +41,18 @@ typedef enum {
 	GS_AUTH_ERROR_AUTH_DENIED
 } GSAuthError;
 
-typedef gboolean  (* GSAuthMessageFunc) (GSAuthMessageStyle style,
-					 const char        *msg,
-					 char             **response,
-					 gpointer           data);
+typedef gboolean (*GSAuthMessageFunc)(GSAuthMessageStyle style, const char* msg, char** response, gpointer data);
 
-#define GS_AUTH_ERROR gs_auth_error_quark ()
+#define GS_AUTH_ERROR gs_auth_error_quark()
 
-GQuark   gs_auth_error_quark (void);
+GQuark gs_auth_error_quark(void);
 
-void     gs_auth_set_verbose (gboolean verbose);
-gboolean gs_auth_get_verbose (void);
+void gs_auth_set_verbose(gboolean verbose);
+gboolean gs_auth_get_verbose(void);
 
-gboolean gs_auth_priv_init   (void);
-gboolean gs_auth_init        (void);
-gboolean gs_auth_verify_user (const char       *username,
-			      const char       *display,
-			      GSAuthMessageFunc func,
-			      gpointer          data,
-			      GError          **error);
+gboolean gs_auth_priv_init(void);
+gboolean gs_auth_init(void);
+gboolean gs_auth_verify_user(const char* username, const char* display, GSAuthMessageFunc func, gpointer data, GError** error);
 
 G_END_DECLS
 

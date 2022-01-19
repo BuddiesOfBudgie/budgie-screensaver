@@ -25,40 +25,34 @@
 
 G_BEGIN_DECLS
 
-#define GS_TYPE_WATCHER         (gs_watcher_get_type ())
-#define GS_WATCHER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GS_TYPE_WATCHER, GSWatcher))
-#define GS_WATCHER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_WATCHER, GSWatcherClass))
-#define GS_IS_WATCHER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GS_TYPE_WATCHER))
-#define GS_IS_WATCHER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GS_TYPE_WATCHER))
-#define GS_WATCHER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GS_TYPE_WATCHER, GSWatcherClass))
+#define GS_TYPE_WATCHER (gs_watcher_get_type())
+#define GS_WATCHER(o) (G_TYPE_CHECK_INSTANCE_CAST((o), GS_TYPE_WATCHER, GSWatcher))
+#define GS_WATCHER_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_WATCHER, GSWatcherClass))
+#define GS_IS_WATCHER(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), GS_TYPE_WATCHER))
+#define GS_IS_WATCHER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_WATCHER))
+#define GS_WATCHER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_WATCHER, GSWatcherClass))
 
 typedef struct GSWatcherPrivate GSWatcherPrivate;
 
-typedef struct
-{
-	GObject           parent;
-	GSWatcherPrivate *priv;
+typedef struct {
+	GObject parent;
+	GSWatcherPrivate* priv;
 } GSWatcher;
 
-typedef struct
-{
-	GObjectClass      parent_class;
+typedef struct {
+	GObjectClass parent_class;
 
-	gboolean          (* idle_changed)        (GSWatcher *watcher,
-						   gboolean   is_idle);
-	gboolean          (* idle_notice_changed) (GSWatcher *watcher,
-						   gboolean   in_effect);
+	gboolean (*idle_changed)(GSWatcher* watcher, gboolean is_idle);
+	gboolean (*idle_notice_changed)(GSWatcher* watcher, gboolean in_effect);
 } GSWatcherClass;
 
-GType       gs_watcher_get_type         (void);
+GType gs_watcher_get_type(void);
 
-GSWatcher * gs_watcher_new              (void);
-gboolean    gs_watcher_set_enabled      (GSWatcher *watcher,
-					 gboolean   enabled);
-gboolean    gs_watcher_get_enabled      (GSWatcher *watcher);
-gboolean    gs_watcher_set_active       (GSWatcher *watcher,
-					 gboolean   active);
-gboolean    gs_watcher_get_active       (GSWatcher *watcher);
+GSWatcher* gs_watcher_new(void);
+gboolean gs_watcher_set_enabled(GSWatcher* watcher, gboolean enabled);
+gboolean gs_watcher_get_enabled(GSWatcher* watcher);
+gboolean gs_watcher_set_active(GSWatcher* watcher, gboolean active);
+gboolean gs_watcher_get_active(GSWatcher* watcher);
 
 G_END_DECLS
 

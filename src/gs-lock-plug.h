@@ -27,57 +27,49 @@
 
 G_BEGIN_DECLS
 
-typedef enum
-{
-	GS_LOCK_PLUG_RESPONSE_NONE   = -1,
-	GS_LOCK_PLUG_RESPONSE_OK     = -2,
+typedef enum {
+	GS_LOCK_PLUG_RESPONSE_NONE = -1,
+	GS_LOCK_PLUG_RESPONSE_OK = -2,
 	GS_LOCK_PLUG_RESPONSE_CANCEL = -3
 } GSPlugResponseType;
 
-#define GS_TYPE_LOCK_PLUG         (gs_lock_plug_get_type ())
-#define GS_LOCK_PLUG(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GS_TYPE_LOCK_PLUG, GSLockPlug))
-#define GS_LOCK_PLUG_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_LOCK_PLUG, GSLockPlugClass))
-#define GS_IS_LOCK_PLUG(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GS_TYPE_LOCK_PLUG))
-#define GS_IS_LOCK_PLUG_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GS_TYPE_LOCK_PLUG))
-#define GS_LOCK_PLUG_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GS_TYPE_LOCK_PLUG, GSLockPlugClass))
+#define GS_TYPE_LOCK_PLUG (gs_lock_plug_get_type())
+#define GS_LOCK_PLUG(o) (G_TYPE_CHECK_INSTANCE_CAST((o), GS_TYPE_LOCK_PLUG, GSLockPlug))
+#define GS_LOCK_PLUG_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_LOCK_PLUG, GSLockPlugClass))
+#define GS_IS_LOCK_PLUG(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), GS_TYPE_LOCK_PLUG))
+#define GS_IS_LOCK_PLUG_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_LOCK_PLUG))
+#define GS_LOCK_PLUG_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_LOCK_PLUG, GSLockPlugClass))
 
 typedef struct GSLockPlugPrivate GSLockPlugPrivate;
 
-typedef struct
-{
-	GtkPlug            parent;
+typedef struct {
+	GtkPlug parent;
 
-	GSLockPlugPrivate *priv;
+	GSLockPlugPrivate* priv;
 } GSLockPlug;
 
-typedef struct
-{
-	GtkPlugClass         parent_class;
+typedef struct {
+	GtkPlugClass parent_class;
 
-	void (* response) (GSLockPlug *plug, gint response_id);
+	void (*response)(GSLockPlug* plug, gint response_id);
 
 	/* Keybinding signals */
-	void (* close)    (GSLockPlug *plug);
+	void (*close)(GSLockPlug* plug);
 
 } GSLockPlugClass;
 
-GType       gs_lock_plug_get_type       (void);
-GtkWidget * gs_lock_plug_new            (void);
+GType gs_lock_plug_get_type(void);
+GtkWidget* gs_lock_plug_new(void);
 
-int         gs_lock_plug_run            (GSLockPlug *plug);
-void        gs_lock_plug_set_sensitive  (GSLockPlug *plug,
-					 gboolean    sensitive);
-void        gs_lock_plug_enable_prompt  (GSLockPlug *plug,
-					 const char *message,
-					 gboolean    visible);
-void        gs_lock_plug_disable_prompt (GSLockPlug *plug);
-void        gs_lock_plug_set_busy       (GSLockPlug *plug);
-void        gs_lock_plug_set_ready      (GSLockPlug *plug);
+int gs_lock_plug_run(GSLockPlug* plug);
+void gs_lock_plug_set_sensitive(GSLockPlug* plug, gboolean sensitive);
+void gs_lock_plug_enable_prompt(GSLockPlug* plug, const char* message, gboolean visible);
+void gs_lock_plug_disable_prompt(GSLockPlug* plug);
+void gs_lock_plug_set_busy(GSLockPlug* plug);
+void gs_lock_plug_set_ready(GSLockPlug* plug);
 
-void        gs_lock_plug_get_text       (GSLockPlug *plug,
-					 char      **text);
-void        gs_lock_plug_show_message   (GSLockPlug *plug,
-					 const char *message);
+void gs_lock_plug_get_text(GSLockPlug* plug, char** text);
+void gs_lock_plug_show_message(GSLockPlug* plug, const char* message);
 
 G_END_DECLS
 

@@ -25,33 +25,29 @@
 
 G_BEGIN_DECLS
 
-#define GS_TYPE_MONITOR         (gs_monitor_get_type ())
-#define GS_MONITOR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GS_TYPE_MONITOR, GSMonitor))
-#define GS_MONITOR_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_MONITOR, GSMonitorClass))
-#define GS_IS_MONITOR(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GS_TYPE_MONITOR))
-#define GS_IS_MONITOR_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GS_TYPE_MONITOR))
-#define GS_MONITOR_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GS_TYPE_MONITOR, GSMonitorClass))
+#define GS_TYPE_MONITOR (gs_monitor_get_type())
+#define GS_MONITOR(o) (G_TYPE_CHECK_INSTANCE_CAST((o), GS_TYPE_MONITOR, GSMonitor))
+#define GS_MONITOR_CLASS(k) (G_TYPE_CHECK_CLASS_CAST((k), GS_TYPE_MONITOR, GSMonitorClass))
+#define GS_IS_MONITOR(o) (G_TYPE_CHECK_INSTANCE_TYPE((o), GS_TYPE_MONITOR))
+#define GS_IS_MONITOR_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_MONITOR))
+#define GS_MONITOR_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_MONITOR, GSMonitorClass))
 
 typedef struct GSMonitorPrivate GSMonitorPrivate;
 
-typedef struct
-{
-	GObject          parent;
-	GSMonitorPrivate *priv;
+typedef struct {
+	GObject parent;
+	GSMonitorPrivate* priv;
 } GSMonitor;
 
-typedef struct
-{
-	GObjectClass     parent_class;
+typedef struct {
+	GObjectClass parent_class;
 } GSMonitorClass;
 
-GType       gs_monitor_get_type (void);
+GType gs_monitor_get_type(void);
 
-GSMonitor * gs_monitor_new              (void);
-gboolean    gs_monitor_start            (GSMonitor *monitor,
-					 GError   **error);
-void        gs_monitor_set_lock_enabled (GSMonitor *monitor,
-					 gboolean   lock_enabled);
+GSMonitor* gs_monitor_new(void);
+gboolean gs_monitor_start(GSMonitor* monitor, GError** error);
+void gs_monitor_set_lock_enabled(GSMonitor* monitor, gboolean lock_enabled);
 G_END_DECLS
 
 #endif /* __GS_MONITOR_H */

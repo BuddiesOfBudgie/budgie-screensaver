@@ -23,41 +23,40 @@
 #define __GS_BUS_H
 
 /* systemd logind */
-#define SYSTEMD_LOGIND_SERVICE          "org.freedesktop.login1"
-#define SYSTEMD_LOGIND_PATH             "/org/freedesktop/login1"
-#define SYSTEMD_LOGIND_INTERFACE        "org.freedesktop.login1.Manager"
+#define SYSTEMD_LOGIND_SERVICE "org.freedesktop.login1"
+#define SYSTEMD_LOGIND_PATH "/org/freedesktop/login1"
+#define SYSTEMD_LOGIND_INTERFACE "org.freedesktop.login1.Manager"
 
 #define SYSTEMD_LOGIND_SESSION_INTERFACE "org.freedesktop.login1.Session"
-#define SYSTEMD_LOGIND_SESSION_PATH     "/org/freedesktop/login1/session"
+#define SYSTEMD_LOGIND_SESSION_PATH "/org/freedesktop/login1/session"
 
 /* ConsoleKit */
-#define CK_SERVICE                      "org.freedesktop.ConsoleKit"
-#define CK_PATH                         "/org/freedesktop/ConsoleKit"
-#define CK_INTERFACE                    "org.freedesktop.ConsoleKit"
+#define CK_SERVICE "org.freedesktop.ConsoleKit"
+#define CK_PATH "/org/freedesktop/ConsoleKit"
+#define CK_INTERFACE "org.freedesktop.ConsoleKit"
 
-#define CK_MANAGER_PATH                 CK_PATH "/Manager"
-#define CK_MANAGER_INTERFACE            CK_INTERFACE ".Manager"
+#define CK_MANAGER_PATH CK_PATH "/Manager"
+#define CK_MANAGER_INTERFACE CK_INTERFACE ".Manager"
 
-#define CK_SESSION_PATH                 CK_PATH "/Session"
-#define CK_SESSION_INTERFACE            CK_INTERFACE ".Session"
+#define CK_SESSION_PATH CK_PATH "/Session"
+#define CK_SESSION_INTERFACE CK_INTERFACE ".Session"
 
 /* DBus */
-#define DBUS_SERVICE                    "org.freedesktop.DBus"
-#define DBUS_PATH                       "/org/freedesktop/DBus"
-#define DBUS_INTERFACE                  "org.freedesktop.DBus"
+#define DBUS_SERVICE "org.freedesktop.DBus"
+#define DBUS_PATH "/org/freedesktop/DBus"
+#define DBUS_INTERFACE "org.freedesktop.DBus"
 
 /* Gnome Screensaver */
-#define GS_SERVICE                      "org.gnome.ScreenSaver"
-#define GS_PATH                         "/org/gnome/ScreenSaver"
-#define GS_INTERFACE                    "org.gnome.ScreenSaver"
+#define GS_SERVICE "org.gnome.ScreenSaver"
+#define GS_PATH "/org/gnome/ScreenSaver"
+#define GS_INTERFACE "org.gnome.ScreenSaver"
 
 /* Gnome Session Manager */
-#define GSM_SERVICE                     "org.gnome.SessionManager"
-#define GSM_PATH                        "/org/gnome/SessionManager"
-#define GSM_INTERFACE                   "org.gnome.SessionManager"
+#define GSM_SERVICE "org.gnome.SessionManager"
+#define GSM_PATH "/org/gnome/SessionManager"
+#define GSM_INTERFACE "org.gnome.SessionManager"
 
-#define GSM_PRESENCE_PATH               GSM_PATH "/Presence"
-#define GSM_PRESENCE_INTERFACE          GSM_INTERFACE ".Presence"
+#define GSM_PRESENCE_PATH GSM_PATH "/Presence"
+#define GSM_PRESENCE_INTERFACE GSM_INTERFACE ".Presence"
 
 #endif
-
