@@ -60,47 +60,47 @@ gboolean attempt_gjs_screensaver_kill (gpointer data) {
 void
 gnome_screensaver_quit (void)
 {
-        gtk_main_quit ();
+	gtk_main_quit ();
 }
 
 int
 main (int    argc,
       char **argv)
 {
-        GSMonitor          *monitor;
-        GError             *error = NULL;
-        static gboolean     show_version = FALSE;
-        static gboolean     no_daemon    = TRUE;
-        static gboolean     debug        = FALSE;
-        static GOptionEntry entries []   = {
-                { "version", 0, 0, G_OPTION_ARG_NONE, &show_version, N_("Version of this application"), NULL },
-                { "no-daemon", 0, 0, G_OPTION_ARG_NONE, &no_daemon, N_("Don't become a daemon"), NULL },
-                { "debug", 0, 0, G_OPTION_ARG_NONE, &debug, N_("Enable debugging code"), NULL },
-                { NULL }
-        };
+	GSMonitor          *monitor;
+	GError             *error = NULL;
+	static gboolean     show_version = FALSE;
+	static gboolean     no_daemon    = TRUE;
+	static gboolean     debug        = FALSE;
+	static GOptionEntry entries []   = {
+		{ "version", 0, 0, G_OPTION_ARG_NONE, &show_version, N_("Version of this application"), NULL },
+		{ "no-daemon", 0, 0, G_OPTION_ARG_NONE, &no_daemon, N_("Don't become a daemon"), NULL },
+		{ "debug", 0, 0, G_OPTION_ARG_NONE, &debug, N_("Enable debugging code"), NULL },
+		{ NULL }
+	};
 
 #ifdef ENABLE_NLS
-        bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 # ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-        bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 # endif
-        textdomain (GETTEXT_PACKAGE);
+	textdomain (GETTEXT_PACKAGE);
 #endif
 
-        if (! gtk_init_with_args (&argc, &argv, NULL, entries, NULL, &error)) {
-                if (error) {
-                        g_warning ("%s", error->message);
-                        g_error_free (error);
-                } else {
-                        g_warning ("Unable to initialize GTK+");
-                }
-                exit (1);
-        }
+	if (! gtk_init_with_args (&argc, &argv, NULL, entries, NULL, &error)) {
+		if (error) {
+			g_warning ("%s", error->message);
+			g_error_free (error);
+		} else {
+			g_warning ("Unable to initialize GTK+");
+		}
+		exit (1);
+	}
 
-        if (show_version) {
-                g_print ("%s %s\n", argv [0], VERSION);
-                exit (1);
-        }
+	if (show_version) {
+		g_print ("%s %s\n", argv [0], VERSION);
+		exit (1);
+	}
 
 		gchar** env_vars = g_get_environ(); // Get our list of environment variables
 		gchar* desktop = g_environ_getenv(env_vars, "XDG_CURRENT_DESKTOP"); // Get the current desktop value
@@ -114,14 +114,14 @@ main (int    argc,
 
 		g_strfreev(env_vars); // Free our environment variables
 
-        gs_debug_init (debug, FALSE);
-        gs_debug ("initializing budgie-screensaver %s", VERSION);
+	gs_debug_init (debug, FALSE);
+	gs_debug ("initializing budgie-screensaver %s", VERSION);
 
-        monitor = gs_monitor_new ();
+	monitor = gs_monitor_new ();
 
-        if (monitor == NULL) {
-            exit (1);
-        }
+	if (monitor == NULL) {
+	    exit (1);
+	}
 
 		// While the logic might seem weird, this saves us from having to implement a reading of /proc looking for gjs running the org.gnome.ScreenSaver "service", killing it, then doing a defer and kill again in case it starts up again
 		// It also saves us from having to add any exponential backoff or logic for stopping the timer after N attempts.
@@ -133,24 +133,24 @@ main (int    argc,
 			g_timeout_add_seconds_full(G_PRIORITY_LOW, 30, attempt_gjs_screensaver_kill, NULL, NULL); // In the event gjs is still going after 30s, kill again
 		}
 
-        error = NULL;
-        if (! gs_monitor_start (monitor, &error)) {
-                if (error) {
-                        g_warning ("%s", error->message);
-                        g_error_free (error);
-                } else {
-                        g_warning ("Unable to start screensaver");
-                }
-                exit (1);
-        }
+	error = NULL;
+	if (! gs_monitor_start (monitor, &error)) {
+		if (error) {
+			g_warning ("%s", error->message);
+			g_error_free (error);
+		} else {
+			g_warning ("Unable to start screensaver");
+		}
+		exit (1);
+	}
 
-        gtk_main ();
+	gtk_main ();
 
-        g_object_unref (monitor);
+	g_object_unref (monitor);
 
-        gs_debug ("budgie-screensaver finished");
+	gs_debug ("budgie-screensaver finished");
 
-        gs_debug_shutdown ();
+	gs_debug_shutdown ();
 
-        return 0;
+	return 0;
 }

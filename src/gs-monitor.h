@@ -36,22 +36,22 @@ typedef struct GSMonitorPrivate GSMonitorPrivate;
 
 typedef struct
 {
-        GObject          parent;
-        GSMonitorPrivate *priv;
+	GObject          parent;
+	GSMonitorPrivate *priv;
 } GSMonitor;
 
 typedef struct
 {
-        GObjectClass     parent_class;
+	GObjectClass     parent_class;
 } GSMonitorClass;
 
 GType       gs_monitor_get_type (void);
 
 GSMonitor * gs_monitor_new              (void);
 gboolean    gs_monitor_start            (GSMonitor *monitor,
-                                         GError   **error);
+					 GError   **error);
 void        gs_monitor_set_lock_enabled (GSMonitor *monitor,
-                                         gboolean   lock_enabled);
+					 gboolean   lock_enabled);
 G_END_DECLS
 
 #endif /* __GS_MONITOR_H */

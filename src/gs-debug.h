@@ -37,13 +37,13 @@ G_BEGIN_DECLS
 #endif
 
 void gs_debug_init             (gboolean debug,
-                                gboolean to_file);
+				gboolean to_file);
 gboolean gs_debug_enabled      (void);
 void gs_debug_shutdown         (void);
 void gs_debug_real             (const char *func,
-                                const char *file,
-                                int         line,
-                                const char *format, ...);
+				const char *file,
+				int         line,
+				const char *format, ...);
 
 #ifdef ENABLE_PROFILING
 #ifdef G_HAVE_ISO_VARARGS
@@ -62,9 +62,9 @@ void gs_debug_real             (const char *func,
 #endif
 
 void            _gs_profile_log    (const char *func,
-                                    const char *note,
-                                    const char *format,
-                                    ...) G_GNUC_PRINTF (3, 4);
+				    const char *note,
+				    const char *format,
+				    ...) G_GNUC_PRINTF (3, 4);
 
 G_END_DECLS
 

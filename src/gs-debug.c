@@ -43,111 +43,111 @@ static FILE    *debug_out = NULL;
  */
 void
 gs_debug_real (const char *func,
-               const char *file,
-               const int   line,
-               const char *format, ...)
+	       const char *file,
+	       const int   line,
+	       const char *format, ...)
 {
-        va_list args;
-        char    buffer [1025];
-        char   *str_time;
-        time_t  the_time;
+	va_list args;
+	char    buffer [1025];
+	char   *str_time;
+	time_t  the_time;
 
-        if (debugging == FALSE)
-                return;
+	if (debugging == FALSE)
+		return;
 
-        va_start (args, format);
+	va_start (args, format);
 
-        g_vsnprintf (buffer, 1024, format, args);
+	g_vsnprintf (buffer, 1024, format, args);
 
-        va_end (args);
+	va_end (args);
 
-        time (&the_time);
-        str_time = g_new0 (char, 255);
-        strftime (str_time, 254, "%H:%M:%S", localtime (&the_time));
+	time (&the_time);
+	str_time = g_new0 (char, 255);
+	strftime (str_time, 254, "%H:%M:%S", localtime (&the_time));
 
-        fprintf ((debug_out ? debug_out : stderr),
-                 "[%s] %s:%d (%s):\t %s\n",
-                 func, file, line, str_time, buffer);
+	fprintf ((debug_out ? debug_out : stderr),
+		 "[%s] %s:%d (%s):\t %s\n",
+		 func, file, line, str_time, buffer);
 
-        if (debug_out)
-                fflush (debug_out);
+	if (debug_out)
+		fflush (debug_out);
 
-        g_free (str_time);
+	g_free (str_time);
 }
 
 gboolean
 gs_debug_enabled (void)
 {
-        return debugging;
+	return debugging;
 }
 
 void
 gs_debug_init (gboolean debug,
-               gboolean to_file)
+	       gboolean to_file)
 {
-        /* return if already initialized */
-        if (debugging == TRUE) {
-                return;
-        }
+	/* return if already initialized */
+	if (debugging == TRUE) {
+		return;
+	}
 
-        debugging = debug;
+	debugging = debug;
 
-        if (debug && to_file) {
-                const char path [50] = "gnome_screensaver_debug_XXXXXX";
-                int        fd;
+	if (debug && to_file) {
+		const char path [50] = "gnome_screensaver_debug_XXXXXX";
+		int        fd;
 
-                fd = g_file_open_tmp (path, NULL, NULL);
+		fd = g_file_open_tmp (path, NULL, NULL);
 
-                if (fd >= 0) {
-                        debug_out = fdopen (fd, "a");
-                }
-        }
+		if (fd >= 0) {
+			debug_out = fdopen (fd, "a");
+		}
+	}
 
-        gs_debug ("Debugging %s", (debug) ? "enabled" : "disabled");
+	gs_debug ("Debugging %s", (debug) ? "enabled" : "disabled");
 }
 
 void
 gs_debug_shutdown (void)
 {
-        if (! debugging)
-                return;
+	if (! debugging)
+		return;
 
-        gs_debug ("Shutting down debugging");
+	gs_debug ("Shutting down debugging");
 
-        debugging = FALSE;
+	debugging = FALSE;
 
-        if (debug_out != NULL) {
-                fclose (debug_out);
-                debug_out = NULL;
-        }
+	if (debug_out != NULL) {
+		fclose (debug_out);
+		debug_out = NULL;
+	}
 }
 
 void
 _gs_profile_log (const char *func,
-                 const char *note,
-                 const char *format,
-                 ...)
+		 const char *note,
+		 const char *format,
+		 ...)
 {
-        va_list args;
-        char   *str;
-        char   *formatted;
+	va_list args;
+	char   *str;
+	char   *formatted;
 
-        if (format == NULL) {
-                formatted = g_strdup ("");
-        } else {
-        	va_start (args, format);
-        	formatted = g_strdup_vprintf (format, args);
-        	va_end (args);
-        }
+	if (format == NULL) {
+		formatted = g_strdup ("");
+	} else {
+		va_start (args, format);
+		formatted = g_strdup_vprintf (format, args);
+		va_end (args);
+	}
 
-        if (func != NULL) {
-                str = g_strdup_printf ("MARK: %s %s: %s %s", g_get_prgname(), func, note ? note : "", formatted);
-        } else {
-                str = g_strdup_printf ("MARK: %s: %s %s", g_get_prgname(), note ? note : "", formatted);
-        }
+	if (func != NULL) {
+		str = g_strdup_printf ("MARK: %s %s: %s %s", g_get_prgname(), func, note ? note : "", formatted);
+	} else {
+		str = g_strdup_printf ("MARK: %s: %s %s", g_get_prgname(), note ? note : "", formatted);
+	}
 
-        g_free (formatted);
+	g_free (formatted);
 
-        g_access (str, F_OK);
-        g_free (str);
+	g_access (str, F_OK);
+	g_free (str);
 }

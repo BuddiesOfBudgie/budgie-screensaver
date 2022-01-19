@@ -63,10 +63,10 @@ gs_auth_get_verbose (void)
 
 gboolean
 gs_auth_verify_user (const char       *username,
-                     const char       *display, 
-                     GSAuthMessageFunc func,
-                     gpointer          data,
-                     GError          **error)
+		     const char       *display, 
+		     GSAuthMessageFunc func,
+		     gpointer          data,
+		     GError          **error)
 {
 	int res;
 	char *password;

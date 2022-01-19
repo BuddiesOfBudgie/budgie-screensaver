@@ -39,19 +39,19 @@ typedef struct GSWindowPrivate GSWindowPrivate;
 
 typedef struct
 {
-        GtkWindow        window;
+	GtkWindow        window;
 
-        GSWindowPrivate *priv;
+	GSWindowPrivate *priv;
 } GSWindow;
 
 typedef struct
 {
-        GtkWindowClass   parent_class;
+	GtkWindowClass   parent_class;
 
-        gboolean        (* activity)            (GSWindow *window);
-        void            (* deactivated)         (GSWindow *window);
-        void            (* dialog_up)           (GSWindow *window);
-        void            (* dialog_down)         (GSWindow *window);
+	gboolean        (* activity)            (GSWindow *window);
+	void            (* deactivated)         (GSWindow *window);
+	void            (* dialog_up)           (GSWindow *window);
+	void            (* dialog_down)         (GSWindow *window);
 } GSWindowClass;
 
 GType       gs_window_get_type           (void);
@@ -60,41 +60,41 @@ gboolean    gs_window_is_obscured        (GSWindow  *window);
 gboolean    gs_window_is_dialog_up       (GSWindow  *window);
 
 void        gs_window_set_screen         (GSWindow  *window,
-                                          GdkScreen *screen);
+					  GdkScreen *screen);
 GdkScreen * gs_window_get_screen         (GSWindow  *window);
 void        gs_window_set_monitor        (GSWindow  *window,
-                                          int        monitor);
+					  int        monitor);
 int         gs_window_get_monitor        (GSWindow  *window);
 
 void        gs_window_set_background_surface (GSWindow        *window,
-                                              cairo_surface_t *surface);
+					      cairo_surface_t *surface);
 void        gs_window_set_lock_enabled   (GSWindow  *window,
-                                          gboolean   lock_enabled);
+					  gboolean   lock_enabled);
 void        gs_window_set_logout_enabled (GSWindow  *window,
-                                          gboolean   logout_enabled);
+					  gboolean   logout_enabled);
 void        gs_window_set_keyboard_enabled (GSWindow  *window,
-                                            gboolean   enabled);
+					    gboolean   enabled);
 void        gs_window_set_keyboard_command (GSWindow   *window,
-                                            const char *command);
+					    const char *command);
 void        gs_window_set_user_switch_enabled (GSWindow  *window,
-                                               gboolean   user_switch_enabled);
+					       gboolean   user_switch_enabled);
 void        gs_window_set_logout_timeout (GSWindow  *window,
-                                          glong      timeout);
+					  glong      timeout);
 void        gs_window_set_logout_command (GSWindow   *window,
-                                          const char *command);
+					  const char *command);
 void        gs_window_set_status_message   (GSWindow   *window,
-                                            const char *status_message);
+					    const char *status_message);
 void        gs_window_show_message         (GSWindow   *window,
-                                            const char *summary,
-                                            const char *body,
-                                            const char *icon);
+					    const char *summary,
+					    const char *body,
+					    const char *icon);
 
 void        gs_window_request_unlock     (GSWindow  *window);
 void        gs_window_cancel_unlock_request (GSWindow  *window);
 
 GSWindow  * gs_window_new                (GdkScreen *screen,
-                                          int        monitor,
-                                          gboolean   lock_enabled);
+					  int        monitor,
+					  gboolean   lock_enabled);
 void        gs_window_show               (GSWindow  *window);
 void        gs_window_destroy            (GSWindow  *window);
 GdkWindow * gs_window_get_gdk_window     (GSWindow  *window);

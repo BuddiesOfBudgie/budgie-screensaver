@@ -27,9 +27,9 @@ sigset_t
 block_sigchld (void);
 
 int  signal_pid           (int    pid,
-                           int    signal);
+			   int    signal);
 void await_dying_children (int      pid,
-                           gboolean debug);
+			   gboolean debug);
 
 G_END_DECLS
 

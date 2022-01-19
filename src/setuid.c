@@ -31,119 +31,119 @@
 
 static char *
 uid_gid_string (uid_t uid,
-                gid_t gid)
+		gid_t gid)
 {
-        static char   *buf;
-        struct passwd *p = NULL;
-        struct group  *g = NULL;
+	static char   *buf;
+	struct passwd *p = NULL;
+	struct group  *g = NULL;
 
-        p = getpwuid (uid);
-        g = getgrgid (gid);
+	p = getpwuid (uid);
+	g = getgrgid (gid);
 
-        buf = g_strdup_printf ("%s/%s (%ld/%ld)",
-                               (p && p->pw_name ? p->pw_name : "???"),
-                               (g && g->gr_name ? g->gr_name : "???"),
-                               (long) uid, (long) gid);
+	buf = g_strdup_printf ("%s/%s (%ld/%ld)",
+			       (p && p->pw_name ? p->pw_name : "???"),
+			       (g && g->gr_name ? g->gr_name : "???"),
+			       (long) uid, (long) gid);
 
-        return buf;
+	return buf;
 }
 
 static gboolean
 set_ids_by_number (uid_t  uid,
-                   gid_t  gid,
-                   char **message_ret)
+		   gid_t  gid,
+		   char **message_ret)
 {
-        int uid_errno = 0;
-        int gid_errno = 0;
-        int sgs_errno = 0;
-        struct passwd *p = getpwuid (uid);
-        struct group  *g = getgrgid (gid);
+	int uid_errno = 0;
+	int gid_errno = 0;
+	int sgs_errno = 0;
+	struct passwd *p = getpwuid (uid);
+	struct group  *g = getgrgid (gid);
 
-        if (message_ret)
-                *message_ret = NULL;
+	if (message_ret)
+		*message_ret = NULL;
 
-        /* Rumor has it that some implementations of of setuid() do nothing
-           when called with -1; therefore, if the "nobody" user has a uid of
-           -1, then that would be Really Bad.  Rumor further has it that such
-           systems really ought to be using -2 for "nobody", since that works.
-           So, if we get a uid (or gid, for good measure) of -1, switch to -2
-           instead.  Note that this must be done after we've looked up the
-           user/group names with getpwuid(-1) and/or getgrgid(-1).
-        */
-        if (gid == (gid_t) -1) gid = (gid_t) -2;
-        if (uid == (uid_t) -1) uid = (uid_t) -2;
+	/* Rumor has it that some implementations of of setuid() do nothing
+	   when called with -1; therefore, if the "nobody" user has a uid of
+	   -1, then that would be Really Bad.  Rumor further has it that such
+	   systems really ought to be using -2 for "nobody", since that works.
+	   So, if we get a uid (or gid, for good measure) of -1, switch to -2
+	   instead.  Note that this must be done after we've looked up the
+	   user/group names with getpwuid(-1) and/or getgrgid(-1).
+	*/
+	if (gid == (gid_t) -1) gid = (gid_t) -2;
+	if (uid == (uid_t) -1) uid = (uid_t) -2;
 
-         errno = 0;
-         if (setgroups (1, &gid) < 0)
-                 sgs_errno = errno ? errno : -1;
+	 errno = 0;
+	 if (setgroups (1, &gid) < 0)
+		 sgs_errno = errno ? errno : -1;
 
-        errno = 0;
-        if (setgid (gid) != 0)
-                gid_errno = errno ? errno : -1;
+	errno = 0;
+	if (setgid (gid) != 0)
+		gid_errno = errno ? errno : -1;
 
-        errno = 0;
-        if (setuid (uid) != 0)
-                uid_errno = errno ? errno : -1;
+	errno = 0;
+	if (setuid (uid) != 0)
+		uid_errno = errno ? errno : -1;
 
-        if (uid_errno == 0 && gid_errno == 0 && sgs_errno == 0) {
-                static char *reason;
-                reason = g_strdup_printf ("changed uid/gid to %s/%s (%ld/%ld).",
-                                          (p && p->pw_name ? p->pw_name : "???"),
-                                          (g && g->gr_name ? g->gr_name : "???"),
-                                          (long) uid, (long) gid);
-                if (message_ret)
-                        *message_ret = g_strdup (reason);
+	if (uid_errno == 0 && gid_errno == 0 && sgs_errno == 0) {
+		static char *reason;
+		reason = g_strdup_printf ("changed uid/gid to %s/%s (%ld/%ld).",
+					  (p && p->pw_name ? p->pw_name : "???"),
+					  (g && g->gr_name ? g->gr_name : "???"),
+					  (long) uid, (long) gid);
+		if (message_ret)
+			*message_ret = g_strdup (reason);
 
-                g_free (reason);
+		g_free (reason);
 
-                return TRUE;
-        } else {
-                char *reason = NULL;
+		return TRUE;
+	} else {
+		char *reason = NULL;
 
-                if (sgs_errno) {
-                        reason = g_strdup_printf ("couldn't setgroups to %s (%ld)",
-                                                  (g && g->gr_name ? g->gr_name : "???"),
-                                                  (long) gid);
-                        if (sgs_errno == -1)
-                                fprintf (stderr, "%s: unknown error\n", reason);
-                        else {
-                                errno = sgs_errno;
-                                perror (reason);
-                        }
-                        g_free (reason);
-                        reason = NULL;
-                }
+		if (sgs_errno) {
+			reason = g_strdup_printf ("couldn't setgroups to %s (%ld)",
+						  (g && g->gr_name ? g->gr_name : "???"),
+						  (long) gid);
+			if (sgs_errno == -1)
+				fprintf (stderr, "%s: unknown error\n", reason);
+			else {
+				errno = sgs_errno;
+				perror (reason);
+			}
+			g_free (reason);
+			reason = NULL;
+		}
 
-                if (gid_errno) {
-                        reason = g_strdup_printf ("couldn't set gid to %s (%ld)",
-                                                  (g && g->gr_name ? g->gr_name : "???"),
-                                                  (long) gid);
-                        if (gid_errno == -1)
-                                fprintf (stderr, "%s: unknown error\n", reason);
-                        else {
-                                errno = gid_errno;
-                                perror (reason);
-                        }
-                        g_free (reason);
-                        reason = NULL;
-                }
+		if (gid_errno) {
+			reason = g_strdup_printf ("couldn't set gid to %s (%ld)",
+						  (g && g->gr_name ? g->gr_name : "???"),
+						  (long) gid);
+			if (gid_errno == -1)
+				fprintf (stderr, "%s: unknown error\n", reason);
+			else {
+				errno = gid_errno;
+				perror (reason);
+			}
+			g_free (reason);
+			reason = NULL;
+		}
 
-                if (uid_errno) {
-                        reason = g_strdup_printf ("couldn't set uid to %s (%ld)",
-                                                  (p && p->pw_name ? p->pw_name : "???"),
-                                                  (long) uid);
-                        if (uid_errno == -1)
-                                fprintf (stderr, "%s: unknown error\n", reason);
-                        else {
-                                errno = uid_errno;
-                                perror (reason);
-                        }
-                        g_free (reason);
-                        reason = NULL;
-                }
-                return FALSE;
-        }
-        return FALSE;
+		if (uid_errno) {
+			reason = g_strdup_printf ("couldn't set uid to %s (%ld)",
+						  (p && p->pw_name ? p->pw_name : "???"),
+						  (long) uid);
+			if (uid_errno == -1)
+				fprintf (stderr, "%s: unknown error\n", reason);
+			else {
+				errno = uid_errno;
+				perror (reason);
+			}
+			g_free (reason);
+			reason = NULL;
+		}
+		return FALSE;
+	}
+	return FALSE;
 }
 
 
@@ -162,87 +162,87 @@ set_ids_by_number (uid_t  uid,
 /* Returns TRUE if OK to lock, FALSE otherwise */
 gboolean
 hack_uid (char **nolock_reason,
-          char **orig_uid,
-          char **uid_message)
+	  char **orig_uid,
+	  char **uid_message)
 {
-        char    *reason;
-        gboolean ret;
+	char    *reason;
+	gboolean ret;
 
-        ret = TRUE;
-        reason = NULL;
+	ret = TRUE;
+	reason = NULL;
 
-        if (nolock_reason != NULL) {
-                *nolock_reason = NULL;
-        }
-        if (orig_uid != NULL) {
-                *orig_uid = NULL;
-        }
-        if (uid_message != NULL) {
-                *uid_message = NULL;
-        }
+	if (nolock_reason != NULL) {
+		*nolock_reason = NULL;
+	}
+	if (orig_uid != NULL) {
+		*orig_uid = NULL;
+	}
+	if (uid_message != NULL) {
+		*uid_message = NULL;
+	}
 
-        /* Discard privileges, and set the effective user/group ids to the
-           real user/group ids.  That is, give up our "chmod +s" rights.
-        */
-        {
-                uid_t euid = geteuid ();
-                gid_t egid = getegid ();
-                uid_t uid  = getuid ();
-                gid_t gid  = getgid ();
+	/* Discard privileges, and set the effective user/group ids to the
+	   real user/group ids.  That is, give up our "chmod +s" rights.
+	*/
+	{
+		uid_t euid = geteuid ();
+		gid_t egid = getegid ();
+		uid_t uid  = getuid ();
+		gid_t gid  = getgid ();
 
-                if (orig_uid != NULL) {
-                        *orig_uid = uid_gid_string (euid, egid);
-                }
+		if (orig_uid != NULL) {
+			*orig_uid = uid_gid_string (euid, egid);
+		}
 
 #ifdef HAVE_BSDAUTH /* we need to setgid auth to run the bsd_auth(3) login_* helpers */
-                {
-                        struct group *authg = getgrnam("auth");
-                        if (!authg || !authg->gr_name || !*authg->gr_name) {
-                                        reason = g_strdup ("no such group as \"auth\" for bsdauth.");
+		{
+			struct group *authg = getgrnam("auth");
+			if (!authg || !authg->gr_name || !*authg->gr_name) {
+					reason = g_strdup ("no such group as \"auth\" for bsdauth.");
 
-                                        ret = FALSE;
-                                        goto out;
-                        }
-                        if (! set_ids_by_number (uid, authg->gr_gid, uid_message)) {
-                                        reason = g_strdup ("cannot setgid \"auth\" for bsdauth.");
+					ret = FALSE;
+					goto out;
+			}
+			if (! set_ids_by_number (uid, authg->gr_gid, uid_message)) {
+					reason = g_strdup ("cannot setgid \"auth\" for bsdauth.");
 
-                                        ret = FALSE;
-                                        goto out;
-                        }
-                }
+					ret = FALSE;
+					goto out;
+			}
+		}
 #else /* !HAVE_BSDAUTH */
-                if (uid != euid || gid != egid) {
-                        if (! set_ids_by_number (uid, gid, uid_message)) {
-                                reason = g_strdup ("unable to discard privileges.");
+		if (uid != euid || gid != egid) {
+			if (! set_ids_by_number (uid, gid, uid_message)) {
+				reason = g_strdup ("unable to discard privileges.");
 
-                                ret = FALSE;
-                                goto out;
-                        }
-                }
+				ret = FALSE;
+				goto out;
+			}
+		}
 #endif
-        }
+	}
 
 
-        /* Locking can't work when running as root, because we have no way of
-           knowing what the user id of the logged in user is (so we don't know
-           whose password to prompt for.)
+	/* Locking can't work when running as root, because we have no way of
+	   knowing what the user id of the logged in user is (so we don't know
+	   whose password to prompt for.)
 
-           *** WARNING: DO NOT DISABLE THIS CODE!
-           If you do so, you will open a security hole.  See the sections
-           of the xscreensaver manual titled "LOCKING AND ROOT LOGINS",
-           and "USING XDM".
-        */
-        if (getuid () == (uid_t) 0) {
-                reason = g_strdup ("running as root");
-                ret = FALSE;
-                goto out;
-        }
+	   *** WARNING: DO NOT DISABLE THIS CODE!
+	   If you do so, you will open a security hole.  See the sections
+	   of the xscreensaver manual titled "LOCKING AND ROOT LOGINS",
+	   and "USING XDM".
+	*/
+	if (getuid () == (uid_t) 0) {
+		reason = g_strdup ("running as root");
+		ret = FALSE;
+		goto out;
+	}
 
  out:
-        if (nolock_reason != NULL) {
-                *nolock_reason = g_strdup (reason);
-        }
-        g_free (reason);
+	if (nolock_reason != NULL) {
+		*nolock_reason = g_strdup (reason);
+	}
+	g_free (reason);
 
-        return ret;
+	return ret;
 }

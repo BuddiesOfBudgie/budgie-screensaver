@@ -36,28 +36,28 @@ typedef struct GSWatcherPrivate GSWatcherPrivate;
 
 typedef struct
 {
-        GObject           parent;
-        GSWatcherPrivate *priv;
+	GObject           parent;
+	GSWatcherPrivate *priv;
 } GSWatcher;
 
 typedef struct
 {
-        GObjectClass      parent_class;
+	GObjectClass      parent_class;
 
-        gboolean          (* idle_changed)        (GSWatcher *watcher,
-                                                   gboolean   is_idle);
-        gboolean          (* idle_notice_changed) (GSWatcher *watcher,
-                                                   gboolean   in_effect);
+	gboolean          (* idle_changed)        (GSWatcher *watcher,
+						   gboolean   is_idle);
+	gboolean          (* idle_notice_changed) (GSWatcher *watcher,
+						   gboolean   in_effect);
 } GSWatcherClass;
 
 GType       gs_watcher_get_type         (void);
 
 GSWatcher * gs_watcher_new              (void);
 gboolean    gs_watcher_set_enabled      (GSWatcher *watcher,
-                                         gboolean   enabled);
+					 gboolean   enabled);
 gboolean    gs_watcher_get_enabled      (GSWatcher *watcher);
 gboolean    gs_watcher_set_active       (GSWatcher *watcher,
-                                         gboolean   active);
+					 gboolean   active);
 gboolean    gs_watcher_get_active       (GSWatcher *watcher);
 
 G_END_DECLS
