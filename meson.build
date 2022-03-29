@@ -1,7 +1,7 @@
 project(
     'budgie-screensaver',
     'c',
-    version: '5.0',
+    version: '5.0.1',
     license: ['GPL-2.0'],
     default_options: [
         'c_std=c11',
