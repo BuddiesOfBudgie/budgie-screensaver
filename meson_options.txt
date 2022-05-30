@@ -1,1 +1,2 @@
 option('with-systemd', type: 'boolean', value: true, description: 'Enable systemd integration')
+option('without-kbd-layout-indicator', type: 'boolean', value: false, description: 'Disable keyboard layout indicator')

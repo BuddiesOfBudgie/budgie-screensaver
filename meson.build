@@ -28,6 +28,11 @@ if with_systemd
     dep_systemd = dependency('libsystemd', version: '>= 209')
 endif
 
+without_kdb_layout_indicator = get_option('without-kbd-layout-indicator')
+if not without_kdb_layout_indicator
+    dep_gnomekbdui = dependency('libgnomekbdui', version: '>= 0.1')
+endif
+
 c = meson.get_compiler('c')
 dep_pam = c.find_library('pam', required: true)
 
@@ -56,6 +61,10 @@ cdata.set_quoted('LIBEXECDIR', libexecdir)
 
 if with_systemd
     cdata.set('WITH_SYSTEMD', 1)
+endif
+
+if not without_kdb_layout_indicator
+    cdata.set('WITH_KBD_LAYOUT_INDICATOR', 1)
 endif
 
 configure_file(

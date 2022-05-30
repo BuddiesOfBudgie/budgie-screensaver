@@ -42,6 +42,10 @@ if with_systemd
     screensaver_deps += dep_systemd
 endif
 
+if not without_kdb_layout_indicator
+    screensaver_deps += dep_gnomekbdui
+endif
+
 # Output
 
 executable(
