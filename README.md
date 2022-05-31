@@ -11,7 +11,7 @@ This fork was born out of a need in Budgie 10 series to have a drop-in replaceme
 
 ## Compiling
 
-Budgie Screensaver makes use of GNU Autotools for configuration, compilation, and installation. As such, the standard method is to:
+Budgie Screensaver makes use of Meson for configuration, compilation, and installation. As such, the standard method is to:
 
 1. `meson build`
 2. `meson compile -C build`
