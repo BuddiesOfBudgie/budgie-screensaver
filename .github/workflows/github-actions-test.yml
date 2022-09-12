@@ -10,6 +10,6 @@ jobs:
         python-version: '3.x'
     - run: pip install meson ninja
     - run: sudo apt update
-    - run: sudo apt install libdbus-glib-1-dev libx11-dev libgtk-3-dev libgnome-desktop-3-dev libgnomekbd-dev libpam0g-dev intltool
+    - run: sudo apt install libdbus-glib-1-dev libx11-dev libgtk-3-dev libgnome-desktop-3-dev libgnomekbd-dev libpam0g-dev libxxf86vm-dev intltool
     - run: meson build
     - run: meson compile -C build
