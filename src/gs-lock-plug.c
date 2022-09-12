@@ -1281,6 +1281,7 @@ gs_lock_plug_enable_prompt (GSLockPlug *plug,
 	g_free (markup);
 	gtk_widget_show (plug->priv->auth_prompt_label);
 	gtk_entry_set_visibility (GTK_ENTRY (plug->priv->auth_prompt_entry), visible);
+	gtk_entry_set_invisible_char (GTK_ENTRY (plug->priv->auth_prompt_entry), 0x2022); // bullet char
 	gtk_widget_set_sensitive (plug->priv->auth_prompt_entry, TRUE);
 	gtk_widget_show (plug->priv->auth_prompt_entry);
 
