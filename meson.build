@@ -33,6 +33,14 @@ if not without_kdb_layout_indicator
     dep_gnomekbdui = dependency('libgnomekbdui', version: '>= 0.1')
 endif
 
+no_locking = get_option('no-locking')
+with_console_kit = get_option('with-console-kit')
+
+with_xf86gamma_ext = get_option('with-xf86gamma-ext')
+if with_xf86gamma_ext
+    dep_xf86vm = dependency('xxf86vm', version: '>= 1.1.0')
+endif
+
 c = meson.get_compiler('c')
 dep_pam = c.find_library('pam', required: true)
 
@@ -65,6 +73,19 @@ endif
 
 if not without_kdb_layout_indicator
     cdata.set('WITH_KBD_LAYOUT_INDICATOR', 1)
+endif
+
+if no_locking
+    cdata.set('NO_LOCKING', 1)
+endif
+
+if with_console_kit
+    cdata.set('WITH_CONSOLE_KIT', 1)
+endif
+
+if with_xf86gamma_ext
+    cdata.set('HAVE_XF86VMODE_GAMMA', 1)
+    cdata.set('HAVE_XF86VMODE_GAMMA_RAMP', 1)
 endif
 
 configure_file(

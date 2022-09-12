@@ -46,6 +46,10 @@ if not without_kdb_layout_indicator
     screensaver_deps += dep_gnomekbdui
 endif
 
+if with_xf86gamma_ext
+    screensaver_deps += dep_xf86vm
+endif
+
 # Output
 
 executable(
