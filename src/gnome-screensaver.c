@@ -103,7 +103,7 @@ main (int    argc,
 	}
 
 		gchar** env_vars = g_get_environ(); // Get our list of environment variables
-		gchar* desktop = g_environ_getenv(env_vars, "XDG_CURRENT_DESKTOP"); // Get the current desktop value
+		const gchar* desktop = g_environ_getenv(env_vars, "XDG_CURRENT_DESKTOP"); // Get the current desktop value
 
 		if (desktop != NULL) { // Got a value
 			if (!g_str_has_prefix(desktop, "Budgie")) { // Does not start with Budgie
