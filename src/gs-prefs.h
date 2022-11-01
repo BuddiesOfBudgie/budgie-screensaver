@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 #define GS_IS_PREFS_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_PREFS))
 #define GS_PREFS_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_PREFS, GSPrefsClass))
 
-typedef struct GSPrefsPrivate GSPrefsPrivate;
+typedef struct _GSPrefsPrivate GSPrefsPrivate;
 
 typedef struct {
 	GObject parent;
