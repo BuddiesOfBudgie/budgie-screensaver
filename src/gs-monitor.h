@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 #define GS_IS_MONITOR_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_MONITOR))
 #define GS_MONITOR_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_MONITOR, GSMonitorClass))
 
-typedef struct GSMonitorPrivate GSMonitorPrivate;
+typedef struct _GSMonitorPrivate GSMonitorPrivate;
 
 typedef struct {
 	GObject parent;
