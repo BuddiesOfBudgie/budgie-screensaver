@@ -60,8 +60,6 @@ static void     gs_fade_class_init (GSFadeClass *klass);
 static void     gs_fade_init       (GSFade      *fade);
 static void     gs_fade_finalize   (GObject        *object);
 
-#define GS_FADE_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_FADE, GSFadePrivate))
-
 struct GSGammaInfo {
 	int              size;
 	unsigned short  *r;
@@ -90,7 +88,7 @@ struct GSFadeScreenPrivate
 					  int     screen);
 };
 
-struct GSFadePrivate
+struct _GSFadePrivate
 {
 	guint            enabled : 1;
 	guint            active : 1;
@@ -109,6 +107,8 @@ struct GSFadePrivate
 	struct GSFadeScreenPrivate *screen_priv;
 };
 
+G_DEFINE_TYPE_WITH_PRIVATE (GSFade, gs_fade, G_TYPE_OBJECT)
+
 enum {
 	FADED,
 	LAST_SIGNAL
@@ -122,8 +122,6 @@ enum {
 };
 
 static guint         signals [LAST_SIGNAL] = { 0, };
-
-G_DEFINE_TYPE (GSFade, gs_fade, G_TYPE_OBJECT)
 
 static gpointer fade_object = NULL;
 
@@ -141,6 +139,9 @@ static int
 ignore_all_errors_ehandler (Display     *dpy,
 			    XErrorEvent *error)
 {
+	(void) dpy;
+	(void) error;
+
 	error_handler_hit = TRUE;
 
 	return 0;
@@ -208,12 +209,14 @@ xf86_whack_gamma (int              screen,
 			g2.blue = XF86_MIN_GAMMA;
 		}
 
-		gdk_error_trap_push ();	   
+		GdkDisplay* default_display = gdk_display_get_default();
+
+		gdk_x11_display_error_trap_push (default_display);
 		status = XF86VidModeSetGamma (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), screen, &g2);
-		gdk_flush ();
-		if (gdk_error_trap_pop ()) {
+		gdk_display_flush (default_display);
+		if (gdk_x11_display_error_trap_pop (default_display)) {
 			gs_debug ("Failed to set gamma. Bailing out and aborting fade");
-			return FALSE;        
+			return FALSE;
 		}
 	} else {
 
@@ -231,12 +234,14 @@ xf86_whack_gamma (int              screen,
 			b[i] = gamma_info->b[i] * ratio;
 		}
 
-		gdk_error_trap_push ();
+		GdkDisplay* default_display = gdk_display_get_default();
+
+		gdk_x11_display_error_trap_push (default_display);
 		status = XF86VidModeSetGammaRamp (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), screen, gamma_info->size, r, g, b);
-		gdk_flush ();
-		if (gdk_error_trap_pop ()) {
+		gdk_display_flush (default_display);
+		if (gdk_x11_display_error_trap_pop (default_display)) {
 			gs_debug ("Failed to set gamma. Bailing out and aborting fade");
-			return FALSE;        
+			return FALSE;
 		}
 
 		g_free (r);
@@ -578,8 +583,7 @@ static gboolean xrandr_fade_set_alpha_gamma (GSFade *fade,
 static void
 check_randr_extension (GSFade *fade, int screen_idx)
 {
-	GdkDisplay *display = gdk_display_get_default ();
-	GdkScreen *screen = gdk_display_get_screen (display, screen_idx);
+	GdkScreen *screen = gdk_screen_get_default ();
 	struct GSFadeScreenPrivate *screen_priv;
 	GnomeRRCrtc **crtcs;
 	GnomeRRCrtc *crtc;
@@ -603,7 +607,7 @@ check_randr_extension (GSFade *fade, int screen_idx)
 		res = gnome_rr_crtc_get_gamma (crtc, &gamma_size, NULL, NULL, NULL);
 		if (res == FALSE || gamma_size == 0) {
 			screen_priv->fade_type = FADE_TYPE_NONE;
-			return;                
+			return;
 		}
 		crtcs++;
 	}
@@ -893,23 +897,18 @@ gs_fade_class_init (GSFadeClass *klass)
 			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE,
 			      0, G_TYPE_NONE);
-
-	g_type_class_add_private (klass, sizeof (GSFadePrivate));
 }
 
 static void
 gs_fade_init (GSFade *fade)
 {
-	GdkDisplay *display;
 	int i;
 
-	fade->priv = GS_FADE_GET_PRIVATE (fade);
+	fade->priv = gs_fade_get_instance_private (fade);
 
 	fade->priv->timeout = 1000;
 	fade->priv->current_alpha = 1.0;
-
-	display = gdk_display_get_default ();
-	fade->priv->num_screens = gdk_display_get_n_screens (display);
+	fade->priv->num_screens = 1;
 
 	fade->priv->screen_priv = g_new0 (struct GSFadeScreenPrivate, fade->priv->num_screens);
 

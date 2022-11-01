@@ -33,7 +33,7 @@ G_BEGIN_DECLS
 #define GS_FADE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_FADE, GSFadeClass))
 
 
-typedef struct GSFadePrivate GSFadePrivate;
+typedef struct _GSFadePrivate GSFadePrivate;
 
 typedef struct {
 	GObject parent;
