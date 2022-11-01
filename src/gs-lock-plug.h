@@ -40,7 +40,7 @@ typedef enum {
 #define GS_IS_LOCK_PLUG_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_LOCK_PLUG))
 #define GS_LOCK_PLUG_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_LOCK_PLUG, GSLockPlugClass))
 
-typedef struct GSLockPlugPrivate GSLockPlugPrivate;
+typedef struct _GSLockPlugPrivate GSLockPlugPrivate;
 
 typedef struct {
 	GtkPlug parent;
