@@ -44,9 +44,7 @@ static void     gs_watcher_finalize   (GObject        *object);
 
 static gboolean watchdog_timer        (GSWatcher      *watcher);
 
-#define GS_WATCHER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_WATCHER, GSWatcherPrivate))
-
-struct GSWatcherPrivate
+struct _GSWatcherPrivate
 {
 	/* settings */
 	guint           enabled : 1;
@@ -77,7 +75,7 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GSWatcher, gs_watcher, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GSWatcher, gs_watcher, G_TYPE_OBJECT)
 
 static void
 remove_watchdog_timer (GSWatcher *watcher)
@@ -184,8 +182,6 @@ gs_watcher_class_init (GSWatcherClass *klass)
 			      gs_marshal_BOOLEAN__BOOLEAN,
 			      G_TYPE_BOOLEAN,
 			      1, G_TYPE_BOOLEAN);
-
-	g_type_class_add_private (klass, sizeof (GSWatcherPrivate));
 }
 
 static gboolean
@@ -377,6 +373,8 @@ on_presence_status_changed (DBusGProxy    *presence_proxy,
 			    guint          status,
 			    GSWatcher     *watcher)
 {
+	(void) presence_proxy;
+
 	set_status (watcher, status);
 }
 
@@ -385,6 +383,8 @@ on_presence_status_text_changed (DBusGProxy    *presence_proxy,
 				 const char    *status_text,
 				 GSWatcher     *watcher)
 {
+	(void) presence_proxy;
+
 	set_status_text (watcher, status_text);
 }
 
@@ -481,7 +481,7 @@ connect_presence_watcher (GSWatcher *watcher)
 static void
 gs_watcher_init (GSWatcher *watcher)
 {
-	watcher->priv = GS_WATCHER_GET_PRIVATE (watcher);
+	watcher->priv = gs_watcher_get_instance_private (watcher);
 
 	watcher->priv->enabled = TRUE;
 	watcher->priv->active = FALSE;
@@ -530,6 +530,8 @@ static void
 disable_builtin_screensaver (GSWatcher *watcher,
 			     gboolean   unblank_screen)
 {
+	(void) watcher;
+
 	int current_server_timeout, current_server_interval;
 	int current_prefer_blank,   current_allow_exp;
 	int desired_server_timeout, desired_server_interval;
