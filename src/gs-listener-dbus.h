@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 #define GS_IS_LISTENER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_LISTENER))
 #define GS_LISTENER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_LISTENER, GSListenerClass))
 
-typedef struct GSListenerPrivate GSListenerPrivate;
+typedef struct _GSListenerPrivate GSListenerPrivate;
 
 typedef struct {
 	GObject parent;
