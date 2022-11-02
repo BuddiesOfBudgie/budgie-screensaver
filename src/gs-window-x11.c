@@ -2252,25 +2252,8 @@ create_panel (GSWindow *window)
 	GtkWidget    *right_hbox;
 	GtkWidget    *image;
 	GtkSizeGroup *sg;
-	GdkRGBA       bg;
-	GdkRGBA       fg;
-	int           all_states;
 	GIcon        *gicon;
 
-	bg.red = 0;
-	bg.green = 0;
-	bg.blue = 0;
-	bg.alpha = 1.0;
-
-	fg.red = 0.8;
-	fg.green = 0.8;
-	fg.blue = 0.8;
-	fg.alpha = 1.0;
-
-	all_states = 0;
-
-	gtk_widget_override_background_color (window->priv->panel, all_states, &bg);
-	gtk_widget_override_color (window->priv->panel, all_states, &fg);
 	gtk_container_set_border_width (GTK_CONTAINER (window->priv->panel), 0);
 
 	g_signal_connect (window->priv->panel, "draw", G_CALLBACK (on_panel_draw), window);
@@ -2292,7 +2275,6 @@ create_panel (GSWindow *window)
 
 	gicon = g_themed_icon_new_with_default_fallbacks ("changes-prevent-symbolic");
 	image = gtk_image_new_from_gicon (gicon, GTK_ICON_SIZE_MENU);
-	gtk_widget_override_color (image, all_states, &fg);
 	g_object_unref (gicon);
 	gtk_box_pack_end (GTK_BOX (right_hbox), image, FALSE, FALSE, 0);
 
