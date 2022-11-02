@@ -10,7 +10,7 @@
  * the above copyright notice appear in all copies and that both that
  * copyright notice and this permission notice appear in supporting
  * documentation.  No representations are made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or 
+ * software for any purpose.  It is provided "as is" without express or
  * implied warranty.
  */
 
@@ -36,7 +36,6 @@
 # define fork  vfork
 #endif /* VMS */
 
-#define _POSIX_SOURCE
 #include <signal.h>		/* for the signal names */
 
 #include <glib.h>
@@ -126,7 +125,7 @@ await_dying_children (int      pid,
 		if (debug) {
 			if (kid < 0 && errno)
 				g_message ("waitpid(%d) ==> %ld (%d)", pid, (long) kid, errno);
-			else if (kid != 0) 
+			else if (kid != 0)
 				g_message ("waitpid(%d) ==> %ld", pid, (long) kid);
 		}
 
