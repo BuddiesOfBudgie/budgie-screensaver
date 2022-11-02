@@ -142,6 +142,8 @@ auth_message_handler (GSAuthMessageStyle style,
 		      char             **response,
 		      gpointer           data)
 {
+	(void) data;
+
 	gboolean ret;
 
 	ret = TRUE;
@@ -345,12 +347,12 @@ close_pam_handle (int status)
 	}
 
 	if (message_handled_condition != NULL) {
-		g_cond_free (message_handled_condition);
+		g_cond_clear (message_handled_condition);
 		message_handled_condition = NULL;
 	}
 
 	if (message_handler_mutex != NULL) {
-		g_mutex_free (message_handler_mutex);
+		g_mutex_clear (message_handler_mutex);
 		message_handler_mutex = NULL;
 	}
 
@@ -467,8 +469,8 @@ set_pam_error (GError **error,
 
 }
 
-static int
-gs_auth_thread_func (int auth_operation_fd)
+static void*
+gs_auth_thread_func (void* auth_operation_fd)
 {
 	static const int flags = 0;
 	int              status;
@@ -560,9 +562,9 @@ gs_auth_thread_func (int auth_operation_fd)
 	/* we're done, close the fd and wake up the main
 	 * loop
 	 */
-	close (auth_operation_fd);
+	close (GPOINTER_TO_INT (auth_operation_fd));
 
-	return status;
+	return GINT_TO_POINTER(status);
 }
 
 static gboolean
@@ -570,6 +572,9 @@ gs_auth_loop_quit (GIOChannel  *source,
 		   GIOCondition condition,
 		   gboolean    *thread_done)
 {
+	(void) source;
+	(void) condition;
+
 	*thread_done = TRUE;
 	gtk_main_quit ();
 	return FALSE;
@@ -579,6 +584,8 @@ static gboolean
 gs_auth_pam_verify_user (pam_handle_t *handle,
 			 int          *status)
 {
+	(void) handle;
+
 	GThread    *auth_thread;
 	GIOChannel *channel;
 	guint       watch_id;
@@ -591,7 +598,7 @@ gs_auth_pam_verify_user (pam_handle_t *handle,
 	auth_status = PAM_AUTH_ERR;
 
 	/* This pipe gives us a set of fds we can hook into
-	 * the event loop to be notified when our helper thread 
+	 * the event loop to be notified when our helper thread
 	 * is ready to be reaped.
 	 */
 	if (pipe (auth_operation_fds) < 0) {
@@ -620,9 +627,8 @@ gs_auth_pam_verify_user (pam_handle_t *handle,
 	watch_id = g_io_add_watch (channel, G_IO_ERR | G_IO_HUP,
 				   (GIOFunc) gs_auth_loop_quit, &thread_done);
 
-	auth_thread = g_thread_create ((GThreadFunc) gs_auth_thread_func,
-				       GINT_TO_POINTER (auth_operation_fds[1]),
-				       TRUE, NULL);
+	auth_thread = g_thread_new (NULL, (GThreadFunc) gs_auth_thread_func,
+				       GINT_TO_POINTER (auth_operation_fds[1]));
 
 	if (auth_thread == NULL) {
 		goto out;
