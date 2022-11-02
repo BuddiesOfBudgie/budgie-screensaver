@@ -308,8 +308,6 @@ main (int    argc,
 	textdomain (GETTEXT_PACKAGE);
 #endif
 
-	g_type_init ();
-
 	g_set_prgname (argv[0]);
 
 	if (setlocale (LC_ALL, "") == NULL) {
