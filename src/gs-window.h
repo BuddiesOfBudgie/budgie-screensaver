@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 #define GS_IS_WINDOW_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_WINDOW))
 #define GS_WINDOW_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_WINDOW, GSWindowClass))
 
-typedef struct GSWindowPrivate GSWindowPrivate;
+typedef struct _GSWindowPrivate GSWindowPrivate;
 
 typedef struct {
 	GtkWindow window;

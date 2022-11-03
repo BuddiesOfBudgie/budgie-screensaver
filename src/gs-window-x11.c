@@ -62,9 +62,7 @@ enum {
 #define MAX_QUEUED_EVENTS 16
 #define INFO_BAR_SECONDS 30
 
-#define GS_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_WINDOW, GSWindowPrivate))
-
-struct GSWindowPrivate
+struct _GSWindowPrivate
 {
 	int        monitor;
 
@@ -127,6 +125,8 @@ struct GSWindowPrivate
 #endif
 };
 
+G_DEFINE_TYPE_WITH_PRIVATE(GSWindow, gs_window, GTK_TYPE_WINDOW)
+
 enum {
 	ACTIVITY,
 	DEACTIVATED,
@@ -149,8 +149,6 @@ enum {
 
 static guint           signals [LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GSWindow, gs_window, GTK_TYPE_WINDOW)
-
 static void
 set_invisible_cursor (GdkWindow *window,
 		      gboolean   invisible)
@@ -158,13 +156,13 @@ set_invisible_cursor (GdkWindow *window,
 	GdkCursor *cursor = NULL;
 
 	if (invisible) {
-		cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+		cursor = gdk_cursor_new_for_display (gdk_display_get_default(), GDK_BLANK_CURSOR);
 	}
 
 	gdk_window_set_cursor (window, cursor);
 
 	if (cursor) {
-		gdk_cursor_unref (cursor);
+		g_object_unref (G_OBJECT (cursor));
 	}
 }
 
@@ -259,16 +257,19 @@ gs_window_clear (GSWindow *window)
 static cairo_region_t *
 get_outside_region (GSWindow *window)
 {
+	GdkMonitor* monitor;
 	int             i;
 	cairo_region_t *region;
+
+	GdkDisplay* default_display = gdk_display_get_default();
 
 	region = cairo_region_create ();
 	for (i = 0; i < window->priv->monitor; i++) {
 		GdkRectangle geometry;
 		cairo_rectangle_int_t rectangle;
 
-		gdk_screen_get_monitor_geometry (gtk_window_get_screen (GTK_WINDOW (window)),
-						   i, &geometry);
+		monitor = gdk_display_get_monitor (default_display, i);
+		gdk_monitor_get_geometry (monitor, &geometry);
 		rectangle.x = geometry.x;
 		rectangle.y = geometry.y;
 		rectangle.width = geometry.width;
@@ -288,9 +289,9 @@ update_geometry (GSWindow *window)
 
 	outside_region = get_outside_region (window);
 
-	gdk_screen_get_monitor_geometry (gtk_window_get_screen (GTK_WINDOW (window)),
-					 window->priv->monitor,
-					 &geometry);
+	GdkDisplay* display = gdk_display_get_default ();
+	GdkMonitor* monitor = gdk_display_get_monitor (display, window->priv->monitor);
+	gdk_monitor_get_geometry (monitor, &geometry);
 	gs_debug ("got geometry for monitor %d: x=%d y=%d w=%d h=%d",
 		  window->priv->monitor,
 		  geometry.x,
@@ -321,6 +322,8 @@ static void
 screen_size_changed (GdkScreen *screen,
 		     GSWindow  *window)
 {
+	(void) screen;
+
 	gs_debug ("Got screen size changed signal");
 	gtk_widget_queue_resize (GTK_WIDGET (window));
 }
@@ -332,9 +335,8 @@ gs_window_move_resize_window (GSWindow *window,
 			      gboolean  resize)
 {
 	GtkWidget *widget;
-	GdkScreen *screen;
-	int        monitor;
-	int        primary_monitor;
+	GdkMonitor* monitor;
+	GdkMonitor* primary_monitor;
 
 	widget = GTK_WIDGET (window);
 
@@ -363,10 +365,10 @@ gs_window_move_resize_window (GSWindow *window,
 				   window->priv->geometry.height);
 	}
 
-	screen = gtk_widget_get_screen (widget);
-	monitor = gdk_screen_get_monitor_at_window (screen,
+	GdkDisplay* default_display = gdk_display_get_default ();
+	monitor = gdk_display_get_monitor_at_window (default_display,
 						    gtk_widget_get_window (widget));
-	primary_monitor = gdk_screen_get_primary_monitor (screen);
+	primary_monitor = gdk_display_get_primary_monitor (default_display);
 	gtk_widget_set_visible (window->priv->panel, monitor == primary_monitor);
 }
 
@@ -593,6 +595,8 @@ xevent_filter (GdkXEvent *xevent,
 	       GdkEvent  *event,
 	       GSWindow  *window)
 {
+	(void) event;
+
 	gs_window_xevent (window, xevent);
 
 	return GDK_FILTER_CONTINUE;
@@ -604,7 +608,9 @@ select_popup_events (void)
 	XWindowAttributes attr;
 	unsigned long     events;
 
-	gdk_error_trap_push ();
+	GdkDisplay* default_display = gdk_display_get_default ();
+
+	gdk_x11_display_error_trap_push (default_display);
 
 	memset (&attr, 0, sizeof (attr));
 	XGetWindowAttributes (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_ROOT_WINDOW (), &attr);
@@ -612,24 +618,28 @@ select_popup_events (void)
 	events = SubstructureNotifyMask | attr.your_event_mask;
 	XSelectInput (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_ROOT_WINDOW (), events);
 
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (default_display);
 }
 
 static void
 window_select_shape_events (GSWindow *window)
 {
+	(void) window;
+
 #ifdef HAVE_SHAPE_EXT
 	unsigned long events;
 	int           shape_error_base;
 
-	gdk_error_trap_push ();
+	GdkDisplay* default_display = gdk_display_get_default ();
+
+	gdk_x11_display_error_trap_push (default_display);
 
 	if (XShapeQueryExtension (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), &window->priv->shape_event_base, &shape_error_base)) {
 		events = ShapeNotifyMask;
 		XShapeSelectInput (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window))), events);
 	}
 
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (default_display);
 #endif
 }
 
@@ -678,10 +688,11 @@ set_info_text_and_icon (GSWindow   *window,
 	hbox_content = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 8);
 	gtk_widget_show (hbox_content);
 
-	image = gtk_image_new_from_stock (icon_stock_id, GTK_ICON_SIZE_DIALOG);
+	image = gtk_image_new_from_icon_name (icon_stock_id, GTK_ICON_SIZE_DIALOG);
 	gtk_widget_show (image);
 	gtk_box_pack_start (GTK_BOX (hbox_content), image, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0);
+	gtk_widget_set_halign (GTK_WIDGET (image), GTK_ALIGN_CENTER);
+    gtk_widget_set_valign (GTK_WIDGET (image), GTK_ALIGN_START);
 
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 	gtk_widget_show (vbox);
@@ -694,7 +705,8 @@ set_info_text_and_icon (GSWindow   *window,
 	gtk_box_pack_start (GTK_BOX (vbox), primary_label, TRUE, TRUE, 0);
 	gtk_label_set_use_markup (GTK_LABEL (primary_label), TRUE);
 	gtk_label_set_line_wrap (GTK_LABEL (primary_label), TRUE);
-	gtk_misc_set_alignment (GTK_MISC (primary_label), 0, 0.5);
+	gtk_widget_set_halign (GTK_WIDGET (primary_label), GTK_ALIGN_START);
+	gtk_widget_set_valign (GTK_WIDGET (primary_label), GTK_ALIGN_CENTER);
 
 	if (secondary_text != NULL) {
 		secondary_markup = g_strdup_printf ("<small>%s</small>",
@@ -705,7 +717,8 @@ set_info_text_and_icon (GSWindow   *window,
 		gtk_box_pack_start (GTK_BOX (vbox), secondary_label, TRUE, TRUE, 0);
 		gtk_label_set_use_markup (GTK_LABEL (secondary_label), TRUE);
 		gtk_label_set_line_wrap (GTK_LABEL (secondary_label), TRUE);
-		gtk_misc_set_alignment (GTK_MISC (secondary_label), 0, 0.5);
+		gtk_widget_set_halign (GTK_WIDGET (secondary_label), GTK_ALIGN_START);
+		gtk_widget_set_valign (GTK_WIDGET (secondary_label), GTK_ALIGN_CENTER);
 	}
 
 	/* remove old content */
@@ -806,6 +819,8 @@ error_watch (GIOChannel   *source,
 	     GIOCondition  condition,
 	     gpointer      data)
 {
+	(void) data;
+
 	gboolean finished = FALSE;
 
 	if (condition & G_IO_IN) {
@@ -935,6 +950,8 @@ static void
 lock_plug_added (GtkWidget *widget,
 		 GSWindow  *window)
 {
+	(void) window;
+
 	gtk_widget_show (widget);
 }
 
@@ -953,6 +970,8 @@ static void
 keyboard_plug_added (GtkWidget *widget,
 		     GSWindow  *window)
 {
+	(void) window;
+
 	gtk_widget_show (widget);
 }
 
@@ -1011,6 +1030,8 @@ static void
 lock_socket_show (GtkWidget *widget,
 		  GSWindow  *window)
 {
+	(void) widget;
+
 	gtk_widget_child_focus (window->priv->lock_socket, GTK_DIR_TAB_FORWARD);
 
 	/* send queued events to the dialog */
@@ -1192,7 +1213,9 @@ create_lock_socket (GSWindow *window,
 		    guint32   id)
 {
 	window->priv->lock_socket = gtk_socket_new ();
-	window->priv->lock_box = gtk_alignment_new (0.5, 0.5, 0, 0);
+	window->priv->lock_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	gtk_widget_set_halign( GTK_WIDGET (window->priv->lock_box), GTK_ALIGN_CENTER);
+	gtk_widget_set_valign( GTK_WIDGET (window->priv->lock_box), GTK_ALIGN_CENTER);
 	gtk_widget_show (window->priv->lock_box);
 	gtk_box_pack_start (GTK_BOX (window->priv->vbox), window->priv->lock_box, TRUE, TRUE, 0);
 
@@ -1271,10 +1294,8 @@ shake_dialog (GSWindow *window)
 			break;
 		}
 
-		gtk_alignment_set_padding (GTK_ALIGNMENT (window->priv->lock_box),
-					   0, 0,
-					   left,
-					   right);
+		gtk_widget_set_margin_start( GTK_WIDGET (window->priv->lock_box), left);
+		gtk_widget_set_margin_end( GTK_WIDGET (window->priv->lock_box), right);
 
 		while (gtk_events_pending ()) {
 			gtk_main_iteration ();
@@ -1869,6 +1890,8 @@ static gboolean
 gs_window_real_button_press_event (GtkWidget      *widget,
 				   GdkEventButton *event)
 {
+	(void) event;
+
 	GSWindow *window;
 
 	window = GS_WINDOW (widget);
@@ -1881,6 +1904,8 @@ static gboolean
 gs_window_real_scroll_event (GtkWidget      *widget,
 			     GdkEventScroll *event)
 {
+	(void) event;
+
 	GSWindow *window;
 
 	window = GS_WINDOW (widget);
@@ -1903,7 +1928,7 @@ gs_window_real_size_request (GtkWidget      *widget,
 	bin = GTK_BIN (widget);
 
 	if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin))) {
-		gtk_widget_size_request (gtk_bin_get_child (bin), requisition);
+		gtk_widget_get_preferred_size (gtk_bin_get_child (bin), NULL, requisition);
 	}
 
 	old_geometry = window->priv->geometry;
@@ -1934,6 +1959,8 @@ static gboolean
 gs_window_real_grab_broken (GtkWidget          *widget,
 			    GdkEventGrabBroken *event)
 {
+	(void) widget;
+
 	if (event->grab_window != NULL) {
 		gs_debug ("Grab broken on window %X %s, new grab on window %X",
 			  (guint32) GDK_WINDOW_XID (event->window),
@@ -2042,8 +2069,6 @@ gs_window_class_init (GSWindowClass *klass)
 	widget_class->get_preferred_height       = gs_window_real_get_preferred_height;
 	widget_class->grab_broken_event   = gs_window_real_grab_broken;
 	widget_class->visibility_notify_event = gs_window_real_visibility_notify_event;
-
-	g_type_class_add_private (klass, sizeof (GSWindowPrivate));
 
 	signals [ACTIVITY] =
 		g_signal_new ("activity",
@@ -2157,6 +2182,9 @@ on_panel_draw (GtkWidget    *widget,
 	       cairo_t      *cr,
 	       GSWindow     *window)
 {
+	(void) widget;
+	(void) window;
+
 	cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
 	cairo_paint (cr);
 
@@ -2178,6 +2206,9 @@ on_clock_changed (GnomeWallClock *clock,
 		  GParamSpec     *pspec,
 		  gpointer        user_data)
 {
+	(void) clock;
+	(void) pspec;
+
 	update_clock (GS_WINDOW (user_data));
 }
 
@@ -2219,49 +2250,24 @@ create_panel (GSWindow *window)
 {
 	GtkWidget    *left_hbox;
 	GtkWidget    *right_hbox;
-	GtkWidget    *alignment;
-	GtkWidget    *right_alignment;
 	GtkWidget    *image;
 	GtkSizeGroup *sg;
-	GdkRGBA       bg;
-	GdkRGBA       fg;
-	int           all_states;
 	GIcon        *gicon;
 
-	bg.red = 0;
-	bg.green = 0;
-	bg.blue = 0;
-	bg.alpha = 1.0;
-
-	fg.red = 0.8;
-	fg.green = 0.8;
-	fg.blue = 0.8;
-	fg.alpha = 1.0;
-
-	all_states = 0;
-
-	gtk_widget_override_background_color (window->priv->panel, all_states, &bg);
-	gtk_widget_override_color (window->priv->panel, all_states, &fg);
 	gtk_container_set_border_width (GTK_CONTAINER (window->priv->panel), 0);
 
 	g_signal_connect (window->priv->panel, "draw", G_CALLBACK (on_panel_draw), window);
 
 	left_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-	gtk_box_pack_start (GTK_BOX (window->priv->panel), left_hbox, TRUE, TRUE, 0);
+	gtk_widget_set_halign (GTK_WIDGET (left_hbox), GTK_ALIGN_CENTER);
+	gtk_container_set_border_width (GTK_CONTAINER (left_hbox), 4);
+	gtk_box_set_center_widget (GTK_BOX (window->priv->panel), left_hbox);
 
-	alignment = gtk_alignment_new (0.5, 0.5, 1, 1);
-	gtk_box_pack_start (GTK_BOX (window->priv->panel), alignment, FALSE, FALSE, 0);
 	window->priv->clock = gtk_label_new (NULL);
-	gtk_misc_set_padding (GTK_MISC (window->priv->clock), 4, 4);
-	gtk_container_add (GTK_CONTAINER (alignment), window->priv->clock);
-
-	right_alignment = gtk_alignment_new (1, 0.5, 1, 1);
-	gtk_box_pack_end (GTK_BOX (window->priv->panel), right_alignment, TRUE, TRUE, 0);
-	gtk_alignment_set_padding (GTK_ALIGNMENT (right_alignment),
-				   0, 0, 10, 10);
+	gtk_container_add (GTK_CONTAINER (left_hbox), window->priv->clock);
 
 	right_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-	gtk_container_add (GTK_CONTAINER (right_alignment), right_hbox);
+	gtk_box_pack_end (GTK_BOX (window->priv->panel), right_hbox, TRUE, TRUE, 0);
 
 	window->priv->name_label = gtk_label_new (NULL);
 	update_name_label (window);
@@ -2269,7 +2275,6 @@ create_panel (GSWindow *window)
 
 	gicon = g_themed_icon_new_with_default_fallbacks ("changes-prevent-symbolic");
 	image = gtk_image_new_from_gicon (gicon, GTK_ICON_SIZE_MENU);
-	gtk_widget_override_color (image, all_states, &fg);
 	g_object_unref (gicon);
 	gtk_box_pack_end (GTK_BOX (right_hbox), image, FALSE, FALSE, 0);
 
@@ -2292,7 +2297,7 @@ on_drawing_area_realized (GtkWidget *drawing_area)
 static void
 gs_window_init (GSWindow *window)
 {
-	window->priv = GS_WINDOW_GET_PRIVATE (window);
+	window->priv = gs_window_get_instance_private (window);
 
 	window->priv->geometry.x      = -1;
 	window->priv->geometry.y      = -1;

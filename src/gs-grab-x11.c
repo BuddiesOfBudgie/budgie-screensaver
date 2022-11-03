@@ -41,13 +41,9 @@ static void     gs_grab_class_init (GSGrabClass *klass);
 static void     gs_grab_init       (GSGrab      *grab);
 static void     gs_grab_finalize   (GObject        *object);
 
-#define GS_GRAB_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_GRAB, GSGrabPrivate))
-
-G_DEFINE_TYPE (GSGrab, gs_grab, G_TYPE_OBJECT)
-
 static gpointer grab_object = NULL;
 
-struct GSGrabPrivate
+struct _GSGrabPrivate
 {
 	GDBusConnection *session_bus;
 
@@ -59,6 +55,8 @@ struct GSGrabPrivate
 
 	GtkWidget *invisible;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (GSGrab, gs_grab, G_TYPE_OBJECT)
 
 static const char *
 grab_string (int status)
@@ -79,7 +77,7 @@ grab_string (int status)
 }
 
 #ifdef HAVE_XF86MISCSETGRABKEYSSTATE
-/* This function enables and disables the Ctrl-Alt-KP_star and 
+/* This function enables and disables the Ctrl-Alt-KP_star and
    Ctrl-Alt-KP_slash hot-keys, which (in XFree86 4.2) break any
    grabs and/or kill the grabbing client.  That would effectively
    unlock the screen, so we don't like that.
@@ -137,6 +135,8 @@ static void
 xorg_lock_smasher_set_active (GSGrab  *grab,
 			      gboolean active)
 {
+	(void) grab;
+	(void) active;
 }
 #endif /* HAVE_XF86MISCSETGRABKEYSSTATE */
 
@@ -183,7 +183,7 @@ gs_grab_get_mouse (GSGrab    *grab,
 	g_return_val_if_fail (window != NULL, FALSE);
 	g_return_val_if_fail (screen != NULL, FALSE);
 
-	cursor = gdk_cursor_new (GDK_BLANK_CURSOR);
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_BLANK_CURSOR);
 
 	gs_debug ("Grabbing mouse widget=%X", (guint32) GDK_WINDOW_XID (window));
 	status = gdk_pointer_grab (window, TRUE, 0, NULL,
@@ -204,7 +204,7 @@ gs_grab_get_mouse (GSGrab    *grab,
 		grab->priv->mouse_hide_cursor = hide_cursor;
 	}
 
-	gdk_cursor_unref (cursor);
+	g_object_unref (G_OBJECT (cursor));
 
 	return status;
 }
@@ -317,7 +317,7 @@ gs_grab_move_mouse (GSGrab    *grab,
 
 	gs_debug ("*** releasing X server grab");
 	gdk_x11_ungrab_server ();
-	gdk_flush ();
+	gdk_display_flush (gdk_display_get_default ());
 
 	return (result == GDK_GRAB_SUCCESS);
 }
@@ -371,7 +371,7 @@ gs_grab_move_keyboard (GSGrab    *grab,
 
 	gs_debug ("*** releasing X server grab");
 	gdk_x11_ungrab_server ();
-	gdk_flush ();
+	gdk_display_flush (gdk_display_get_default ());
 
 	return (result == GDK_GRAB_SUCCESS);
 }
@@ -384,13 +384,15 @@ gs_grab_move_focus (GdkWindow *window)
 
 	gs_debug ("Nuking focus");
 
-	gdk_error_trap_push ();
+	GdkDisplay* default_display = gdk_display_get_default ();
 
-	XGetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), &focus, &rev);
+	gdk_x11_display_error_trap_push (default_display);
 
-	XSetInputFocus (GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), GDK_WINDOW_XID (window), RevertToNone, CurrentTime);
+	XGetInputFocus (GDK_DISPLAY_XDISPLAY (default_display), &focus, &rev);
 
-	gdk_error_trap_pop_ignored ();
+	XSetInputFocus (GDK_DISPLAY_XDISPLAY (default_display), GDK_WINDOW_XID (window), RevertToNone, CurrentTime);
+
+	gdk_x11_display_error_trap_pop_ignored (default_display);
 }
 
 void
@@ -405,7 +407,7 @@ gs_grab_release (GSGrab *grab)
 	xorg_lock_smasher_set_active (grab, TRUE);
 
 	gdk_display_sync (gdk_display_get_default ());
-	gdk_flush ();
+	gdk_display_flush (gdk_display_get_default ());
 }
 
 /* The GNOME 3 Shell holds an X grab when we're in the overview;
@@ -575,12 +577,12 @@ gs_grab_move_to_window (GSGrab    *grab,
 
 	do {
 		result = gs_grab_move_keyboard (grab, window, screen);
-		gdk_flush ();
+		gdk_display_flush (gdk_display_get_default ());
 	} while (!result);
 
 	do {
 		result = gs_grab_move_mouse (grab, window, screen, hide_cursor);
-		gdk_flush ();
+		gdk_display_flush (gdk_display_get_default ());
 	} while (!result);
 }
 
@@ -590,14 +592,12 @@ gs_grab_class_init (GSGrabClass *klass)
 	GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = gs_grab_finalize;
-
-	g_type_class_add_private (klass, sizeof (GSGrabPrivate));
 }
 
 static void
 gs_grab_init (GSGrab *grab)
 {
-	grab->priv = GS_GRAB_GET_PRIVATE (grab);
+	grab->priv = gs_grab_get_instance_private (grab);
 
 	grab->priv->session_bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
 

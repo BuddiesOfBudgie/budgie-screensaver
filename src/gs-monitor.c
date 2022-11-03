@@ -47,9 +47,7 @@ static void     gs_monitor_class_init (GSMonitorClass *klass);
 static void     gs_monitor_init       (GSMonitor      *monitor);
 static void     gs_monitor_finalize   (GObject        *object);
 
-#define GS_MONITOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_MONITOR, GSMonitorPrivate))
-
-struct GSMonitorPrivate
+struct _GSMonitorPrivate
 {
 	GSWatcher      *watcher;
 	GSListener     *listener;
@@ -62,7 +60,7 @@ struct GSMonitorPrivate
 
 #define FADE_TIMEOUT 10000
 
-G_DEFINE_TYPE (GSMonitor, gs_monitor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GSMonitor, gs_monitor, G_TYPE_OBJECT)
 
 static void
 gs_monitor_class_init (GSMonitorClass *klass)
@@ -70,20 +68,22 @@ gs_monitor_class_init (GSMonitorClass *klass)
 	GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
 	object_class->finalize = gs_monitor_finalize;
-
-	g_type_class_add_private (klass, sizeof (GSMonitorPrivate));
 }
 
 static void
 manager_activated_cb (GSManager *manager,
 		      GSMonitor *monitor)
 {
+	(void) manager;
+	(void) monitor;
 }
 
 static void
 manager_deactivated_cb (GSManager *manager,
 			GSMonitor *monitor)
 {
+	(void) manager;
+
 	gs_listener_set_active (monitor->priv->listener, FALSE);
 }
 
@@ -92,6 +92,8 @@ watcher_idle_cb (GSWatcher *watcher,
 		 gboolean   is_idle,
 		 GSMonitor *monitor)
 {
+	(void) watcher;
+
 	gboolean res;
 
 	gs_debug ("Idle signal detected: %d", is_idle);
@@ -120,6 +122,8 @@ watcher_idle_notice_cb (GSWatcher *watcher,
 			gboolean   in_effect,
 			GSMonitor *monitor)
 {
+	(void) watcher;
+
 	gboolean activation_enabled;
 	gboolean handled;
 
@@ -203,6 +207,8 @@ static void
 listener_lock_cb (GSListener *listener,
 		  GSMonitor  *monitor)
 {
+	(void) listener;
+
 	if (! monitor->priv->prefs->lock_disabled) {
 		gs_monitor_lock_screen (monitor);
 	} else {
@@ -215,6 +221,8 @@ static void
 listener_config_lock_cb (GSListener *listener,
 			 GSMonitor  *monitor)
 {
+	(void) listener;
+
 	if (! monitor->priv->prefs->lock_disabled) {
 		/* Unlike the Ubuntu implementation that uses a patched gsettings
 		 * desktop schemas, we'll mandate that we lock on suspend */
@@ -232,6 +240,8 @@ static void
 listener_quit_cb (GSListener *listener,
 		  GSMonitor  *monitor)
 {
+	(void) listener;
+
 	gs_listener_set_active (monitor->priv->listener, FALSE);
 	gnome_screensaver_quit ();
 }
@@ -243,6 +253,8 @@ listener_show_message_cb (GSListener *listener,
 			  const char *icon,
 			  GSMonitor  *monitor)
 {
+	(void) listener;
+
 	gs_manager_show_message (monitor->priv->manager,
 				 summary,
 				 body,
@@ -254,6 +266,8 @@ listener_active_changed_cb (GSListener *listener,
 			    gboolean    active,
 			    GSMonitor  *monitor)
 {
+	(void) listener;
+
 	gboolean res;
 	gboolean ret;
 	gboolean idle_watch_enabled;
@@ -284,6 +298,8 @@ static void
 listener_simulate_user_activity_cb (GSListener *listener,
 				    GSMonitor  *monitor)
 {
+	(void) listener;
+
 	gs_monitor_simulate_user_activity (monitor);
 }
 
@@ -291,6 +307,8 @@ static void
 _gs_monitor_update_from_prefs (GSMonitor *monitor,
 			       GSPrefs   *prefs)
 {
+	(void) prefs;
+
 	gboolean idle_detection_enabled;
 	gboolean idle_detection_active;
 	gboolean activate_watch;
@@ -376,6 +394,8 @@ on_watcher_status_message_changed (GSWatcher  *watcher,
 				   GParamSpec *pspec,
 				   GSMonitor  *monitor)
 {
+	(void) pspec;
+
 	char *text;
 	g_object_get (watcher, "status-message", &text, NULL);
 	gs_manager_set_status_message (monitor->priv->manager, text);
@@ -435,7 +455,7 @@ static void
 gs_monitor_init (GSMonitor *monitor)
 {
 
-	monitor->priv = GS_MONITOR_GET_PRIVATE (monitor);
+	monitor->priv = gs_monitor_get_instance_private (monitor);
 
 	monitor->priv->prefs = gs_prefs_new ();
 	connect_prefs_signals (monitor);

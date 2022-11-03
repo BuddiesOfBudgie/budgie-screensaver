@@ -9,7 +9,7 @@
  * the above copyright notice appear in all copies and that both that
  * copyright notice and this permission notice appear in supporting
  * documentation.  No representations are made about the suitability of this
- * software for any purpose.  It is provided "as is" without express or 
+ * software for any purpose.  It is provided "as is" without express or
  * implied warranty.
  */
 
@@ -73,9 +73,11 @@ set_ids_by_number (uid_t  uid,
 	if (gid == (gid_t) -1) gid = (gid_t) -2;
 	if (uid == (uid_t) -1) uid = (uid_t) -2;
 
-	 errno = 0;
-	 if (setgroups (1, &gid) < 0)
-		 sgs_errno = errno ? errno : -1;
+#ifdef _BSD_SOURCE
+	errno = 0;
+	if (setgroups (1, &gid) < 0)
+		sgs_errno = errno ? errno : -1;
+#endif
 
 	errno = 0;
 	if (setgid (gid) != 0)
@@ -100,6 +102,7 @@ set_ids_by_number (uid_t  uid,
 	} else {
 		char *reason = NULL;
 
+#ifdef _BSD_SOURCE
 		if (sgs_errno) {
 			reason = g_strdup_printf ("couldn't setgroups to %s (%ld)",
 						  (g && g->gr_name ? g->gr_name : "???"),
@@ -113,6 +116,7 @@ set_ids_by_number (uid_t  uid,
 			g_free (reason);
 			reason = NULL;
 		}
+#endif
 
 		if (gid_errno) {
 			reason = g_strdup_printf ("couldn't set gid to %s (%ld)",
@@ -155,7 +159,7 @@ set_ids_by_number (uid_t  uid,
 
    *** WARNING: DO NOT DISABLE ANY OF THE FOLLOWING CODE!
    If you do so, you will open a security hole.  See the sections
-   of the xscreensaver manual titled "LOCKING AND ROOT LOGINS", 
+   of the xscreensaver manual titled "LOCKING AND ROOT LOGINS",
    and "USING XDM".
 */
 

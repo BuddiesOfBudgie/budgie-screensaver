@@ -120,8 +120,10 @@ response_ok (void)
 }
 
 static gboolean
-quit_response_ok (void)
+quit_response_ok (gpointer data)
 {
+	(void) data;
+
 	response_ok ();
 	gtk_main_quit ();
 	return FALSE;
@@ -324,6 +326,8 @@ static void
 response_cb (GSLockPlug *plug,
 	     gint        response_id)
 {
+	(void) plug;
+
 	if ((response_id == GS_LOCK_PLUG_RESPONSE_CANCEL) ||
 	    (response_id == GTK_RESPONSE_DELETE_EVENT)) {
 		quit_response_cancel ();
@@ -331,8 +335,10 @@ response_cb (GSLockPlug *plug,
 }
 
 static gboolean
-response_request_quit (void)
+response_request_quit (gpointer data)
 {
+	(void) data;
+
 	printf ("REQUEST QUIT\n");
 	fflush (stdout);
 	return FALSE;
@@ -341,6 +347,8 @@ response_request_quit (void)
 static gboolean
 quit_timeout_cb (gpointer data)
 {
+	(void) data;
+
 	gtk_main_quit ();
 	return FALSE;
 }
@@ -382,12 +390,16 @@ static void
 show_cb (GtkWidget *widget,
 	 gpointer   data)
 {
+	(void) data;
+
 	print_id (widget);
 }
 
 static gboolean
-popup_dialog_idle (void)
+popup_dialog_idle (gpointer data)
 {
+	(void) data;
+
 	GtkWidget *widget;
 
 	gs_profile_start (NULL);
@@ -436,6 +448,9 @@ privileged_initialization (int     *argc,
 			   char   **argv,
 			   gboolean verbose)
 {
+	(void) argc;
+	(void) argv;
+
 	gboolean ret;
 	char    *nolock_reason;
 	char    *orig_uid;
@@ -482,6 +497,10 @@ lock_initialization (int     *argc,
 		     char   **nolock_reason,
 		     gboolean verbose)
 {
+	(void) argc;
+	(void) argv;
+	(void) verbose;
+
 	if (nolock_reason != NULL) {
 		*nolock_reason = NULL;
 	}
@@ -560,12 +579,6 @@ main (int    argc,
 	textdomain (GETTEXT_PACKAGE);
 #endif
 
-	if (! g_thread_supported ()) {
-		g_thread_init (NULL);
-	}
-
-	g_type_init ();
-
 	gs_profile_start (NULL);
 
 	if (! privileged_initialization (&argc, argv, verbose)) {
@@ -598,7 +611,7 @@ main (int    argc,
 
 	gs_debug_init (verbose, FALSE);
 
-	g_idle_add ((GSourceFunc)popup_dialog_idle, NULL);
+	g_idle_add ((GSourceFunc) popup_dialog_idle, NULL);
 
 	gtk_main ();
 

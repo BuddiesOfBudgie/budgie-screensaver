@@ -35,7 +35,7 @@ G_BEGIN_DECLS
 #define GS_IS_GRAB_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_GRAB))
 #define GS_GRAB_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_GRAB, GSGrabClass))
 
-typedef struct GSGrabPrivate GSGrabPrivate;
+typedef struct _GSGrabPrivate GSGrabPrivate;
 
 typedef struct {
 	GObject parent;

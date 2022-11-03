@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 #define GS_IS_MANAGER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_MANAGER))
 #define GS_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_MANAGER, GSManagerClass))
 
-typedef struct GSManagerPrivate GSManagerPrivate;
+typedef struct _GSManagerPrivate GSManagerPrivate;
 
 typedef struct {
 	GObject parent;

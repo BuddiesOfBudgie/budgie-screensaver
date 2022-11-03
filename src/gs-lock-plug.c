@@ -64,9 +64,7 @@ enum {
 
 static void gs_lock_plug_finalize   (GObject         *object);
 
-#define GS_LOCK_PLUG_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_LOCK_PLUG, GSLockPlugPrivate))
-
-struct GSLockPlugPrivate
+struct _GSLockPlugPrivate
 {
 	GtkWidget   *frame;
 	GtkWidget   *vbox;
@@ -129,7 +127,7 @@ enum {
 
 static guint lock_plug_signals [LAST_SIGNAL];
 
-G_DEFINE_TYPE (GSLockPlug, gs_lock_plug, GTK_TYPE_PLUG)
+G_DEFINE_TYPE_WITH_PRIVATE (GSLockPlug, gs_lock_plug, GTK_TYPE_PLUG)
 
 static void
 gs_lock_plug_style_set (GtkWidget *widget,
@@ -153,6 +151,8 @@ gs_lock_plug_style_set (GtkWidget *widget,
 static void
 do_user_switch (GSLockPlug *plug)
 {
+	(void) plug;
+
 	GError  *error = NULL;
 
 	/* If running under LightDM switch to the greeter using dbus */
@@ -194,7 +194,7 @@ do_user_switch (GSLockPlug *plug)
 					   GDM_FLEXISERVER_ARGS);
 
 		error = NULL;
-		context = (GAppLaunchContext*)gdk_app_launch_context_new ();
+		context = (GAppLaunchContext*) gdk_display_get_app_launch_context (gdk_display_get_default ());
 		app = g_app_info_create_from_commandline (command, "gdmflexiserver", 0, &error);
 		if (app)
 			g_app_info_launch (app, NULL, context, &error);
@@ -336,7 +336,7 @@ get_kbd_lock_mode (void)
 
 	mode = LOCK_NONE;
 
-	keymap = gdk_keymap_get_default ();
+	keymap = gdk_keymap_get_for_display (gdk_display_get_default ());
 	if (keymap != NULL) {
 		gboolean res;
 
@@ -399,6 +399,8 @@ static void
 run_unmap_handler (GSLockPlug *plug,
 		   gpointer data)
 {
+	(void) plug;
+
 	RunInfo *ri = data;
 
 	shutdown_loop (ri);
@@ -409,6 +411,8 @@ run_response_handler (GSLockPlug *plug,
 		      gint response_id,
 		      gpointer data)
 {
+	(void) plug;
+
 	RunInfo *ri;
 
 	ri = data;
@@ -423,6 +427,9 @@ run_delete_handler (GSLockPlug *plug,
 		    GdkEventAny *event,
 		    gpointer data)
 {
+	(void) plug;
+	(void) event;
+
 	RunInfo *ri = data;
 
 	shutdown_loop (ri);
@@ -434,6 +441,8 @@ static void
 run_destroy_handler (GSLockPlug *plug,
 		     gpointer data)
 {
+	(void) plug;
+
 	RunInfo *ri = data;
 
 	/* shutdown_loop will be called by run_unmap_handler */
@@ -444,6 +453,8 @@ static void
 run_keymap_handler (GdkKeymap *keymap,
 		    GSLockPlug *plug)
 {
+	(void) keymap;
+
 	kbd_lock_mode_update (plug, get_kbd_lock_mode ());
 }
 
@@ -769,6 +780,8 @@ image_set_from_pixbuf (GtkImage  *image,
 static GdkPixbuf *
 get_pixbuf_of_user_icon (GSLockPlug *plug)
 {
+	(void) plug;
+
 	GError          *error;
 	GDBusConnection *system_bus;
 	GVariant        *find_user_by_name_reply;
@@ -1133,8 +1146,6 @@ gs_lock_plug_class_init (GSLockPlugClass *klass)
 
 	klass->close = gs_lock_plug_close;
 
-	g_type_class_add_private (klass, sizeof (GSLockPlugPrivate));
-
 	lock_plug_signals [RESPONSE] = g_signal_new ("response",
 						     G_OBJECT_CLASS_TYPE (klass),
 						     G_SIGNAL_RUN_LAST,
@@ -1203,6 +1214,8 @@ static void
 logout_button_clicked (GtkButton  *button,
 		       GSLockPlug *plug)
 {
+	(void) button;
+
 	char   **argv  = NULL;
 	GError  *error = NULL;
 	gboolean res;
@@ -1244,9 +1257,9 @@ gs_lock_plug_set_busy (GSLockPlug *plug)
 
 	top_level = gtk_widget_get_toplevel (GTK_WIDGET (plug));
 
-	cursor = gdk_cursor_new (GDK_WATCH);
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_WATCH);
 	gdk_window_set_cursor (gtk_widget_get_window (top_level), cursor);
-	gdk_cursor_unref (cursor);
+	g_object_unref (G_OBJECT (cursor));
 }
 
 void
@@ -1257,9 +1270,9 @@ gs_lock_plug_set_ready (GSLockPlug *plug)
 
 	top_level = gtk_widget_get_toplevel (GTK_WIDGET (plug));
 
-	cursor = gdk_cursor_new (GDK_LEFT_PTR);
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_LEFT_PTR);
 	gdk_window_set_cursor (gtk_widget_get_window (top_level), cursor);
-	gdk_cursor_unref (cursor);
+	g_object_unref (G_OBJECT (cursor));
 }
 
 void
@@ -1323,6 +1336,8 @@ static gint
 entry_button_press (GtkWidget      *widget,
 		    GdkEventButton *event)
 {
+	(void) widget;
+
 	if (event->button == 3 && event->type == GDK_BUTTON_PRESS) {
 		return TRUE;
 	}
@@ -1335,6 +1350,8 @@ entry_key_press (GtkWidget   *widget,
 		 GdkEventKey *event,
 		 GSLockPlug  *plug)
 {
+	(void) widget;
+
 	restart_cancel_timeout (plug);
 
 	/* if the input widget is visible and ready for input
@@ -1365,7 +1382,7 @@ gs_lock_plug_add_button (GSLockPlug  *plug,
 	g_return_val_if_fail (GS_IS_LOCK_PLUG (plug), NULL);
 	g_return_val_if_fail (button_text != NULL, NULL);
 
-	button = gtk_button_new_from_stock (button_text);
+	button = gtk_button_new_with_mnemonic (button_text);
 
 	gtk_widget_set_can_default (button, TRUE);
 
@@ -1390,20 +1407,20 @@ create_page_one_buttons (GSLockPlug *plug)
 	gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (plug->priv->auth_action_area),
 					    plug->priv->auth_switch_button,
 					    TRUE);
-	gtk_button_set_focus_on_click (GTK_BUTTON (plug->priv->auth_switch_button), FALSE);
+	gtk_widget_set_focus_on_click (GTK_WIDGET (plug->priv->auth_switch_button), FALSE);
 	gtk_widget_set_no_show_all (plug->priv->auth_switch_button, TRUE);
 
 	plug->priv->auth_logout_button =  gs_lock_plug_add_button (GS_LOCK_PLUG (plug),
 								   plug->priv->auth_action_area,
 								   _("Log _Out"));
-	gtk_button_set_focus_on_click (GTK_BUTTON (plug->priv->auth_logout_button), FALSE);
+	gtk_widget_set_focus_on_click (GTK_WIDGET (plug->priv->auth_logout_button), FALSE);
 	gtk_widget_set_no_show_all (plug->priv->auth_logout_button, TRUE);
 
 
 	plug->priv->auth_unlock_button =  gs_lock_plug_add_button (GS_LOCK_PLUG (plug),
 								   plug->priv->auth_action_area,
 								   _("_Unlock"));
-	gtk_button_set_focus_on_click (GTK_BUTTON (plug->priv->auth_unlock_button), FALSE);
+	gtk_widget_set_focus_on_click (GTK_WIDGET (plug->priv->auth_unlock_button), FALSE);
 
 	gtk_window_set_default (GTK_WINDOW (plug), plug->priv->auth_unlock_button);
 
@@ -1433,6 +1450,8 @@ input_sources_current_changed_cb (GSettings *settings,
 				  gchar     *key,
 				  gpointer   user_data)
 {
+	(void) key;
+
 	GSLockPlug *plug = GS_LOCK_PLUG (user_data);
 	guint current = g_settings_get_uint (settings, CURRENT_KEY);
 	guint i;
@@ -1524,6 +1543,9 @@ layout_indicator_clicked_cb (GtkWidget *widget,
 			     GdkEvent  *event,
 			     gpointer   user_data)
 {
+	(void) widget;
+	(void) event;
+
 	GSLockPlug *plug;
 	InputSource *input_source;
 
@@ -1548,7 +1570,9 @@ create_page_one (GSLockPlug *plug)
 
 	gs_profile_start ("page one");
 
-	align = gtk_alignment_new (0.5, 0.5, 1, 1);
+	align = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+	gtk_widget_set_halign (GTK_WIDGET (align), GTK_ALIGN_FILL);
+	gtk_widget_set_valign (GTK_WIDGET (align), GTK_ALIGN_FILL);
 	gtk_notebook_append_page (GTK_NOTEBOOK (plug->priv->notebook), align, NULL);
 
 	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -1559,14 +1583,16 @@ create_page_one (GSLockPlug *plug)
 
 	plug->priv->auth_face_image = gtk_image_new ();
 	gtk_box_pack_start (GTK_BOX (hbox), plug->priv->auth_face_image, FALSE, FALSE, 0);
-	gtk_misc_set_alignment (GTK_MISC (plug->priv->auth_face_image), 0, 0);
+	gtk_widget_set_halign (GTK_WIDGET (plug->priv->auth_face_image), GTK_ALIGN_START);
+	gtk_widget_set_valign (GTK_WIDGET (plug->priv->auth_face_image), GTK_ALIGN_START);
 
 	vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 	gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 10);
 
 	plug->priv->auth_prompt_label = gtk_label_new_with_mnemonic (_("_Password:"));
-	gtk_misc_set_alignment (GTK_MISC (plug->priv->auth_prompt_label), 0, 0.5);
+	gtk_widget_set_halign (GTK_WIDGET (plug->priv->auth_prompt_label), GTK_ALIGN_START);
+	gtk_widget_set_valign (GTK_WIDGET (plug->priv->auth_prompt_label), GTK_ALIGN_CENTER);
 	gtk_box_pack_start (GTK_BOX (vbox2), plug->priv->auth_prompt_label, FALSE, FALSE, 0);
 
 	hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -1604,7 +1630,8 @@ create_page_one (GSLockPlug *plug)
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2, TRUE, TRUE, 0);
 
 	plug->priv->auth_capslock_label = gtk_label_new ("");
-	gtk_misc_set_alignment (GTK_MISC (plug->priv->auth_capslock_label), 0.5, 0.5);
+	gtk_widget_set_halign (GTK_WIDGET (plug->priv->auth_capslock_label), GTK_ALIGN_CENTER);
+	gtk_widget_set_valign (GTK_WIDGET (plug->priv->auth_capslock_label), GTK_ALIGN_CENTER);
 	gtk_box_pack_start (GTK_BOX (vbox2), plug->priv->auth_capslock_label, FALSE, FALSE, 0);
 
 	/* Status text */
@@ -1631,6 +1658,8 @@ static void
 unlock_button_clicked (GtkButton  *button,
 		       GSLockPlug *plug)
 {
+	(void) button;
+
 	gs_lock_plug_response (plug, GS_LOCK_PLUG_RESPONSE_OK);
 }
 
@@ -1638,6 +1667,7 @@ static void
 switch_user_button_clicked (GtkButton  *button,
 			    GSLockPlug *plug)
 {
+	(void) button;
 
 	remove_response_idle (plug);
 
@@ -1656,6 +1686,9 @@ delete_handler (GSLockPlug  *plug,
 		GdkEventAny *event,
 		gpointer     data)
 {
+	(void) event;
+	(void) data;
+
 	gs_lock_plug_response (plug, GS_LOCK_PLUG_RESPONSE_CANCEL);
 
 	return TRUE; /* Do not destroy */
@@ -1668,7 +1701,7 @@ gs_lock_plug_init (GSLockPlug *plug)
 
 	gs_profile_start (NULL);
 
-	plug->priv = GS_LOCK_PLUG_GET_PRIVATE (plug);
+	plug->priv = gs_lock_plug_get_instance_private (plug);
 
 	clear_clipboards (plug);
 

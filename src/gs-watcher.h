@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 #define GS_IS_WATCHER_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_WATCHER))
 #define GS_WATCHER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_WATCHER, GSWatcherClass))
 
-typedef struct GSWatcherPrivate GSWatcherPrivate;
+typedef struct _GSWatcherPrivate GSWatcherPrivate;
 
 typedef struct {
 	GObject parent;

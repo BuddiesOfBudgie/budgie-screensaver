@@ -56,9 +56,7 @@ static DBusHandlerResult gs_listener_message_handler    (DBusConnection  *connec
 
 #define TYPE_MISMATCH_ERROR  GS_INTERFACE ".TypeMismatch"
 
-#define GS_LISTENER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GS_TYPE_LISTENER, GSListenerPrivate))
-
-struct GSListenerPrivate
+struct _GSListenerPrivate
 {
 	DBusConnection *connection;
 	DBusConnection *system_connection;
@@ -102,7 +100,7 @@ gs_listener_vtable = { &gs_listener_unregister_handler,
 
 static guint         signals [LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GSListener, gs_listener, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GSListener, gs_listener, G_TYPE_OBJECT)
 
 GQuark
 gs_listener_error_quark (void)
@@ -119,6 +117,8 @@ static void
 gs_listener_unregister_handler (DBusConnection *connection,
 				void           *data)
 {
+	(void) connection;
+	(void) data;
 }
 
 static gboolean
@@ -592,6 +592,8 @@ do_introspect (DBusConnection *connection,
 	       DBusMessage    *message,
 	       dbus_bool_t     local_interface)
 {
+	(void) local_interface;
+
 	DBusMessage *reply;
 	GString     *xml;
 	char        *xml_string;
@@ -836,6 +838,8 @@ listener_dbus_handle_system_message (DBusConnection *connection,
 				     void           *user_data,
 				     dbus_bool_t     local_interface)
 {
+	(void) local_interface;
+
 	GSListener *listener = GS_LISTENER (user_data);
 
 	g_return_val_if_fail (connection != NULL, DBUS_HANDLER_RESULT_NOT_YET_HANDLED);
@@ -1278,26 +1282,6 @@ gs_listener_class_init (GSListenerClass *klass)
 							       NULL,
 							       TRUE,
 							       G_PARAM_READWRITE));
-
-	g_type_class_add_private (klass, sizeof (GSListenerPrivate));
-}
-
-
-static gboolean
-screensaver_is_running (DBusConnection *connection)
-{
-	DBusError error;
-	gboolean  exists;
-
-	g_return_val_if_fail (connection != NULL, FALSE);
-
-	dbus_error_init (&error);
-	exists = dbus_bus_name_has_owner (connection, GS_SERVICE, &error);
-	if (dbus_error_is_set (&error)) {
-		dbus_error_free (&error);
-	}
-
-	return exists;
 }
 
 gboolean
@@ -1503,7 +1487,7 @@ init_session_id (GSListener *listener)
 static void
 gs_listener_init (GSListener *listener)
 {
-	listener->priv = GS_LISTENER_GET_PRIVATE (listener);
+	listener->priv = gs_listener_get_instance_private (listener);
 
 #ifdef WITH_SYSTEMD
 	/* check if logind is running */
