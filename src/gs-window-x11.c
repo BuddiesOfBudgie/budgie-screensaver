@@ -2260,10 +2260,10 @@ create_panel (GSWindow *window)
 
 	left_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 	gtk_widget_set_halign (GTK_WIDGET (left_hbox), GTK_ALIGN_CENTER);
+	gtk_container_set_border_width (GTK_CONTAINER (left_hbox), 4);
 	gtk_box_set_center_widget (GTK_BOX (window->priv->panel), left_hbox);
 
 	window->priv->clock = gtk_label_new (NULL);
-	gtk_container_set_border_width (GTK_CONTAINER (window->priv->clock), 4);
 	gtk_container_add (GTK_CONTAINER (left_hbox), window->priv->clock);
 
 	right_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
