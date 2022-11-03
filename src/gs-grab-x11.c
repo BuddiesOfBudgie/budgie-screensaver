@@ -265,7 +265,8 @@ gs_grab_move_grab (GSGrab    *grab,
 	result = gs_grab_seat_grab (grab, window, hide_cursor);
 
 	if (result != GDK_GRAB_SUCCESS) {
-		sleep (1);
+		struct timespec remaining, request = {0, 2.5e8};
+		nanosleep (&request, &remaining); // wait for 250 ms
 		result = gs_grab_seat_grab (grab, window, hide_cursor);
 	}
 
