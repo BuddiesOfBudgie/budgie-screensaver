@@ -61,6 +61,7 @@ gboolean gs_grab_grab_offscreen(GSGrab* grab, gboolean hide_cursor);
 void gs_grab_move_to_window(GSGrab* grab, GdkWindow* window, gboolean hide_cursor);
 
 void gs_grab_seat_ungrab(GSGrab* grab);
+void gs_grab_seat_reset(GSGrab* grab);
 
 G_END_DECLS
 

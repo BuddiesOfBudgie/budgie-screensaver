@@ -725,6 +725,7 @@ window_grab_broken_cb (GSWindow           *window,
 		       GSManager          *manager)
 {
 	(void) window;
+	(void) event;
 
 	gs_debug ("GRAB BROKEN!");
 	gs_grab_seat_reset (manager->priv->grab);
