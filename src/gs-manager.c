@@ -712,7 +712,6 @@ manager_maybe_grab_window (GSManager *manager,
 		gs_debug ("Moving grab to %p", window);
 		gs_grab_move_to_window (manager->priv->grab,
 					gs_window_get_gdk_window (window),
-					gs_window_get_screen (window),
 					FALSE);
 		grabbed = TRUE;
 	}
@@ -726,13 +725,10 @@ window_grab_broken_cb (GSWindow           *window,
 		       GSManager          *manager)
 {
 	(void) window;
+	(void) event;
 
 	gs_debug ("GRAB BROKEN!");
-	if (event->keyboard) {
-		gs_grab_keyboard_reset (manager->priv->grab);
-	} else {
-		gs_grab_mouse_reset (manager->priv->grab);
-	}
+	gs_grab_seat_reset (manager->priv->grab);
 }
 
 static gboolean
@@ -870,12 +866,11 @@ handle_window_dialog_up (GSManager *manager,
 	/* Move keyboard and mouse grabs so dialog can be used */
 	gs_grab_move_to_window (manager->priv->grab,
 				gs_window_get_gdk_window (window),
-				gs_window_get_screen (window),
 				FALSE);
 
 	/* Release the pointer grab while dialog is up so that
 	   the dialog can be used.  We'll regrab it when the dialog goes down. */
-	gs_grab_release_mouse (manager->priv->grab);
+	gs_grab_seat_ungrab (manager->priv->grab);
 }
 
 static void
@@ -892,7 +887,6 @@ handle_window_dialog_down (GSManager *manager,
 	/* Regrab the mouse */
 	gs_grab_move_to_window (manager->priv->grab,
 				gs_window_get_gdk_window (window),
-				gs_window_get_screen (window),
 				FALSE);
 
 	/* Make all windows sensitive so we get events */

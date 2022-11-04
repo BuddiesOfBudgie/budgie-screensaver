@@ -47,11 +47,9 @@ struct _GSGrabPrivate
 {
 	GDBusConnection *session_bus;
 
-	guint      mouse_hide_cursor : 1;
-	GdkWindow *mouse_grab_window;
-	GdkWindow *keyboard_grab_window;
-	GdkScreen *mouse_grab_screen;
-	GdkScreen *keyboard_grab_screen;
+	GdkSeat   *seat;
+	guint      seat_hide_cursor : 1;
+	GdkWindow *seat_grab_window;
 
 	GtkWidget *invisible;
 };
@@ -140,249 +138,11 @@ xorg_lock_smasher_set_active (GSGrab  *grab,
 }
 #endif /* HAVE_XF86MISCSETGRABKEYSSTATE */
 
-static int
-gs_grab_get_keyboard (GSGrab    *grab,
-		      GdkWindow *window,
-		      GdkScreen *screen)
-{
-	GdkGrabStatus status;
-
-	g_return_val_if_fail (window != NULL, FALSE);
-	g_return_val_if_fail (screen != NULL, FALSE);
-
-	gs_debug ("Grabbing keyboard widget=%X", (guint32) GDK_WINDOW_XID (window));
-	status = gdk_keyboard_grab (window, FALSE, GDK_CURRENT_TIME);
-
-	if (status == GDK_GRAB_SUCCESS) {
-		if (grab->priv->keyboard_grab_window != NULL) {
-			g_object_remove_weak_pointer (G_OBJECT (grab->priv->keyboard_grab_window),
-						      (gpointer *) &grab->priv->keyboard_grab_window);
-		}
-		grab->priv->keyboard_grab_window = window;
-
-		g_object_add_weak_pointer (G_OBJECT (grab->priv->keyboard_grab_window),
-					   (gpointer *) &grab->priv->keyboard_grab_window);
-
-		grab->priv->keyboard_grab_screen = screen;
-	} else {
-		gs_debug ("Couldn't grab keyboard!  (%s)", grab_string (status));
-	}
-
-	return status;
-}
-
-static int
-gs_grab_get_mouse (GSGrab    *grab,
-		   GdkWindow *window,
-		   GdkScreen *screen,
-		   gboolean   hide_cursor)
-{
-	GdkGrabStatus status;
-	GdkCursor    *cursor;
-
-	g_return_val_if_fail (window != NULL, FALSE);
-	g_return_val_if_fail (screen != NULL, FALSE);
-
-	cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_BLANK_CURSOR);
-
-	gs_debug ("Grabbing mouse widget=%X", (guint32) GDK_WINDOW_XID (window));
-	status = gdk_pointer_grab (window, TRUE, 0, NULL,
-				   (hide_cursor ? cursor : NULL),
-				   GDK_CURRENT_TIME);
-
-	if (status == GDK_GRAB_SUCCESS) {
-		if (grab->priv->mouse_grab_window != NULL) {
-			g_object_remove_weak_pointer (G_OBJECT (grab->priv->mouse_grab_window),
-						      (gpointer *) &grab->priv->mouse_grab_window);
-		}
-		grab->priv->mouse_grab_window = window;
-
-		g_object_add_weak_pointer (G_OBJECT (grab->priv->mouse_grab_window),
-					   (gpointer *) &grab->priv->mouse_grab_window);
-
-		grab->priv->mouse_grab_screen = screen;
-		grab->priv->mouse_hide_cursor = hide_cursor;
-	}
-
-	g_object_unref (G_OBJECT (cursor));
-
-	return status;
-}
-
-void
-gs_grab_keyboard_reset (GSGrab *grab)
-{
-	if (grab->priv->keyboard_grab_window != NULL) {
-		g_object_remove_weak_pointer (G_OBJECT (grab->priv->keyboard_grab_window),
-					      (gpointer *) &grab->priv->keyboard_grab_window);
-	}
-	grab->priv->keyboard_grab_window = NULL;
-	grab->priv->keyboard_grab_screen = NULL;
-}
-
-static gboolean
-gs_grab_release_keyboard (GSGrab *grab)
-{
-	gs_debug ("Ungrabbing keyboard");
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
-
-	gs_grab_keyboard_reset (grab);
-
-	return TRUE;
-}
-
-void
-gs_grab_mouse_reset (GSGrab *grab)
-{
-	if (grab->priv->mouse_grab_window != NULL) {
-		g_object_remove_weak_pointer (G_OBJECT (grab->priv->mouse_grab_window),
-					      (gpointer *) &grab->priv->mouse_grab_window);
-	}
-
-	grab->priv->mouse_grab_window = NULL;
-	grab->priv->mouse_grab_screen = NULL;
-}
-
-gboolean
-gs_grab_release_mouse (GSGrab *grab)
-{
-	gs_debug ("Ungrabbing pointer");
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-
-	gs_grab_mouse_reset (grab);
-
-	return TRUE;
-}
-
-static gboolean
-gs_grab_move_mouse (GSGrab    *grab,
-		    GdkWindow *window,
-		    GdkScreen *screen,
-		    gboolean   hide_cursor)
-{
-	gboolean   result;
-	GdkWindow *old_window;
-	GdkScreen *old_screen;
-	gboolean   old_hide_cursor;
-
-	/* if the pointer is not grabbed and we have a
-	   mouse_grab_window defined then we lost the grab */
-	if (! gdk_pointer_is_grabbed ()) {
-		gs_grab_mouse_reset (grab);
-	}
-
-	if (grab->priv->mouse_grab_window == window) {
-		gs_debug ("Window %X is already grabbed, skipping",
-			  (guint32) GDK_WINDOW_XID (grab->priv->mouse_grab_window));
-		return TRUE;
-	}
-
-#if 0
-	gs_debug ("Intentionally skipping move pointer grabs");
-	/* FIXME: GTK doesn't like having the pointer grabbed */
-	return TRUE;
-#else
-	if (grab->priv->mouse_grab_window) {
-		gs_debug ("Moving pointer grab from %X to %X",
-			  (guint32) GDK_WINDOW_XID (grab->priv->mouse_grab_window),
-			  (guint32) GDK_WINDOW_XID (window));
-	} else {
-		gs_debug ("Getting pointer grab on %X",
-			  (guint32) GDK_WINDOW_XID (window));
-	}
-#endif
-
-	gs_debug ("*** doing X server grab");
-	gdk_x11_grab_server ();
-
-	old_window = grab->priv->mouse_grab_window;
-	old_screen = grab->priv->mouse_grab_screen;
-	old_hide_cursor = grab->priv->mouse_hide_cursor;
-
-	if (old_window) {
-		gs_grab_release_mouse (grab);
-	}
-
-	result = gs_grab_get_mouse (grab, window, screen, hide_cursor);
-
-	if (result != GDK_GRAB_SUCCESS) {
-		sleep (1);
-		result = gs_grab_get_mouse (grab, window, screen, hide_cursor);
-	}
-
-	if ((result != GDK_GRAB_SUCCESS) && old_window) {
-		gs_debug ("Could not grab mouse for new window.  Resuming previous grab.");
-		gs_grab_get_mouse (grab, old_window, old_screen, old_hide_cursor);
-	}
-
-	gs_debug ("*** releasing X server grab");
-	gdk_x11_ungrab_server ();
-	gdk_display_flush (gdk_display_get_default ());
-
-	return (result == GDK_GRAB_SUCCESS);
-}
-
-static gboolean
-gs_grab_move_keyboard (GSGrab    *grab,
-		       GdkWindow *window,
-		       GdkScreen *screen)
-{
-	gboolean   result;
-	GdkWindow *old_window;
-	GdkScreen *old_screen;
-
-	if (grab->priv->keyboard_grab_window == window) {
-		gs_debug ("Window %X is already grabbed, skipping",
-			  (guint32) GDK_WINDOW_XID (grab->priv->keyboard_grab_window));
-		return TRUE;
-	}
-
-	if (grab->priv->keyboard_grab_window != NULL) {
-		gs_debug ("Moving keyboard grab from %X to %X",
-			  (guint32) GDK_WINDOW_XID (grab->priv->keyboard_grab_window),
-			  (guint32) GDK_WINDOW_XID (window));
-	} else {
-		gs_debug ("Getting keyboard grab on %X",
-			  (guint32) GDK_WINDOW_XID (window));
-
-	}
-
-	gs_debug ("*** doing X server grab");
-	gdk_x11_grab_server ();
-
-	old_window = grab->priv->keyboard_grab_window;
-	old_screen = grab->priv->keyboard_grab_screen;
-
-	if (old_window) {
-		gs_grab_release_keyboard (grab);
-	}
-
-	result = gs_grab_get_keyboard (grab, window, screen);
-
-	if (result != GDK_GRAB_SUCCESS) {
-		sleep (1);
-		result = gs_grab_get_keyboard (grab, window, screen);
-	}
-
-	if ((result != GDK_GRAB_SUCCESS) && old_window) {
-		gs_debug ("Could not grab keyboard for new window.  Resuming previous grab.");
-		gs_grab_get_keyboard (grab, old_window, old_screen);
-	}
-
-	gs_debug ("*** releasing X server grab");
-	gdk_x11_ungrab_server ();
-	gdk_display_flush (gdk_display_get_default ());
-
-	return (result == GDK_GRAB_SUCCESS);
-}
-
 static void
 gs_grab_move_focus (GdkWindow *window)
 {
 	Window focus = 0;
 	int    rev = 0;
-
-	gs_debug ("Nuking focus");
 
 	GdkDisplay* default_display = gdk_display_get_default ();
 
@@ -395,13 +155,137 @@ gs_grab_move_focus (GdkWindow *window)
 	gdk_x11_display_error_trap_pop_ignored (default_display);
 }
 
+static void gs_grab_seat_grab_prepare_cb(GdkSeat* seat, GdkWindow* window, gpointer user_data) {
+	(void) seat;
+	(void) user_data;
+
+	gdk_window_show(window);
+	gs_grab_move_focus(window);
+}
+
+static int gs_grab_seat_grab(GSGrab* grab, GdkWindow* window, gboolean hide_cursor) {
+	g_return_val_if_fail(window != NULL, FALSE);
+
+	GdkCursor* cursor = NULL;
+	if (!hide_cursor) {
+		cursor = gdk_cursor_new_for_display (gdk_display_get_default (), GDK_BLANK_CURSOR);
+	}
+
+	GdkSeat* seat = gdk_display_get_default_seat(gdk_display_get_default());
+	GdkGrabStatus status = gdk_seat_grab(seat, window, GDK_SEAT_CAPABILITY_ALL, FALSE, cursor, NULL, gs_grab_seat_grab_prepare_cb, NULL);
+
+	if (status == GDK_GRAB_SUCCESS) {
+		if (grab->priv->seat_grab_window != NULL) {
+			g_object_remove_weak_pointer(G_OBJECT(grab->priv->seat_grab_window), (gpointer*) &grab->priv->seat_grab_window);
+		}
+
+		if (grab->priv->seat != NULL) {
+			g_object_remove_weak_pointer(G_OBJECT(grab->priv->seat), (gpointer*) &grab->priv->seat);
+		}
+
+		grab->priv->seat = seat;
+		grab->priv->seat_grab_window = window;
+		grab->priv->seat_hide_cursor = hide_cursor;
+
+		g_object_add_weak_pointer(G_OBJECT(grab->priv->seat_grab_window), (gpointer*) &grab->priv->seat_grab_window);
+		g_object_add_weak_pointer(G_OBJECT(grab->priv->seat), (gpointer*) &grab->priv->seat);
+	} else {
+		gs_debug ("Couldn't grab capabilities on seat!  (%s)", grab_string (status));
+	}
+
+	return status;
+}
+
+void gs_grab_seat_reset(GSGrab* grab) {
+	if (grab->priv->seat_grab_window != NULL) {
+		g_object_remove_weak_pointer(G_OBJECT(grab->priv->seat_grab_window), (gpointer*) &grab->priv->seat_grab_window);
+	}
+
+	if (grab->priv->seat != NULL) {
+		g_object_remove_weak_pointer(G_OBJECT(grab->priv->seat), (gpointer*) &grab->priv->seat);
+	}
+
+	grab->priv->seat_grab_window = NULL;
+	grab->priv->seat = NULL;
+}
+
+void gs_grab_seat_ungrab(GSGrab* grab) {
+	gdk_seat_ungrab(grab->priv->seat);
+	gs_grab_seat_reset(grab);
+}
+
+static gboolean
+gs_grab_move_grab (GSGrab    *grab,
+		    GdkWindow *window,
+		    gboolean   hide_cursor)
+{
+	gboolean   result;
+	GdkWindow *old_window;
+	gboolean   old_hide_cursor;
+
+	/* if the pointer is not grabbed and we have a
+	   mouse_grab_window defined then we lost the grab */
+	if (grab->priv->seat != NULL && !gdk_display_device_is_grabbed(gdk_display_get_default(), gdk_seat_get_pointer(grab->priv->seat))) {
+		gs_grab_seat_reset (grab);
+	}
+
+	if (grab->priv->seat_grab_window == window) {
+		gs_debug ("Window %X is already grabbed, skipping",
+			  (guint32) GDK_WINDOW_XID (grab->priv->seat_grab_window));
+		return TRUE;
+	}
+
+#if 0
+	gs_debug ("Intentionally skipping move pointer grabs");
+	/* FIXME: GTK doesn't like having the pointer grabbed */
+	return TRUE;
+#else
+	if (grab->priv->seat_grab_window) {
+		gs_debug ("Moving pointer grab from %X to %X",
+			  (guint32) GDK_WINDOW_XID (grab->priv->seat_grab_window),
+			  (guint32) GDK_WINDOW_XID (window));
+	} else {
+		gs_debug ("Getting pointer grab on %X",
+			  (guint32) GDK_WINDOW_XID (window));
+	}
+#endif
+
+	gs_debug ("*** doing X server grab");
+	gdk_x11_grab_server ();
+
+	old_window = grab->priv->seat_grab_window;
+	old_hide_cursor = grab->priv->seat_hide_cursor;
+
+	if (old_window) {
+		gs_grab_seat_ungrab (grab);
+	}
+
+	result = gs_grab_seat_grab (grab, window, hide_cursor);
+
+	if (result != GDK_GRAB_SUCCESS) {
+		struct timespec remaining, request = {0, 2.5e8};
+		nanosleep (&request, &remaining); // wait for 250 ms
+		result = gs_grab_seat_grab (grab, window, hide_cursor);
+	}
+
+	if ((result != GDK_GRAB_SUCCESS) && old_window) {
+		gs_debug ("Could not grab mouse for new window.  Resuming previous grab.");
+		gs_grab_seat_grab (grab, old_window, old_hide_cursor);
+	}
+
+	gs_debug ("*** releasing X server grab");
+	gdk_x11_ungrab_server ();
+	gdk_display_flush (gdk_display_get_default ());
+
+	return (result == GDK_GRAB_SUCCESS);
+}
+
 void
 gs_grab_release (GSGrab *grab)
 {
 	gs_debug ("Releasing all grabs");
 
-	gs_grab_release_mouse (grab);
-	gs_grab_release_keyboard (grab);
+	gs_grab_seat_ungrab (grab);
 
 	/* FIXME: is it right to enable this ? */
 	xorg_lock_smasher_set_active (grab, TRUE);
@@ -444,11 +328,9 @@ request_shell_exit_overview (GSGrab *grab)
 gboolean
 gs_grab_grab_window (GSGrab    *grab,
 		     GdkWindow *window,
-		     GdkScreen *screen,
 		     gboolean   hide_cursor)
 {
-	gboolean mstatus = FALSE;
-	gboolean kstatus = FALSE;
+	GdkGrabStatus status;
 	int      i;
 	int      retries = 4;
 	gboolean focus_fuckus = FALSE;
@@ -459,8 +341,8 @@ gs_grab_grab_window (GSGrab    *grab,
  AGAIN:
 
 	for (i = 0; i < retries; i++) {
-		kstatus = gs_grab_get_keyboard (grab, window, screen);
-		if (kstatus == GDK_GRAB_SUCCESS) {
+		status = gs_grab_seat_grab (grab, window, hide_cursor);
+		if (status == GDK_GRAB_SUCCESS) {
 			break;
 		}
 
@@ -468,57 +350,12 @@ gs_grab_grab_window (GSGrab    *grab,
 		sleep (1);
 	}
 
-	if (kstatus != GDK_GRAB_SUCCESS) {
+	if (status != GDK_GRAB_SUCCESS) {
 		if (!focus_fuckus) {
 			focus_fuckus = TRUE;
 			gs_grab_move_focus (window);
 			goto AGAIN;
 		}
-	}
-
-	for (i = 0; i < retries; i++) {
-		mstatus = gs_grab_get_mouse (grab, window, screen, hide_cursor);
-		if (mstatus == GDK_GRAB_SUCCESS) {
-			break;
-		}
-
-		/* else, wait a second and try to grab again. */
-		sleep (1);
-	}
-
-	if (mstatus != GDK_GRAB_SUCCESS) {
-		gs_debug ("Couldn't grab pointer!  (%s)",
-			  grab_string (mstatus));
-	}
-
-#if 0
-	/* FIXME: release the pointer grab so GTK will work */
-	gs_grab_release_mouse (grab);
-#endif
-
-	/* When should we allow blanking to proceed?  The current theory
-	   is that both a keyboard grab and a mouse grab are mandatory
-
-	   - If we don't have a keyboard grab, then we won't be able to
-	   read a password to unlock, so the kbd grab is manditory.
-
-	   - If we don't have a mouse grab, then we might not see mouse
-	   clicks as a signal to unblank, on-screen widgets won't work ideally,
-	   and gs_grab_move_to_window() will spin forever when it gets called.
-	*/
-
-	if (kstatus != GDK_GRAB_SUCCESS || mstatus != GDK_GRAB_SUCCESS) {
-		/* Do not blank without a keyboard and mouse grabs. */
-
-		/* Release keyboard or mouse which was grabbed. */
-		if (kstatus == GDK_GRAB_SUCCESS) {
-			gs_grab_release_keyboard (grab);
-		}
-		if (mstatus == GDK_GRAB_SUCCESS) {
-			gs_grab_release_mouse (grab);
-		}
-
-		return FALSE;
 	}
 
 	/* Grab is good, go ahead and blank.  */
@@ -538,10 +375,12 @@ gs_grab_grab_root (GSGrab  *grab,
 	gs_debug ("Grabbing the root window");
 
 	display = gdk_display_get_default ();
-	gdk_display_get_pointer (display, &screen, NULL, NULL, NULL);
+	GdkSeat* seat = gdk_display_get_default_seat (display);
+	GdkDevice* pointer = gdk_seat_get_pointer(seat);
+	gdk_device_get_position (pointer, &screen, NULL, NULL);
 	root = gdk_screen_get_root_window (screen);
 
-	res = gs_grab_grab_window (grab, root, screen, hide_cursor);
+	res = gs_grab_grab_window (grab, root, hide_cursor);
 
 	return res;
 }
@@ -551,13 +390,11 @@ gboolean
 gs_grab_grab_offscreen (GSGrab *grab,
 			gboolean hide_cursor)
 {
-	GdkScreen *screen;
 	gboolean   res;
 
 	gs_debug ("Grabbing an offscreen window");
 
-	screen = gtk_invisible_get_screen (GTK_INVISIBLE (grab->priv->invisible));
-	res = gs_grab_grab_window (grab, gtk_widget_get_window (grab->priv->invisible), screen, hide_cursor);
+	res = gs_grab_grab_window (grab, gtk_widget_get_window (grab->priv->invisible), hide_cursor);
 
 	return res;
 }
@@ -566,7 +403,6 @@ gs_grab_grab_offscreen (GSGrab *grab,
 void
 gs_grab_move_to_window (GSGrab    *grab,
 			GdkWindow *window,
-			GdkScreen *screen,
 			gboolean   hide_cursor)
 {
 	gboolean result = FALSE;
@@ -576,12 +412,7 @@ gs_grab_move_to_window (GSGrab    *grab,
 	xorg_lock_smasher_set_active (grab, FALSE);
 
 	do {
-		result = gs_grab_move_keyboard (grab, window, screen);
-		gdk_display_flush (gdk_display_get_default ());
-	} while (!result);
-
-	do {
-		result = gs_grab_move_mouse (grab, window, screen, hide_cursor);
+		result = gs_grab_move_grab (grab, window, hide_cursor);
 		gdk_display_flush (gdk_display_get_default ());
 	} while (!result);
 }
@@ -601,7 +432,7 @@ gs_grab_init (GSGrab *grab)
 
 	grab->priv->session_bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
 
-	grab->priv->mouse_hide_cursor = FALSE;
+	grab->priv->seat_hide_cursor = FALSE;
 	grab->priv->invisible = gtk_invisible_new ();
 	gtk_widget_show (grab->priv->invisible);
 }
