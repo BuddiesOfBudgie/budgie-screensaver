@@ -144,8 +144,6 @@ gs_grab_move_focus (GdkWindow *window)
 	Window focus = 0;
 	int    rev = 0;
 
-	gs_debug ("Nuking focus");
-
 	GdkDisplay* default_display = gdk_display_get_default ();
 
 	gdk_x11_display_error_trap_push (default_display);
