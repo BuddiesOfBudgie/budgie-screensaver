@@ -46,10 +46,10 @@ typedef struct {
 typedef struct {
 	GtkWindowClass parent_class;
 
-	gboolean (*activity)(GSWindow* window);
-	void (*deactivated)(GSWindow* window);
-	void (*dialog_up)(GSWindow* window);
-	void (*dialog_down)(GSWindow* window);
+	gboolean (* activity)(GSWindow* window);
+	void (* deactivated)(GSWindow* window);
+	void (* dialog_up)(GSWindow* window);
+	void (* dialog_down)(GSWindow* window);
 } GSWindowClass;
 
 GType gs_window_get_type(void);

@@ -42,8 +42,8 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	gboolean (*idle_changed)(GSWatcher* watcher, gboolean is_idle);
-	gboolean (*idle_notice_changed)(GSWatcher* watcher, gboolean in_effect);
+	gboolean (* idle_changed)(GSWatcher* watcher, gboolean is_idle);
+	gboolean (* idle_notice_changed)(GSWatcher* watcher, gboolean in_effect);
 } GSWatcherClass;
 
 GType gs_watcher_get_type(void);

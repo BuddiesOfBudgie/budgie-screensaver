@@ -23,44 +23,41 @@
 #include <string.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <pwd.h>		/* for getpwnam() and struct passwd */
-#include <grp.h>		/* for getgrgid() and struct group */
+#include <pwd.h>        /* for getpwnam() and struct passwd */
+#include <grp.h>        /* for getgrgid() and struct group */
 #include <glib.h>
 
 #include "setuid.h"
 
-static char *
-uid_gid_string (uid_t uid,
-		gid_t gid)
-{
-	static char   *buf;
-	struct passwd *p = NULL;
-	struct group  *g = NULL;
+static char* uid_gid_string(uid_t uid, gid_t gid) {
+	static char* buf;
+	struct passwd* p = NULL;
+	struct group* g = NULL;
 
-	p = getpwuid (uid);
-	g = getgrgid (gid);
+	p = getpwuid(uid);
+	g = getgrgid(gid);
 
-	buf = g_strdup_printf ("%s/%s (%ld/%ld)",
-			       (p && p->pw_name ? p->pw_name : "???"),
-			       (g && g->gr_name ? g->gr_name : "???"),
-			       (long) uid, (long) gid);
+	buf = g_strdup_printf(
+		"%s/%s (%ld/%ld)",
+		(p && p->pw_name ? p->pw_name : "???"),
+		(g && g->gr_name ? g->gr_name : "???"),
+		(long) uid,
+		(long) gid
+	);
 
 	return buf;
 }
 
-static gboolean
-set_ids_by_number (uid_t  uid,
-		   gid_t  gid,
-		   char **message_ret)
-{
+static gboolean set_ids_by_number(uid_t uid, gid_t gid, char** message_ret) {
 	int uid_errno = 0;
 	int gid_errno = 0;
 	int sgs_errno = 0;
-	struct passwd *p = getpwuid (uid);
-	struct group  *g = getgrgid (gid);
+	struct passwd* p = getpwuid(uid);
+	struct group* g = getgrgid(gid);
 
-	if (message_ret)
+	if (message_ret) {
 		*message_ret = NULL;
+	}
 
 	/* Rumor has it that some implementations of of setuid() do nothing
 	   when called with -1; therefore, if the "nobody" user has a uid of
@@ -70,37 +67,43 @@ set_ids_by_number (uid_t  uid,
 	   instead.  Note that this must be done after we've looked up the
 	   user/group names with getpwuid(-1) and/or getgrgid(-1).
 	*/
-	if (gid == (gid_t) -1) gid = (gid_t) -2;
-	if (uid == (uid_t) -1) uid = (uid_t) -2;
+	if (gid == (gid_t) -1) { gid = (gid_t) -2; }
+	if (uid == (uid_t) -1) { uid = (uid_t) -2; }
 
 #ifdef _BSD_SOURCE
-	errno = 0;
-	if (setgroups (1, &gid) < 0)
-		sgs_errno = errno ? errno : -1;
+		errno = 0;
+		if (setgroups (1, &gid) < 0)
+			sgs_errno = errno ? errno : -1;
 #endif
 
 	errno = 0;
-	if (setgid (gid) != 0)
+	if (setgid(gid) != 0) {
 		gid_errno = errno ? errno : -1;
+	}
 
 	errno = 0;
-	if (setuid (uid) != 0)
+	if (setuid(uid) != 0) {
 		uid_errno = errno ? errno : -1;
+	}
 
 	if (uid_errno == 0 && gid_errno == 0 && sgs_errno == 0) {
-		static char *reason;
-		reason = g_strdup_printf ("changed uid/gid to %s/%s (%ld/%ld).",
-					  (p && p->pw_name ? p->pw_name : "???"),
-					  (g && g->gr_name ? g->gr_name : "???"),
-					  (long) uid, (long) gid);
-		if (message_ret)
-			*message_ret = g_strdup (reason);
+		static char* reason;
+		reason = g_strdup_printf(
+			"changed uid/gid to %s/%s (%ld/%ld).",
+			(p && p->pw_name ? p->pw_name : "???"),
+			(g && g->gr_name ? g->gr_name : "???"),
+			(long) uid,
+			(long) gid
+		);
+		if (message_ret) {
+			*message_ret = g_strdup(reason);
+		}
 
-		g_free (reason);
+		g_free(reason);
 
 		return TRUE;
 	} else {
-		char *reason = NULL;
+		char* reason = NULL;
 
 #ifdef _BSD_SOURCE
 		if (sgs_errno) {
@@ -119,30 +122,30 @@ set_ids_by_number (uid_t  uid,
 #endif
 
 		if (gid_errno) {
-			reason = g_strdup_printf ("couldn't set gid to %s (%ld)",
-						  (g && g->gr_name ? g->gr_name : "???"),
-						  (long) gid);
-			if (gid_errno == -1)
-				fprintf (stderr, "%s: unknown error\n", reason);
-			else {
+			reason = g_strdup_printf(
+				"couldn't set gid to %s (%ld)", (g && g->gr_name ? g->gr_name : "???"), (long) gid
+			);
+			if (gid_errno == -1) {
+				fprintf(stderr, "%s: unknown error\n", reason);
+			} else {
 				errno = gid_errno;
-				perror (reason);
+				perror(reason);
 			}
-			g_free (reason);
+			g_free(reason);
 			reason = NULL;
 		}
 
 		if (uid_errno) {
-			reason = g_strdup_printf ("couldn't set uid to %s (%ld)",
-						  (p && p->pw_name ? p->pw_name : "???"),
-						  (long) uid);
-			if (uid_errno == -1)
-				fprintf (stderr, "%s: unknown error\n", reason);
-			else {
+			reason = g_strdup_printf(
+				"couldn't set uid to %s (%ld)", (p && p->pw_name ? p->pw_name : "???"), (long) uid
+			);
+			if (uid_errno == -1) {
+				fprintf(stderr, "%s: unknown error\n", reason);
+			} else {
 				errno = uid_errno;
-				perror (reason);
+				perror(reason);
 			}
-			g_free (reason);
+			g_free(reason);
 			reason = NULL;
 		}
 		return FALSE;
@@ -164,12 +167,8 @@ set_ids_by_number (uid_t  uid,
 */
 
 /* Returns TRUE if OK to lock, FALSE otherwise */
-gboolean
-hack_uid (char **nolock_reason,
-	  char **orig_uid,
-	  char **uid_message)
-{
-	char    *reason;
+gboolean hack_uid(char** nolock_reason, char** orig_uid, char** uid_message) {
+	char* reason;
 	gboolean ret;
 
 	ret = TRUE;
@@ -189,13 +188,13 @@ hack_uid (char **nolock_reason,
 	   real user/group ids.  That is, give up our "chmod +s" rights.
 	*/
 	{
-		uid_t euid = geteuid ();
-		gid_t egid = getegid ();
-		uid_t uid  = getuid ();
-		gid_t gid  = getgid ();
+		uid_t euid = geteuid();
+		gid_t egid = getegid();
+		uid_t uid = getuid();
+		gid_t gid = getgid();
 
 		if (orig_uid != NULL) {
-			*orig_uid = uid_gid_string (euid, egid);
+			*orig_uid = uid_gid_string(euid, egid);
 		}
 
 #ifdef HAVE_BSDAUTH /* we need to setgid auth to run the bsd_auth(3) login_* helpers */
@@ -216,8 +215,8 @@ hack_uid (char **nolock_reason,
 		}
 #else /* !HAVE_BSDAUTH */
 		if (uid != euid || gid != egid) {
-			if (! set_ids_by_number (uid, gid, uid_message)) {
-				reason = g_strdup ("unable to discard privileges.");
+			if (!set_ids_by_number(uid, gid, uid_message)) {
+				reason = g_strdup("unable to discard privileges.");
 
 				ret = FALSE;
 				goto out;
@@ -236,17 +235,17 @@ hack_uid (char **nolock_reason,
 	   of the xscreensaver manual titled "LOCKING AND ROOT LOGINS",
 	   and "USING XDM".
 	*/
-	if (getuid () == (uid_t) 0) {
-		reason = g_strdup ("running as root");
+	if (getuid() == (uid_t) 0) {
+		reason = g_strdup("running as root");
 		ret = FALSE;
 		goto out;
 	}
 
- out:
+out:
 	if (nolock_reason != NULL) {
-		*nolock_reason = g_strdup (reason);
+		*nolock_reason = g_strdup(reason);
 	}
-	g_free (reason);
+	g_free(reason);
 
 	return ret;
 }

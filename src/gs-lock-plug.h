@@ -51,10 +51,10 @@ typedef struct {
 typedef struct {
 	GtkPlugClass parent_class;
 
-	void (*response)(GSLockPlug* plug, gint response_id);
+	void (* response)(GSLockPlug* plug, gint response_id);
 
 	/* Keybinding signals */
-	void (*close)(GSLockPlug* plug);
+	void (* close)(GSLockPlug* plug);
 
 } GSLockPlugClass;
 

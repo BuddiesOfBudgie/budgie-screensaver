@@ -44,10 +44,10 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	void (*activated)(GSManager* manager);
-	void (*deactivated)(GSManager* manager);
-	void (*auth_request_begin)(GSManager* manager);
-	void (*auth_request_end)(GSManager* manager);
+	void (* activated)(GSManager* manager);
+	void (* deactivated)(GSManager* manager);
+	void (* auth_request_begin)(GSManager* manager);
+	void (* auth_request_end)(GSManager* manager);
 
 } GSManagerClass;
 

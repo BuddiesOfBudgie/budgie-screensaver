@@ -42,13 +42,13 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	void (*lock)(GSListener* listener);
-	void (*config_lock)(GSListener* listener);
-	void (*quit)(GSListener* listener);
-	void (*simulate_user_activity)(GSListener* listener);
-	gboolean (*active_changed)(GSListener* listener, gboolean active);
-	void (*throttle_changed)(GSListener* listener, gboolean throttled);
-	void (*show_message)(GSListener* listener, const char* summary, const char* body, const char* icon);
+	void (* lock)(GSListener* listener);
+	void (* config_lock)(GSListener* listener);
+	void (* quit)(GSListener* listener);
+	void (* simulate_user_activity)(GSListener* listener);
+	gboolean (* active_changed)(GSListener* listener, gboolean active);
+	void (* throttle_changed)(GSListener* listener, gboolean throttled);
+	void (* show_message)(GSListener* listener, const char* summary, const char* body, const char* icon);
 
 } GSListenerClass;
 
