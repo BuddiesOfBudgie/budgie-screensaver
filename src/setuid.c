@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * setuid.c --- management of runtime privileges.
  *
  * xscreensaver, Copyright (c) 1993-1998 Jamie Zawinski <jwz@jwz.org>

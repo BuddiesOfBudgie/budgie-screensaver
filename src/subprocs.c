@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * subprocs.c --- choosing, spawning, and killing screenhacks.
  *
  * xscreensaver, Copyright (c) 1991-2003 Jamie Zawinski <jwz@jwz.org>
