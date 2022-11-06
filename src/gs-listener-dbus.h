@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * Copyright (C) 2004-2006 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  * Authors: William Jon McCann <mccann@jhu.edu>
- *
  */
 
 #ifndef __GS_LISTENER_H
@@ -42,13 +40,13 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	void (*lock)(GSListener* listener);
-	void (*config_lock)(GSListener* listener);
-	void (*quit)(GSListener* listener);
-	void (*simulate_user_activity)(GSListener* listener);
-	gboolean (*active_changed)(GSListener* listener, gboolean active);
-	void (*throttle_changed)(GSListener* listener, gboolean throttled);
-	void (*show_message)(GSListener* listener, const char* summary, const char* body, const char* icon);
+	void (* lock)(GSListener* listener);
+	void (* config_lock)(GSListener* listener);
+	void (* quit)(GSListener* listener);
+	void (* simulate_user_activity)(GSListener* listener);
+	gboolean (* active_changed)(GSListener* listener, gboolean active);
+	void (* throttle_changed)(GSListener* listener, gboolean throttled);
+	void (* show_message)(GSListener* listener, const char* summary, const char* body, const char* icon);
 
 } GSListenerClass;
 

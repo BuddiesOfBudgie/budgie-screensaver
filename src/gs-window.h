@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * Copyright (C) 2004-2005 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  * Authors: William Jon McCann <mccann@jhu.edu>
- *
  */
 
 #ifndef __GS_WINDOW_H
@@ -46,10 +44,10 @@ typedef struct {
 typedef struct {
 	GtkWindowClass parent_class;
 
-	gboolean (*activity)(GSWindow* window);
-	void (*deactivated)(GSWindow* window);
-	void (*dialog_up)(GSWindow* window);
-	void (*dialog_down)(GSWindow* window);
+	gboolean (* activity)(GSWindow* window);
+	void (* deactivated)(GSWindow* window);
+	void (* dialog_up)(GSWindow* window);
+	void (* dialog_down)(GSWindow* window);
 } GSWindowClass;
 
 GType gs_window_get_type(void);

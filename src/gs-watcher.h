@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * Copyright (C) 2004-2005 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  * Authors: William Jon McCann <mccann@jhu.edu>
- *
  */
 
 #ifndef __GS_WATCHER_H
@@ -42,8 +40,8 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	gboolean (*idle_changed)(GSWatcher* watcher, gboolean is_idle);
-	gboolean (*idle_notice_changed)(GSWatcher* watcher, gboolean in_effect);
+	gboolean (* idle_changed)(GSWatcher* watcher, gboolean is_idle);
+	gboolean (* idle_notice_changed)(GSWatcher* watcher, gboolean in_effect);
 } GSWatcherClass;
 
 GType gs_watcher_get_type(void);

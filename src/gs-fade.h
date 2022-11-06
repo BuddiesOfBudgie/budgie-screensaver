@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
+/*
  * Copyright (C) 2004-2005 William Jon McCann <mccann@jhu.edu>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -17,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  * Authors: William Jon McCann <mccann@jhu.edu>
- *
  */
 
 #ifndef __GS_FADE_H
@@ -32,7 +30,6 @@ G_BEGIN_DECLS
 #define GS_IS_FADE_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE((k), GS_TYPE_FADE))
 #define GS_FADE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o), GS_TYPE_FADE, GSFadeClass))
 
-
 typedef struct _GSFadePrivate GSFadePrivate;
 
 typedef struct {
@@ -43,11 +40,10 @@ typedef struct {
 typedef struct {
 	GObjectClass parent_class;
 
-	void (*faded)(GSFade* fade);
+	void (* faded)(GSFade* fade);
 } GSFadeClass;
 
-typedef void (*GSFadeDoneFunc)(GSFade* fade, gpointer data);
-
+typedef void (* GSFadeDoneFunc)(GSFade* fade, gpointer data);
 
 GType gs_fade_get_type(void);
 
