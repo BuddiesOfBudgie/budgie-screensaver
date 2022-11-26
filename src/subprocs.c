@@ -36,6 +36,9 @@
 # define fork  vfork
 #endif /* VMS */
 
+#ifndef _POSIX_SOURCE
+# define _POSIX_SOURCE
+#endif
 #include <signal.h>		/* for the signal names */
 
 #include <glib.h>
