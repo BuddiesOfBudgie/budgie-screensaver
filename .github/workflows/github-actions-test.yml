@@ -2,14 +2,22 @@ name: Build
 on: [push]
 jobs:
   ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
-    - run: pip install meson ninja
     - run: sudo apt update
-    - run: sudo apt install libdbus-glib-1-dev libx11-dev libgtk-3-dev libgnome-desktop-3-dev libgnomekbd-dev libpam0g-dev libxxf86vm-dev intltool
-    - run: meson build
+    - run: sudo apt install meson libdbus-glib-1-dev libx11-dev libgtk-3-dev libgnome-desktop-3-dev libgnomekbd-dev libpam0g-dev libxxf86vm-dev intltool -y
+    - run: meson setup build
     - run: meson compile -C build
+
+  alpine:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: jirutka/setup-alpine@v1
+      with:
+        packages: build-base alpine-sdk meson gtk+3.0-dev dbus-glib-dev gnome-desktop-dev libgnomekbd-dev linux-pam-dev intltool
+    - run: |
+        meson setup build -Dwith-systemd=false
+        meson compile -C build
+      shell: alpine.sh {0}
