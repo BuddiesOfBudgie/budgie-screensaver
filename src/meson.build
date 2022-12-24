@@ -7,6 +7,17 @@ screensaver_command_sources = [
     'gnome-screensaver-command.c',
 ]
 
+
+if host_machine.system() in ['openbsd', 'freebsd', 'netbsd']
+screensaver_dialog_sources = [
+    'gnome-screensaver-dialog.c',
+    'gs-lock-plug.c',
+    'gs-debug.c',
+    'setuid.c',
+    'subprocs.c',
+]
+else
+
 screensaver_dialog_sources = [
     'gnome-screensaver-dialog.c',
     'gs-auth-pam.c',
@@ -15,6 +26,8 @@ screensaver_dialog_sources = [
     'setuid.c',
     'subprocs.c',
 ]
+
+endif
 
 screensaver_sources = [
     'gnome-screensaver.c',
@@ -34,7 +47,12 @@ screensaver_sources = [
 
 screensaver_command_deps = [dep_glib, dep_gio]
 
-screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
+if host_machine.system() in ['openbsd', 'freebsd', 'netbsd']
+  # BSDs don't have linux PAM
+  screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
+else
+  screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
+endif
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 

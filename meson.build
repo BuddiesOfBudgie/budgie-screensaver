@@ -42,7 +42,10 @@ if with_xf86gamma_ext
 endif
 
 c = meson.get_compiler('c')
-dep_pam = c.find_library('pam', required: true)
+if not(host_machine.system() in ['openbsd', 'freebsd', 'netbsd'])
+  # BSDs don't have linux PAM
+  dep_pam = c.find_library('pam', required: true)
+endif
 
 # Inspired by https://github.com/GNOME/recipes/blob/master/meson.build
 package_version = meson.project_version()
