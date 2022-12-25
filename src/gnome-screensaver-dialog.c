@@ -461,7 +461,6 @@ privileged_initialization (int     *argc,
 #ifndef NO_LOCKING
 	/* before hack_uid () for proper permissions */
 	gs_auth_priv_init ();
-	// To do (need a bsd_auth version)
 #endif /* NO_LOCKING */
 
 	ret = hack_uid (&nolock_reason,
