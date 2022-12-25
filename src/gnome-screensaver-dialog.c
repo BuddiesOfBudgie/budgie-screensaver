@@ -300,11 +300,7 @@ do_auth_check (GSLockPlug *plug)
 
 	gs_lock_plug_disable_prompt (plug);
 	gs_lock_plug_set_busy (plug);
-#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__)
 	res = gs_auth_verify_user (g_get_user_name (), g_getenv ("DISPLAY"), auth_message_handler, plug, &error);
-#else
-	//To do gs_auth_verify user with bsd auth
-#endif
 
 	gs_debug ("Verify user returned: %s", res ? "TRUE" : "FALSE");
 	if (! res) {
@@ -463,11 +459,9 @@ privileged_initialization (int     *argc,
 	gs_profile_start (NULL);
 
 #ifndef NO_LOCKING
-#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__)
 	/* before hack_uid () for proper permissions */
 	gs_auth_priv_init ();
 	// To do (need a bsd_auth version)
-#endif
 #endif /* NO_LOCKING */
 
 	ret = hack_uid (&nolock_reason,
@@ -521,7 +515,6 @@ lock_initialization (int     *argc,
 #else /* !NO_LOCKING */
 
 	/* Finish initializing locking, now that we're out of privileged code. */
-#if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__)
 	if (! gs_auth_init ()) {
 
 		if (nolock_reason != NULL) {
@@ -530,7 +523,6 @@ lock_initialization (int     *argc,
 
 		return FALSE;
 	}
-#else
 	// To do (need a bsd_auth version)
 #endif
 
