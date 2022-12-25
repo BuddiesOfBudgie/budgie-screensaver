@@ -32,9 +32,11 @@
 #include <string.h>
 #include <pwd.h>
 #include <grp.h>
+#if !defined(__OpenBSD__) && !defined(__FreeBSD__) && defined(__NetBSD__)
 #include <security/pam_appl.h>
 #include <security/pam_modutil.h>
 #include <security/pam_ext.h>
+#endif
 #include <signal.h>
 #include <errno.h>
 
@@ -50,6 +52,7 @@
 /* Some time between Red Hat 4.2 and 7.0, the words were transposed
    in the various PAM_x_CRED macro names.  Yay!
 */
+
 #ifndef  PAM_REFRESH_CRED
 # define PAM_REFRESH_CRED PAM_CRED_REFRESH
 #endif
