@@ -32,11 +32,9 @@
 #include <string.h>
 #include <pwd.h>
 #include <grp.h>
-#if !defined(__OpenBSD__) && !defined(__FreeBSD__) && defined(__NetBSD__)
 #include <security/pam_appl.h>
 #include <security/pam_modutil.h>
 #include <security/pam_ext.h>
-#endif
 #include <signal.h>
 #include <errno.h>
 

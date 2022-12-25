@@ -52,23 +52,15 @@ endif
 
 screensaver_command_deps = [dep_glib, dep_gio]
 
-<<<<<<< HEAD
 screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
 
 if with_bsd_auth == false
   screensaver_dialog_deps += dep_pam
-=======
-if host_machine.system() in ['openbsd', 'freebsd', 'netbsd']
-  # BSDs don't have linux PAM
-  screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
-else
-  screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
->>>>>>> dcf5c454aa48de55694b6c381ff7745714b0c00b
 endif
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 
-if with_systemd
+if with_systemd == true
     screensaver_deps += dep_systemd
 endif
 

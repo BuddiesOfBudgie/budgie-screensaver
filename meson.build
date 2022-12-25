@@ -24,7 +24,7 @@ dep_gnomedesktop = dependency('gnome-desktop-3.0', version: '>= 3.1.91')
 dep_gsettings = dependency('gsettings-desktop-schemas', version: '>= 3.1.91')
 
 with_systemd = get_option('with-systemd')
-if with_systemd
+if with_systemd == true
     dep_systemd = dependency('libsystemd', version: '>= 209')
 endif
 
@@ -42,15 +42,11 @@ if with_xf86gamma_ext
 endif
 
 c = meson.get_compiler('c')
-<<<<<<< HEAD
 
 with_bsd_auth = get_option('with-bsd_auth')
 
 if with_bsd_auth == false
-=======
-if not(host_machine.system() in ['openbsd', 'freebsd', 'netbsd'])
   # BSDs don't have linux PAM
->>>>>>> dcf5c454aa48de55694b6c381ff7745714b0c00b
   dep_pam = c.find_library('pam', required: true)
 endif
 
