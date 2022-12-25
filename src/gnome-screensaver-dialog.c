@@ -523,8 +523,6 @@ lock_initialization (int     *argc,
 
 		return FALSE;
 	}
-	// To do (need a bsd_auth version)
-#endif
 
 	/* If locking is currently enabled, but the environment indicates that
 	   we have been launched as GDM's "Background" program, then disable
