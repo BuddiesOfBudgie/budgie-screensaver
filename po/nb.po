@@ -1,21 +1,38 @@
-# Norwegian bokmål translation of gnome-screensaver.
-# Copyright (C) 1998-2004 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1998-2016.
-# Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver 3.23.x\n"
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-21 08:33+0100\n"
-"PO-Revision-Date: 2016-11-21 08:33+0100\n"
-"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
-"Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
-"Language: no\n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: Norwegian Bokmål (https://www.transifex.com/buddiesofbudgie/teams/129844/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nb\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "Versjon av dette programmet"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "Ikke kjør som en tjeneste"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "Aktiver feilsøkingskode"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -41,18 +58,11 @@ msgstr "Slå på skjermsparer (blank skjermen)"
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
 msgstr "Slå av skjermsparer hvis den er aktiv (ikke blank skjermen)"
 
-#: ../src/gnome-screensaver-command.c:58 ../src/gnome-screensaver-dialog.c:59
-#: ../src/gnome-screensaver.c:56
-msgid "Version of this application"
-msgstr "Versjon av dette programmet"
-
 #: ../src/gnome-screensaver-command.c:224
-#, c-format
 msgid "The screensaver is active\n"
 msgstr "Skjermsparer er aktiv\n"
 
 #: ../src/gnome-screensaver-command.c:226
-#, c-format
 msgid "The screensaver is inactive\n"
 msgstr "Skjermsparer er ikke aktiv\n"
 
@@ -64,7 +74,6 @@ msgstr[0] "Skjermsparer har vært aktiv i %d sekund.\n"
 msgstr[1] "Skjermsparer har vært aktiv i %d sekunder.\n"
 
 #: ../src/gnome-screensaver-command.c:258
-#, c-format
 msgid "The screensaver is not currently active.\n"
 msgstr "Skjermsparer er ikke aktiv.\n"
 
@@ -88,8 +97,10 @@ msgstr "Vis knapp for å bytte bruker"
 msgid "Message to show in the dialog"
 msgstr "Melding som skal vises i dialogen"
 
-#. Translators: This is the example input for the --status-message command line option.
-#. Translators: This is the example input for the --away-message command line option.
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
 #: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
 msgid "MESSAGE"
 msgstr "MELDING"
@@ -99,150 +110,142 @@ msgid "Not used"
 msgstr "Ikke brukt"
 
 #. login: is whacked always translate to Username:
-#: ../src/gnome-screensaver-dialog.c:183 ../src/gnome-screensaver-dialog.c:184
-#: ../src/gnome-screensaver-dialog.c:185 ../src/gs-auth-pam.c:698
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
 msgid "Username:"
 msgstr "Brukernavn:"
 
-#: ../src/gnome-screensaver-dialog.c:186 ../src/gnome-screensaver-dialog.c:187
-#: ../src/gs-auth-pam.c:166
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
 msgid "Password:"
 msgstr "Passord:"
 
-#: ../src/gnome-screensaver-dialog.c:188
+#: ../src/gnome-screensaver-dialog.c:190
 msgid "You are required to change your password immediately (password aged)"
 msgstr "Du må bytte passordet ditt med det samme (passordet er gammelt)"
 
-#: ../src/gnome-screensaver-dialog.c:189
+#: ../src/gnome-screensaver-dialog.c:191
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "Du må bytte passordet ditt med det samme (tvunget av root)"
 
-#: ../src/gnome-screensaver-dialog.c:190
+#: ../src/gnome-screensaver-dialog.c:192
 msgid "Your account has expired; please contact your system administrator"
 msgstr "Kontoen din har utløpt. Vennligst kontakt systemadministrator"
 
-#: ../src/gnome-screensaver-dialog.c:191
+#: ../src/gnome-screensaver-dialog.c:193
 msgid "No password supplied"
 msgstr "Passord ikke oppgitt"
 
-#: ../src/gnome-screensaver-dialog.c:192
+#: ../src/gnome-screensaver-dialog.c:194
 msgid "Password unchanged"
 msgstr "Passordet ble ikke endret"
 
-#: ../src/gnome-screensaver-dialog.c:193
+#: ../src/gnome-screensaver-dialog.c:195
 msgid "Cannot get username"
 msgstr "Fant ikke brukernavn"
 
-#: ../src/gnome-screensaver-dialog.c:194
+#: ../src/gnome-screensaver-dialog.c:196
 msgid "Retype new Unix password:"
 msgstr "Skriv Unix-passord på nytt:"
 
-#: ../src/gnome-screensaver-dialog.c:195
+#: ../src/gnome-screensaver-dialog.c:197
 msgid "Enter new Unix password:"
 msgstr "Oppgi nytt Unix-passord:"
 
-#: ../src/gnome-screensaver-dialog.c:196
+#: ../src/gnome-screensaver-dialog.c:198
 msgid "(current) Unix password:"
 msgstr "(nåværende) Unix-passord:"
 
-#: ../src/gnome-screensaver-dialog.c:197
+#: ../src/gnome-screensaver-dialog.c:199
 msgid "Error while changing NIS password."
 msgstr "Feil under bytte av NIS-passord."
 
-#: ../src/gnome-screensaver-dialog.c:198
+#: ../src/gnome-screensaver-dialog.c:200
 msgid "You must choose a longer password"
 msgstr "Du må velge et passord med flere tegn"
 
-#: ../src/gnome-screensaver-dialog.c:199
+#: ../src/gnome-screensaver-dialog.c:201
 msgid "Password has been already used. Choose another."
 msgstr "Passordet er allerede brukt. Velg et annet."
 
-#: ../src/gnome-screensaver-dialog.c:200
+#: ../src/gnome-screensaver-dialog.c:202
 msgid "You must wait longer to change your password"
 msgstr "Du må vente lenger før du bytter passordet ditt"
 
-#: ../src/gnome-screensaver-dialog.c:201
+#: ../src/gnome-screensaver-dialog.c:203
 msgid "Sorry, passwords do not match"
 msgstr "Beklager. Passordene er ikke like"
 
-#: ../src/gnome-screensaver-dialog.c:267
+#: ../src/gnome-screensaver-dialog.c:269
 msgid "Checking…"
 msgstr "Sjekker …"
 
-#: ../src/gnome-screensaver-dialog.c:309 ../src/gs-auth-pam.c:457
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
 msgid "Authentication failed."
 msgstr "Autentisering feilet."
 
-#: ../src/gnome-screensaver.c:57
-msgid "Don't become a daemon"
-msgstr "Ikke kjør som en tjeneste"
+#: ../src/gs-listener-dbus.c:1302
+msgid "failed to register with the message bus"
+msgstr "klarte ikke å registrere på meldingsbussen"
 
-#: ../src/gnome-screensaver.c:58
-msgid "Enable debugging code"
-msgstr "Aktiver feilsøkingskode"
+#: ../src/gs-listener-dbus.c:1312
+msgid "not connected to the message bus"
+msgstr "ikke koblet til meldingsbussen"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Screensaver"
-msgstr "Skjermsparer"
+#: ../src/gs-listener-dbus.c:1339
+msgid "screensaver already running in this session"
+msgstr "skjermsparer kjører allerede i denne sesjonen"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:2
-msgid "Launch screensaver and locker program"
-msgstr "Start skjermsparer og låsprogram"
+#: ../src/gs-lock-plug.c:293
+msgid "Time has expired."
+msgstr "Tiden har løpt ut."
 
-#: ../src/gs-auth-pam.c:397
+#: ../src/gs-lock-plug.c:324
+msgid "You have the Caps Lock key on."
+msgstr "Du har Caps Lock-tasten på."
+
+#: ../src/gs-lock-plug.c:1406
+msgid "S_witch User…"
+msgstr "_Bytt bruker …"
+
+#: ../src/gs-lock-plug.c:1415
+msgid "Log _Out"
+msgstr "L_ogg ut"
+
+#: ../src/gs-lock-plug.c:1422
+msgid "_Unlock"
+msgstr "Lås _opp"
+
+#: ../src/gs-lock-plug.c:1593
+msgid "_Password:"
+msgstr "_Passord:"
+
+#: ../src/gs-auth-pam.c:380
 #, c-format
 msgid "Unable to establish service %s: %s\n"
 msgstr "Kan ikke etablere tjeneste %s: %s\n"
 
-#: ../src/gs-auth-pam.c:423
+#: ../src/gs-auth-pam.c:406
 #, c-format
 msgid "Can't set PAM_TTY=%s"
 msgstr "Kan ikke sette PAM_TTY=%s"
 
-#: ../src/gs-auth-pam.c:455
+#: ../src/gs-auth-pam.c:436
 msgid "Incorrect password."
 msgstr "Ugyldig passord."
 
-#: ../src/gs-auth-pam.c:471
+#: ../src/gs-auth-pam.c:452
 msgid "Not permitted to gain access at this time."
 msgstr "Ingen rettigheter til å få tilgang nå."
 
-#: ../src/gs-auth-pam.c:477
+#: ../src/gs-auth-pam.c:458
 msgid "No longer permitted to access the system."
 msgstr "Har ikke rettigheter til å aksessere systemet lenger."
 
-#: ../src/gs-listener-dbus.c:1284
-msgid "failed to register with the message bus"
-msgstr "klarte ikke å registrere på meldingsbussen"
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Skjermsparer"
 
-#: ../src/gs-listener-dbus.c:1294
-msgid "not connected to the message bus"
-msgstr "ikke koblet til meldingsbussen"
-
-#: ../src/gs-listener-dbus.c:1303 ../src/gs-listener-dbus.c:1333
-msgid "screensaver already running in this session"
-msgstr "skjermsparer kjører allerede i denne sesjonen"
-
-#: ../src/gs-lock-plug.c:255
-msgid "Time has expired."
-msgstr "Tiden har løpt ut."
-
-#: ../src/gs-lock-plug.c:286
-msgid "You have the Caps Lock key on."
-msgstr "Du har Caps Lock-tasten på."
-
-#: ../src/gs-lock-plug.c:1350
-msgid "S_witch User…"
-msgstr "_Bytt bruker …"
-
-#: ../src/gs-lock-plug.c:1359
-msgid "Log _Out"
-msgstr "L_ogg ut"
-
-#: ../src/gs-lock-plug.c:1366
-msgid "_Unlock"
-msgstr "Lås _opp"
-
-#: ../src/gs-lock-plug.c:1405
-msgid "_Password:"
-msgstr "_Passord:"
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Start skjermsparer og låsprogram"

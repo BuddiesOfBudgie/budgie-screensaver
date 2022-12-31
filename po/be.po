@@ -1,20 +1,38 @@
-# Alexander Nyakhaychyk <nyakhaychyk@gmail.com>, 2008.
-# Ihar Hrachyshka <ihar.hrachyshka@gmail.com>, 2011.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver.master\n"
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 02:27+0300\n"
-"PO-Revision-Date: 2011-07-21 02:26+0300\n"
-"Last-Translator: Alexander Nyakhaychyk <nyakhaychyk@gmail.com>\n"
-"Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
-"Language: be\n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: Belarusian (https://www.transifex.com/buddiesofbudgie/teams/129844/be/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: be\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "Версія гэтай праграмы"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "Не станавіцца дэманам"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "Уключыць адладачны код"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -38,20 +56,14 @@ msgstr "Уключыць ахоўніка экрана (ачысціць экр�
 
 #: ../src/gnome-screensaver-command.c:56
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
-msgstr "Выключыць ахоўніка экрана, калі ён уключаны (ануляваць ачыстку экрана)"
-
-#: ../src/gnome-screensaver-command.c:58 ../src/gnome-screensaver-dialog.c:59
-#: ../src/gnome-screensaver.c:56
-msgid "Version of this application"
-msgstr "Версія гэтай праграмы"
+msgstr ""
+"Выключыць ахоўніка экрана, калі ён уключаны (ануляваць ачыстку экрана)"
 
 #: ../src/gnome-screensaver-command.c:224
-#, c-format
 msgid "The screensaver is active\n"
 msgstr "Ахоўнік экрана актываваны\n"
 
 #: ../src/gnome-screensaver-command.c:226
-#, c-format
 msgid "The screensaver is inactive\n"
 msgstr "Ахоўнік экрана не актываваны\n"
 
@@ -62,9 +74,9 @@ msgid_plural "The screensaver has been active for %d seconds.\n"
 msgstr[0] "Ахоўнік экрана актываваны цягам %d секунды.\n"
 msgstr[1] "Ахоўнік экрана актываваны цягам %d секунд.\n"
 msgstr[2] "Ахоўнік экрана актываваны цягам %d секунд.\n"
+msgstr[3] "Ахоўнік экрана актываваны цягам %d секунд.\n"
 
 #: ../src/gnome-screensaver-command.c:258
-#, c-format
 msgid "The screensaver is not currently active.\n"
 msgstr "Ахоўнік экрана не актываваны.\n"
 
@@ -88,8 +100,10 @@ msgstr "Паказаць кнопку пераключэння карыстал�
 msgid "Message to show in the dialog"
 msgstr "Тэкст паведамлення для гэтага дыялогу"
 
-#. Translators: This is the example input for the --status-message command line option.
-#. Translators: This is the example input for the --away-message command line option.
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
 #: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
 msgid "MESSAGE"
 msgstr "ПАВЕДАМЛЕННЕ"
@@ -99,168 +113,142 @@ msgid "Not used"
 msgstr "Не ўжыта"
 
 #. login: is whacked always translate to Username:
-#: ../src/gnome-screensaver-dialog.c:183 ../src/gnome-screensaver-dialog.c:184
-#: ../src/gnome-screensaver-dialog.c:185 ../src/gs-auth-pam.c:698
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
 msgid "Username:"
 msgstr "Карыстальнік:"
 
-#: ../src/gnome-screensaver-dialog.c:186 ../src/gnome-screensaver-dialog.c:187
-#: ../src/gs-auth-pam.c:166
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
 msgid "Password:"
 msgstr "Пароль:"
 
-#: ../src/gnome-screensaver-dialog.c:188
+#: ../src/gnome-screensaver-dialog.c:190
 msgid "You are required to change your password immediately (password aged)"
 msgstr "Вы мусіце неадкладна змяніць свой пароль, бо ён састарэў"
 
-#: ../src/gnome-screensaver-dialog.c:189
+#: ../src/gnome-screensaver-dialog.c:191
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "Вы мусіце неадкладна змяніць свой пароль, бо гэтак загадаў root"
 
-#: ../src/gnome-screensaver-dialog.c:190
+#: ../src/gnome-screensaver-dialog.c:192
 msgid "Your account has expired; please contact your system administrator"
 msgstr "Ваш конт састарэў. Звярніцеся да свайго сістэмнага адміністратара"
 
-#: ../src/gnome-screensaver-dialog.c:191
+#: ../src/gnome-screensaver-dialog.c:193
 msgid "No password supplied"
 msgstr "Пароль не пададзены"
 
-#: ../src/gnome-screensaver-dialog.c:192
+#: ../src/gnome-screensaver-dialog.c:194
 msgid "Password unchanged"
 msgstr "Пароль не зменены"
 
-#: ../src/gnome-screensaver-dialog.c:193
+#: ../src/gnome-screensaver-dialog.c:195
 msgid "Cannot get username"
 msgstr "Не ўдалося атрымаць імя карыстальніка"
 
-#: ../src/gnome-screensaver-dialog.c:194
+#: ../src/gnome-screensaver-dialog.c:196
 msgid "Retype new Unix password:"
 msgstr "Паўтарыце новы UNIX-пароль:"
 
-#: ../src/gnome-screensaver-dialog.c:195
+#: ../src/gnome-screensaver-dialog.c:197
 msgid "Enter new Unix password:"
 msgstr "Упішыце новы UNIX-пароль:"
 
-#: ../src/gnome-screensaver-dialog.c:196
+#: ../src/gnome-screensaver-dialog.c:198
 msgid "(current) Unix password:"
 msgstr "(бягучы) UNIX-пароль:"
 
-#: ../src/gnome-screensaver-dialog.c:197
+#: ../src/gnome-screensaver-dialog.c:199
 msgid "Error while changing NIS password."
 msgstr "Памылка падчас змянення NIS-пароля."
 
-#: ../src/gnome-screensaver-dialog.c:198
+#: ../src/gnome-screensaver-dialog.c:200
 msgid "You must choose a longer password"
 msgstr "Трэба падаць даўжэйшы пароль"
 
-#: ../src/gnome-screensaver-dialog.c:199
+#: ../src/gnome-screensaver-dialog.c:201
 msgid "Password has been already used. Choose another."
 msgstr "Пароль ужо выкарыстоўваўся раней. Падайце іншы."
 
-#: ../src/gnome-screensaver-dialog.c:200
+#: ../src/gnome-screensaver-dialog.c:202
 msgid "You must wait longer to change your password"
 msgstr "Трэба болей пачакаць, каб змагчы змяніць свой пароль"
 
-#: ../src/gnome-screensaver-dialog.c:201
+#: ../src/gnome-screensaver-dialog.c:203
 msgid "Sorry, passwords do not match"
 msgstr "Паролі адрозніваюцца"
 
-#: ../src/gnome-screensaver-dialog.c:267
+#: ../src/gnome-screensaver-dialog.c:269
 msgid "Checking…"
 msgstr "Праверка..."
 
-#: ../src/gnome-screensaver-dialog.c:309 ../src/gs-auth-pam.c:457
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
 msgid "Authentication failed."
 msgstr "Няўдалая ідэнтыфікацыя."
 
-#: ../src/gnome-screensaver.c:57
-msgid "Don't become a daemon"
-msgstr "Не станавіцца дэманам"
+#: ../src/gs-listener-dbus.c:1302
+msgid "failed to register with the message bus"
+msgstr "не ўдалося зарэгістравацца на магістралі паведамленняў"
 
-#: ../src/gnome-screensaver.c:58
-msgid "Enable debugging code"
-msgstr "Уключыць адладачны код"
+#: ../src/gs-listener-dbus.c:1312
+msgid "not connected to the message bus"
+msgstr "не далучаны да магістралі паведамленняў"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "Запуск ахоўніка і блакіроўшчыка экрана"
+#: ../src/gs-listener-dbus.c:1339
+msgid "screensaver already running in this session"
+msgstr "ахоўнік экрана ўжо працуе ў гэтым сеансе"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:2
-msgid "Screensaver"
-msgstr "Ахоўнік экрана"
+#: ../src/gs-lock-plug.c:293
+msgid "Time has expired."
+msgstr "Час скончыўся."
 
-#: ../src/gs-auth-pam.c:397
+#: ../src/gs-lock-plug.c:324
+msgid "You have the Caps Lock key on."
+msgstr "Caps Lock уключаны."
+
+#: ../src/gs-lock-plug.c:1406
+msgid "S_witch User…"
+msgstr "_Пераключыць карыстальніка..."
+
+#: ../src/gs-lock-plug.c:1415
+msgid "Log _Out"
+msgstr "_Скончыць сеанс"
+
+#: ../src/gs-lock-plug.c:1422
+msgid "_Unlock"
+msgstr "_Адамкнуць"
+
+#: ../src/gs-lock-plug.c:1593
+msgid "_Password:"
+msgstr "_Пароль:"
+
+#: ../src/gs-auth-pam.c:380
 #, c-format
 msgid "Unable to establish service %s: %s\n"
 msgstr "Не ўдалося запусціць службу %s: %s\n"
 
-#: ../src/gs-auth-pam.c:423
+#: ../src/gs-auth-pam.c:406
 #, c-format
 msgid "Can't set PAM_TTY=%s"
 msgstr "Не ўдалося наставіць PAM_TTY=%s"
 
-#: ../src/gs-auth-pam.c:455
+#: ../src/gs-auth-pam.c:436
 msgid "Incorrect password."
 msgstr "Хібны пароль."
 
-#: ../src/gs-auth-pam.c:471
+#: ../src/gs-auth-pam.c:452
 msgid "Not permitted to gain access at this time."
 msgstr "Гэтым разам доступ да сістэмы забаронены."
 
-#: ../src/gs-auth-pam.c:477
+#: ../src/gs-auth-pam.c:458
 msgid "No longer permitted to access the system."
 msgstr "Доступ да сістэмы забаронены."
 
-#: ../src/gs-listener-dbus.c:1148
-msgid "failed to register with the message bus"
-msgstr "не ўдалося зарэгістравацца на магістралі паведамленняў"
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Ахоўнік экрана"
 
-#: ../src/gs-listener-dbus.c:1158
-msgid "not connected to the message bus"
-msgstr "не далучаны да магістралі паведамленняў"
-
-#: ../src/gs-listener-dbus.c:1167 ../src/gs-listener-dbus.c:1197
-msgid "screensaver already running in this session"
-msgstr "ахоўнік экрана ўжо працуе ў гэтым сеансе"
-
-#: ../src/gs-lock-plug.c:256
-msgid "Time has expired."
-msgstr "Час скончыўся."
-
-#: ../src/gs-lock-plug.c:287
-msgid "You have the Caps & Num Lock keys on."
-msgstr "Caps Lock і Num Lock уключаны."
-
-#: ../src/gs-lock-plug.c:290
-msgid "You have the Caps Lock key on."
-msgstr "Caps Lock уключаны."
-
-#: ../src/gs-lock-plug.c:293
-msgid "You have the Num Lock key on."
-msgstr "Num Lock уключаны."
-
-#: ../src/gs-lock-plug.c:1350
-msgid "S_witch User…"
-msgstr "_Пераключыць карыстальніка..."
-
-#: ../src/gs-lock-plug.c:1359
-msgid "Log _Out"
-msgstr "_Скончыць сеанс"
-
-#: ../src/gs-lock-plug.c:1366
-msgid "_Unlock"
-msgstr "_Адамкнуць"
-
-#: ../src/gs-lock-plug.c:1401
-msgid "_Password:"
-msgstr "_Пароль:"
-
-#. Translators, this is the 24h date format used in the panel clock
-#: ../src/gs-window-x11.c:2199
-msgid "%a %R"
-msgstr "%a %R"
-
-#. Translators, this is the 12h date format used in the panel clock
-#: ../src/gs-window-x11.c:2202
-msgid "%a %l:%M %p"
-msgstr "%a %l:%M %p"
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Запуск ахоўніка і блакіроўшчыка экрана"

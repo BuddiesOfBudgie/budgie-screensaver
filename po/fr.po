@@ -1,30 +1,38 @@
-# French translation of gnome-screensaver.
-# Copyright (C) 2005-2012 The Free Software Foundation, Inc.
-# This file is distributed under the same license as the gnome-screensaver package.
-#
-# Eric Maeker <eric.maeker@free.fr>, 2005.
-# Davy Defaud <davy.defaud@posteasy.com>, 2005.
-# Benoît Dejean <benoit@placenet.org>, 2006.
-# Robert-André Mauchin <zebob.m@pengzone.org>, 2006-2008.
-# Christophe Merlet <redfox@redfoxcenter.org>, 2006.
-# Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
-# Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
-# Claude Paroz <claude@2xlibre.net>, 2010.
-# Bruno Brouard <annoa.b@gmail.com>, 2011-2012
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"screensaver&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-03-30 22:23+0000\n"
-"PO-Revision-Date: 2012-05-20 14:32+0200\n"
-"Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: French (https://www.transifex.com/buddiesofbudgie/teams/129844/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "Version de cette application"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "Ne pas devenir un « daemon » (démon)"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "Activer le code de débogage"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -52,18 +60,11 @@ msgstr "Démarre l'économiseur d'écran (efface l'écran)"
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
 msgstr "Désactive l'économiseur d'écran s'il est actif (réaffiche l'écran)"
 
-#: ../src/gnome-screensaver-command.c:58 ../src/gnome-screensaver-dialog.c:59
-#: ../src/gnome-screensaver.c:56
-msgid "Version of this application"
-msgstr "Version de cette application"
-
 #: ../src/gnome-screensaver-command.c:224
-#, c-format
 msgid "The screensaver is active\n"
 msgstr "L'économiseur d'écran est actif\n"
 
 #: ../src/gnome-screensaver-command.c:226
-#, c-format
 msgid "The screensaver is inactive\n"
 msgstr "L'économiseur d'écran est inactif\n"
 
@@ -71,11 +72,11 @@ msgstr "L'économiseur d'écran est inactif\n"
 #, c-format
 msgid "The screensaver has been active for %d second.\n"
 msgid_plural "The screensaver has been active for %d seconds.\n"
-msgstr[0] "L'économiseur d'écran a été actif pendant %d seconde.\n"
-msgstr[1] "L'économiseur d'écran a été actif pendant %d secondes.\n"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: ../src/gnome-screensaver-command.c:258
-#, c-format
 msgid "The screensaver is not currently active.\n"
 msgstr "L'économiseur d'écran n'est actuellement pas actif.\n"
 
@@ -99,8 +100,10 @@ msgstr "Affiche le bouton de changement d'utilisateur"
 msgid "Message to show in the dialog"
 msgstr "Message à afficher dans la boîte de dialogue"
 
-#. Translators: This is the example input for the --status-message command line option.
-#. Translators: This is the example input for the --away-message command line option.
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
 #: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
 msgid "MESSAGE"
 msgstr "MESSAGE"
@@ -110,156 +113,147 @@ msgid "Not used"
 msgstr "Non utilisé"
 
 #. login: is whacked always translate to Username:
-#: ../src/gnome-screensaver-dialog.c:183 ../src/gnome-screensaver-dialog.c:184
-#: ../src/gnome-screensaver-dialog.c:185 ../src/gs-auth-pam.c:698
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
 msgid "Username:"
 msgstr "Utilisateur :"
 
-#: ../src/gnome-screensaver-dialog.c:186 ../src/gnome-screensaver-dialog.c:187
-#: ../src/gs-auth-pam.c:166
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: ../src/gnome-screensaver-dialog.c:188
+#: ../src/gnome-screensaver-dialog.c:190
 msgid "You are required to change your password immediately (password aged)"
 msgstr ""
 "Vous devez modifier votre mot de passe immédiatement (mot de passe ancien)"
 
-#: ../src/gnome-screensaver-dialog.c:189
+#: ../src/gnome-screensaver-dialog.c:191
 msgid "You are required to change your password immediately (root enforced)"
 msgstr ""
 "Vous devez modifier votre mot de passe immédiatement (à la demande de "
 "l'administrateur)"
 
-#: ../src/gnome-screensaver-dialog.c:190
+#: ../src/gnome-screensaver-dialog.c:192
 msgid "Your account has expired; please contact your system administrator"
 msgstr ""
 "Votre compte a expiré ; veuillez contacter votre administrateur système"
 
-#: ../src/gnome-screensaver-dialog.c:191
+#: ../src/gnome-screensaver-dialog.c:193
 msgid "No password supplied"
 msgstr "Aucun mot de passe fourni"
 
-#: ../src/gnome-screensaver-dialog.c:192
+#: ../src/gnome-screensaver-dialog.c:194
 msgid "Password unchanged"
 msgstr "Mot de passe non modifié"
 
-#: ../src/gnome-screensaver-dialog.c:193
+#: ../src/gnome-screensaver-dialog.c:195
 msgid "Cannot get username"
 msgstr "Impossible d'obtenir un nom d'utilisateur"
 
-#: ../src/gnome-screensaver-dialog.c:194
+#: ../src/gnome-screensaver-dialog.c:196
 msgid "Retype new Unix password:"
 msgstr "Ressaisissez un nouveau mot de passe Unix :"
 
-#: ../src/gnome-screensaver-dialog.c:195
+#: ../src/gnome-screensaver-dialog.c:197
 msgid "Enter new Unix password:"
 msgstr "Saisissez un nouveau mot de passe Unix :"
 
-#: ../src/gnome-screensaver-dialog.c:196
+#: ../src/gnome-screensaver-dialog.c:198
 msgid "(current) Unix password:"
 msgstr "Mot de passe Unix (actuel) :"
 
-#: ../src/gnome-screensaver-dialog.c:197
+#: ../src/gnome-screensaver-dialog.c:199
 msgid "Error while changing NIS password."
 msgstr "Erreur lors de la modification du mot de passe NIS."
 
-#: ../src/gnome-screensaver-dialog.c:198
+#: ../src/gnome-screensaver-dialog.c:200
 msgid "You must choose a longer password"
 msgstr "Vous devez choisir un mot de passe plus long"
 
-#: ../src/gnome-screensaver-dialog.c:199
+#: ../src/gnome-screensaver-dialog.c:201
 msgid "Password has been already used. Choose another."
 msgstr "Le mot de passe a déjà été utilisé. Choisissez en un autre."
 
-#: ../src/gnome-screensaver-dialog.c:200
+#: ../src/gnome-screensaver-dialog.c:202
 msgid "You must wait longer to change your password"
 msgstr "Vous devez attendre plus longtemps pour modifier votre mot de passe"
 
-#: ../src/gnome-screensaver-dialog.c:201
+#: ../src/gnome-screensaver-dialog.c:203
 msgid "Sorry, passwords do not match"
 msgstr "Désolé, les mots de passe ne correspondent pas"
 
-#: ../src/gnome-screensaver-dialog.c:267
+#: ../src/gnome-screensaver-dialog.c:269
 msgid "Checking…"
 msgstr "Vérification en cours…"
 
-#: ../src/gnome-screensaver-dialog.c:309 ../src/gs-auth-pam.c:457
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
 msgid "Authentication failed."
 msgstr "L'authentification a échoué."
 
-#: ../src/gnome-screensaver.c:57
-msgid "Don't become a daemon"
-msgstr "Ne pas devenir un « daemon » (démon)"
-
-#: ../src/gnome-screensaver.c:58
-msgid "Enable debugging code"
-msgstr "Activer le code de débogage"
-
-#: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Screensaver"
-msgstr "Économiseur d'écran"
-
-#: ../src/gnome-screensaver.desktop.in.in.h:2
-msgid "Launch screensaver and locker program"
-msgstr "Lancer l'économiseur d'écran et le programme de verrouillage"
-
-#: ../src/gs-auth-pam.c:397
-#, c-format
-msgid "Unable to establish service %s: %s\n"
-msgstr "Impossible d'établir le service %s : %s\n"
-
-#: ../src/gs-auth-pam.c:423
-#, c-format
-msgid "Can't set PAM_TTY=%s"
-msgstr "Impossible de définir PAM_TTY=%s"
-
-#: ../src/gs-auth-pam.c:455
-msgid "Incorrect password."
-msgstr "Mot de passe non valide."
-
-#: ../src/gs-auth-pam.c:471
-msgid "Not permitted to gain access at this time."
-msgstr "Vous n'êtes pas autorisé à accéder au système à cette heure."
-
-#: ../src/gs-auth-pam.c:477
-msgid "No longer permitted to access the system."
-msgstr "Vous n'êtes plus autorisé à accéder au système."
-
-#: ../src/gs-listener-dbus.c:1285
+#: ../src/gs-listener-dbus.c:1302
 msgid "failed to register with the message bus"
 msgstr "l'enregistrement sur le bus de message a échoué"
 
-#: ../src/gs-listener-dbus.c:1295
+#: ../src/gs-listener-dbus.c:1312
 msgid "not connected to the message bus"
 msgstr "non connecté au bus de message"
 
-#: ../src/gs-listener-dbus.c:1304 ../src/gs-listener-dbus.c:1334
+#: ../src/gs-listener-dbus.c:1339
 msgid "screensaver already running in this session"
 msgstr ""
 "l'économiseur d'écran est déjà en cours de fonctionnement pour cette session"
 
-#: ../src/gs-lock-plug.c:255
+#: ../src/gs-lock-plug.c:293
 msgid "Time has expired."
 msgstr "Délai expiré."
 
-#: ../src/gs-lock-plug.c:286
+#: ../src/gs-lock-plug.c:324
 msgid "You have the Caps Lock key on."
 msgstr "La touche Verr. Maj. est enfoncée."
 
-#: ../src/gs-lock-plug.c:1353
+#: ../src/gs-lock-plug.c:1406
 msgid "S_witch User…"
 msgstr "Changer d'_utilisateur…"
 
-#: ../src/gs-lock-plug.c:1362
+#: ../src/gs-lock-plug.c:1415
 msgid "Log _Out"
 msgstr "Se _déconnecter"
 
-#: ../src/gs-lock-plug.c:1369
+#: ../src/gs-lock-plug.c:1422
 msgid "_Unlock"
 msgstr "_Déverrouiller"
 
-#: ../src/gs-lock-plug.c:1408
+#: ../src/gs-lock-plug.c:1593
 msgid "_Password:"
 msgstr "_Mot de passe :"
 
+#: ../src/gs-auth-pam.c:380
+#, c-format
+msgid "Unable to establish service %s: %s\n"
+msgstr "Impossible d'établir le service %s : %s\n"
+
+#: ../src/gs-auth-pam.c:406
+#, c-format
+msgid "Can't set PAM_TTY=%s"
+msgstr "Impossible de définir PAM_TTY=%s"
+
+#: ../src/gs-auth-pam.c:436
+msgid "Incorrect password."
+msgstr "Mot de passe non valide."
+
+#: ../src/gs-auth-pam.c:452
+msgid "Not permitted to gain access at this time."
+msgstr "Vous n'êtes pas autorisé à accéder au système à cette heure."
+
+#: ../src/gs-auth-pam.c:458
+msgid "No longer permitted to access the system."
+msgstr "Vous n'êtes plus autorisé à accéder au système."
+
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Économiseur d'écran"
+
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Lancer l'économiseur d'écran et le programme de verrouillage"

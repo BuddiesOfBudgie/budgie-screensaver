@@ -1,24 +1,38 @@
-# Translation of oc.po to Occitan
-# Occitan translation of gnome-screensaver.
-# Copyright (C) 2005-2006, 2007 The Free Software Foundation, Inc.
-# This file is distributed under the same license as the gnome-screensaver package.
-# Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2006-2008
-# Cédric Valmary (Tot en òc) <cvalmary@yahoo.fr>, 2015.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: oc\n"
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-26 19:37+0000\n"
-"PO-Revision-Date: 2015-05-20 20:00+0200\n"
-"Last-Translator: Cédric Valmary (Tot en òc) <cvalmary@yahoo.fr>\n"
-"Language-Team: Tot en òc (totenoc.eu)\n"
-"Language: oci\n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: Occitan (post 1500) (https://www.transifex.com/buddiesofbudgie/teams/129844/oc/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Virtaal 0.7.1\n"
-"X-Launchpad-Export-Date: 2015-05-20 16:48+0000\n"
+"Language: oc\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "Version d'aquesta aplicacion"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "Impossible de venir un « daemon » (demòni)"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "Activa lo còde de desbogatge"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -36,8 +50,8 @@ msgstr ""
 #: ../src/gnome-screensaver-command.c:52
 msgid "Tells the running screensaver process to lock the screen immediately"
 msgstr ""
-"Demanda a l'estalviador d'ecran en cors de foncionament de varrolhar l'ecran "
-"immediatament"
+"Demanda a l'estalviador d'ecran en cors de foncionament de varrolhar l'ecran"
+" immediatament"
 
 #: ../src/gnome-screensaver-command.c:54
 msgid "Turn the screensaver on (blank the screen)"
@@ -47,18 +61,11 @@ msgstr "Avia l'estalviador d'ecran (escafa l'ecran)"
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
 msgstr "Desactiva l'estalviador d'ecran s'es actiu (reaficha l'ecran)"
 
-#: ../src/gnome-screensaver-command.c:58 ../src/gnome-screensaver-dialog.c:59
-#: ../src/gnome-screensaver.c:56
-msgid "Version of this application"
-msgstr "Version d'aquesta aplicacion"
-
 #: ../src/gnome-screensaver-command.c:224
-#, c-format
 msgid "The screensaver is active\n"
 msgstr "L'estalviador d'ecran es actiu\n"
 
 #: ../src/gnome-screensaver-command.c:226
-#, c-format
 msgid "The screensaver is inactive\n"
 msgstr "L'estalviador d'ecran es inactiu\n"
 
@@ -70,7 +77,6 @@ msgstr[0] "L'estalviador d'ecran es estat actiu pendent %d segonda.\n"
 msgstr[1] "L'estalviador d'ecran es estat actiu pendent %d segondas.\n"
 
 #: ../src/gnome-screensaver-command.c:258
-#, c-format
 msgid "The screensaver is not currently active.\n"
 msgstr "Actualament, l'estalviador d'ecran es pas actiu.\n"
 
@@ -94,8 +100,10 @@ msgstr "Aficha lo boton de cambiament d'utilizaire"
 msgid "Message to show in the dialog"
 msgstr "Messatge d'afichar dins la bóstia de dialòg"
 
-#. Translators: This is the example input for the --status-message command line option.
-#. Translators: This is the example input for the --away-message command line option.
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
 #: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
 msgid "MESSAGE"
 msgstr "MESSATGE"
@@ -105,153 +113,144 @@ msgid "Not used"
 msgstr "Pas utilizat"
 
 #. login: is whacked always translate to Username:
-#: ../src/gnome-screensaver-dialog.c:183 ../src/gnome-screensaver-dialog.c:184
-#: ../src/gnome-screensaver-dialog.c:185 ../src/gs-auth-pam.c:706
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
 msgid "Username:"
 msgstr "Nom d'utilizaire :"
 
-#: ../src/gnome-screensaver-dialog.c:186 ../src/gnome-screensaver-dialog.c:187
-#: ../src/gs-auth-pam.c:166
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
 msgid "Password:"
 msgstr "Senhal :"
 
-#: ../src/gnome-screensaver-dialog.c:188
+#: ../src/gnome-screensaver-dialog.c:190
 msgid "You are required to change your password immediately (password aged)"
 msgstr "Vos cal cambiar vòstre senhal immediatament (senhal perimit)"
 
-#: ../src/gnome-screensaver-dialog.c:189
+#: ../src/gnome-screensaver-dialog.c:191
 msgid "You are required to change your password immediately (root enforced)"
 msgstr ""
 "Vos cal cambiar vòstre senhal immediatament (impausat per l'administrator)"
 
-#: ../src/gnome-screensaver-dialog.c:190
+#: ../src/gnome-screensaver-dialog.c:192
 msgid "Your account has expired; please contact your system administrator"
-msgstr ""
-"Vòstre compte a expirat ; contactatz vòstre administrator del sistèma"
+msgstr "Vòstre compte a expirat ; contactatz vòstre administrator del sistèma"
 
-#: ../src/gnome-screensaver-dialog.c:191
+#: ../src/gnome-screensaver-dialog.c:193
 msgid "No password supplied"
 msgstr "Pas cap de senhal provesit"
 
-#: ../src/gnome-screensaver-dialog.c:192
+#: ../src/gnome-screensaver-dialog.c:194
 msgid "Password unchanged"
 msgstr "Senhal pas cambiat"
 
-#: ../src/gnome-screensaver-dialog.c:193
+#: ../src/gnome-screensaver-dialog.c:195
 msgid "Cannot get username"
 msgstr "Impossible d'obténer un nom d'utilizaire"
 
-#: ../src/gnome-screensaver-dialog.c:194
+#: ../src/gnome-screensaver-dialog.c:196
 msgid "Retype new Unix password:"
 msgstr "Repicatz un senhal Unix novèl :"
 
-#: ../src/gnome-screensaver-dialog.c:195
+#: ../src/gnome-screensaver-dialog.c:197
 msgid "Enter new Unix password:"
 msgstr "Picatz un senhal Unix novèl :"
 
-#: ../src/gnome-screensaver-dialog.c:196
+#: ../src/gnome-screensaver-dialog.c:198
 msgid "(current) Unix password:"
 msgstr "Senhal Unix (actual) :"
 
-#: ../src/gnome-screensaver-dialog.c:197
+#: ../src/gnome-screensaver-dialog.c:199
 msgid "Error while changing NIS password."
 msgstr "Error al moment de la modificacion del senhal NIS."
 
-#: ../src/gnome-screensaver-dialog.c:198
+#: ../src/gnome-screensaver-dialog.c:200
 msgid "You must choose a longer password"
 msgstr "Vos cal causir un senhal mai long"
 
-#: ../src/gnome-screensaver-dialog.c:199
+#: ../src/gnome-screensaver-dialog.c:201
 msgid "Password has been already used. Choose another."
 msgstr "Aqueste senhal es ja utilizat. Causissètz-ne un autre."
 
-#: ../src/gnome-screensaver-dialog.c:200
+#: ../src/gnome-screensaver-dialog.c:202
 msgid "You must wait longer to change your password"
 msgstr "Vos cal esperar mai longtemps per modificar vòstre senhal"
 
-#: ../src/gnome-screensaver-dialog.c:201
+#: ../src/gnome-screensaver-dialog.c:203
 msgid "Sorry, passwords do not match"
 msgstr "O planhèm, los senhals correspondon pas"
 
-#: ../src/gnome-screensaver-dialog.c:267
+#: ../src/gnome-screensaver-dialog.c:269
 msgid "Checking…"
 msgstr "Verificacion en cors…"
 
-#: ../src/gnome-screensaver-dialog.c:309 ../src/gs-auth-pam.c:457
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
 msgid "Authentication failed."
 msgstr "L'autentificacion a fracassat."
 
-#: ../src/gnome-screensaver.c:57
-msgid "Don't become a daemon"
-msgstr "Impossible de venir un « daemon » (demòni)"
-
-#: ../src/gnome-screensaver.c:58
-msgid "Enable debugging code"
-msgstr "Activa lo còde de desbogatge"
-
-#: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Screensaver"
-msgstr "Estalviador d'ecran"
-
-#: ../src/gnome-screensaver.desktop.in.in.h:2
-msgid "Launch screensaver and locker program"
-msgstr "Aviar l'estalviador d'ecran e lo programa de varrolhatge"
-
-#: ../src/gs-auth-pam.c:397
-#, c-format
-msgid "Unable to establish service %s: %s\n"
-msgstr "Impossible d'establir lo servici %s : %s\n"
-
-#: ../src/gs-auth-pam.c:423
-#, c-format
-msgid "Can't set PAM_TTY=%s"
-msgstr "Impossible de definir PAM_TTY=%s"
-
-#: ../src/gs-auth-pam.c:455
-msgid "Incorrect password."
-msgstr "Senhal incorrècte."
-
-#: ../src/gs-auth-pam.c:471
-msgid "Not permitted to gain access at this time."
-msgstr "Sètz pas autorizat a accedir al sistèma a aquesta ora."
-
-#: ../src/gs-auth-pam.c:477
-msgid "No longer permitted to access the system."
-msgstr "Sètz pas pus autorizat a accedir al sistèma."
-
-#: ../src/gs-listener-dbus.c:1325
+#: ../src/gs-listener-dbus.c:1302
 msgid "failed to register with the message bus"
 msgstr "l'enregistrament sul bus de messatge a fracassat"
 
-#: ../src/gs-listener-dbus.c:1335
+#: ../src/gs-listener-dbus.c:1312
 msgid "not connected to the message bus"
 msgstr "pas connectat al bus de messatge"
 
-#: ../src/gs-listener-dbus.c:1343 ../src/gs-listener-dbus.c:1373
+#: ../src/gs-listener-dbus.c:1339
 msgid "screensaver already running in this session"
 msgstr ""
 "l'estalviador d'ecran es ja en cors de foncionament per aquesta sesilha"
 
-#: ../src/gs-lock-plug.c:294
+#: ../src/gs-lock-plug.c:293
 msgid "Time has expired."
 msgstr "Relambi expirat."
 
-#: ../src/gs-lock-plug.c:325
+#: ../src/gs-lock-plug.c:324
 msgid "You have the Caps Lock key on."
 msgstr "La tòca Varr. Maj. es quichada."
 
-#: ../src/gs-lock-plug.c:1398
+#: ../src/gs-lock-plug.c:1406
 msgid "S_witch User…"
 msgstr "Cambiar d'_utilizaire…"
 
-#: ../src/gs-lock-plug.c:1407
+#: ../src/gs-lock-plug.c:1415
 msgid "Log _Out"
 msgstr "Se _desconnectar"
 
-#: ../src/gs-lock-plug.c:1414
+#: ../src/gs-lock-plug.c:1422
 msgid "_Unlock"
 msgstr "_Desvarrolhar"
 
-#: ../src/gs-lock-plug.c:1622 ../src/gs-lock-plug.c:1672
+#: ../src/gs-lock-plug.c:1593
 msgid "_Password:"
 msgstr "Sen_hal :"
+
+#: ../src/gs-auth-pam.c:380
+#, c-format
+msgid "Unable to establish service %s: %s\n"
+msgstr "Impossible d'establir lo servici %s : %s\n"
+
+#: ../src/gs-auth-pam.c:406
+#, c-format
+msgid "Can't set PAM_TTY=%s"
+msgstr "Impossible de definir PAM_TTY=%s"
+
+#: ../src/gs-auth-pam.c:436
+msgid "Incorrect password."
+msgstr "Senhal incorrècte."
+
+#: ../src/gs-auth-pam.c:452
+msgid "Not permitted to gain access at this time."
+msgstr "Sètz pas autorizat a accedir al sistèma a aquesta ora."
+
+#: ../src/gs-auth-pam.c:458
+msgid "No longer permitted to access the system."
+msgstr "Sètz pas pus autorizat a accedir al sistèma."
+
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "Estalviador d'ecran"
+
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "Aviar l'estalviador d'ecran e lo programa de varrolhatge"
