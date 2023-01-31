@@ -7,8 +7,6 @@ screensaver_command_sources = [
     'gnome-screensaver-command.c',
 ]
 
-
-if host_machine.system() in ['openbsd', 'freebsd', 'netbsd']
 screensaver_dialog_sources = [
     'gnome-screensaver-dialog.c',
     'gs-lock-plug.c',
@@ -16,36 +14,25 @@ screensaver_dialog_sources = [
     'setuid.c',
     'subprocs.c',
 ]
-else
-
-screensaver_dialog_sources = [
-    'gnome-screensaver-dialog.c',
-    'gs-lock-plug.c',
-    'gs-debug.c',
-    'setuid.c',
-    'subprocs.c',
-]
-
-endif
 
 screensaver_sources = [
-  'gnome-screensaver.c',
-	'gs-monitor.c',
-	'gs-watcher-x11.c',
-	'gs-listener-dbus.c',
-	'gs-manager.c',
-	'gs-window-x11.c',
-	'gs-prefs.c',
-	'gs-debug.c',
-	'subprocs.c',
-	'gs-grab-x11.c',
-	'gs-fade.c',
+    'gnome-screensaver.c',
+    'gs-monitor.c',
+    'gs-watcher-x11.c',
+    'gs-listener-dbus.c',
+    'gs-manager.c',
+    'gs-window-x11.c',
+    'gs-prefs.c',
+    'gs-debug.c',
+    'subprocs.c',
+    'gs-grab-x11.c',
+    'gs-fade.c',
 ]
 
 if with_bsd_auth == false
-  screensaver_dialog_sources += 'gs-auth-pam.c'
+    screensaver_dialog_sources += 'gs-auth-pam.c'
 else
-  screensaver_dialog_sources += 'gs-auth-bsdauth.c'
+    screensaver_dialog_sources += 'gs-auth-bsdauth.c'
 endif
 
 # Dependencies
@@ -55,12 +42,12 @@ screensaver_command_deps = [dep_glib, dep_gio]
 screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
 
 if with_bsd_auth == false
-  screensaver_dialog_deps += dep_pam
+    screensaver_dialog_deps += dep_pam
 endif
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 
-if with_systemd == true
+if with_systemd
     screensaver_deps += dep_systemd
 endif
 

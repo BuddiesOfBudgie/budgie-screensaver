@@ -515,7 +515,6 @@ lock_initialization (int     *argc,
 
 	/* Finish initializing locking, now that we're out of privileged code. */
 	if (! gs_auth_init ()) {
-
 		if (nolock_reason != NULL) {
 			*nolock_reason = g_strdup ("error getting password");
 		}

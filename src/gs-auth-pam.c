@@ -50,7 +50,6 @@
 /* Some time between Red Hat 4.2 and 7.0, the words were transposed
    in the various PAM_x_CRED macro names.  Yay!
 */
-
 #ifndef  PAM_REFRESH_CRED
 # define PAM_REFRESH_CRED PAM_CRED_REFRESH
 #endif

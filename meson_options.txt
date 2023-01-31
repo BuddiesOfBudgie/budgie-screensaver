@@ -1,5 +1,5 @@
 option('with-systemd', type: 'boolean', value: true, description: 'Enable systemd integration')
-option('with-bsd_auth', type: 'boolean', value: false, description: 'Switch PAM to bsd_auth.h')
+option('with-bsd_auth', type: 'boolean', value: false, description: 'Use BSD Auth instead of PAM')
 option('without-kbd-layout-indicator', type: 'boolean', value: false, description: 'Disable keyboard layout indicator')
 option('with-console-kit', type: 'boolean', value: true, description: 'Enable ConsoleKit support')
 option('with-xf86gamma-ext', type: 'boolean', value: true, description: 'Enable support for XFree86 gamma fading')
