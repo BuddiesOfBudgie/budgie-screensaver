@@ -15,25 +15,25 @@ screensaver_dialog_sources = [
     'subprocs.c',
 ]
 
-screensaver_sources = [
-    'gnome-screensaver.c',
-    'gs-monitor.c',
-    'gs-watcher-x11.c',
-    'gs-listener-dbus.c',
-    'gs-manager.c',
-    'gs-window-x11.c',
-    'gs-prefs.c',
-    'gs-debug.c',
-    'subprocs.c',
-    'gs-grab-x11.c',
-    'gs-fade.c',
-]
-
 if with_bsd_auth == false
     screensaver_dialog_sources += 'gs-auth-pam.c'
 else
     screensaver_dialog_sources += 'gs-auth-bsdauth.c'
 endif
+
+screensaver_sources = [
+	'gnome-screensaver.c',
+	'gs-monitor.c',
+	'gs-watcher-x11.c',
+	'gs-listener-dbus.c',
+	'gs-manager.c',
+	'gs-window-x11.c',
+	'gs-prefs.c',
+	'gs-debug.c',
+	'subprocs.c',
+	'gs-grab-x11.c',
+	'gs-fade.c',
+]
 
 # Dependencies
 
