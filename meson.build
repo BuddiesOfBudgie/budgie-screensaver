@@ -24,7 +24,7 @@ dep_gnomedesktop = dependency('gnome-desktop-3.0', version: '>= 3.1.91')
 dep_gsettings = dependency('gsettings-desktop-schemas', version: '>= 3.1.91')
 
 with_systemd = get_option('with-systemd')
-if with_systemd == true
+if with_systemd
     dep_systemd = dependency('libsystemd', version: '>= 209')
 endif
 
@@ -46,8 +46,8 @@ c = meson.get_compiler('c')
 with_bsd_auth = get_option('with-bsd_auth')
 
 if with_bsd_auth == false
-  # BSDs don't have linux PAM
-  dep_pam = c.find_library('pam', required: true)
+    # BSDs don't have linux PAM
+    dep_pam = c.find_library('pam', required: true)
 endif
 
 # Inspired by https://github.com/GNOME/recipes/blob/master/meson.build
