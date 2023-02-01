@@ -22,7 +22,7 @@ else
 endif
 
 screensaver_sources = [
-	'gnome-screensaver.c',
+    'gnome-screensaver.c',
 	'gs-monitor.c',
 	'gs-watcher-x11.c',
 	'gs-listener-dbus.c',
