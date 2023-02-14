@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: Chinese (https://www.transifex.com/buddiesofbudgie/teams/129844/zh/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "此应用程序的版本"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "不成为守护进程"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "启用调试代码"
+
+#: ../src/gnome-screensaver-command.c:46
+msgid "Causes the screensaver to exit gracefully"
+msgstr "使屏幕保护程序正常退出"
+
+#: ../src/gnome-screensaver-command.c:48
+msgid "Query the state of the screensaver"
+msgstr "查询屏幕保护程序的状态"
+
+#: ../src/gnome-screensaver-command.c:50
+msgid "Query the length of time the screensaver has been active"
+msgstr "查询屏幕保护程序已经活动的时间"
+
+#: ../src/gnome-screensaver-command.c:52
+msgid "Tells the running screensaver process to lock the screen immediately"
+msgstr "通知正在运行的屏幕保护程序进程立即锁定屏幕"
+
+#: ../src/gnome-screensaver-command.c:54
+msgid "Turn the screensaver on (blank the screen)"
+msgstr "开启屏幕保护程序(黑屏)"
+
+#: ../src/gnome-screensaver-command.c:56
+msgid "If the screensaver is active then deactivate it (un-blank the screen)"
+msgstr "如果屏幕保护程序正活动则使之不活动(解除黑屏)"
+
+#: ../src/gnome-screensaver-command.c:224
+msgid "The screensaver is active\n"
+msgstr "屏幕保护程序状态为活动\n"
+
+#: ../src/gnome-screensaver-command.c:226
+msgid "The screensaver is inactive\n"
+msgstr "屏幕保护程序状态为不活动\n"
+
+#: ../src/gnome-screensaver-command.c:256
+#, c-format
+msgid "The screensaver has been active for %d second.\n"
+msgid_plural "The screensaver has been active for %d seconds.\n"
+msgstr[0] "屏幕保护程序已激活 %d 秒。\n"
+
+#: ../src/gnome-screensaver-command.c:258
+msgid "The screensaver is not currently active.\n"
+msgstr "屏幕保护当前没有激活。\n"
+
+#: ../src/gnome-screensaver-dialog.c:57
+msgid "Show debugging output"
+msgstr "显示调试输出"
+
+#: ../src/gnome-screensaver-dialog.c:61
+msgid "Show the logout button"
+msgstr "显示注销按钮"
+
+#: ../src/gnome-screensaver-dialog.c:63
+msgid "Command to invoke from the logout button"
+msgstr "注销按钮所调用的命令"
+
+#: ../src/gnome-screensaver-dialog.c:65
+msgid "Show the switch user button"
+msgstr "显示切换用户按钮"
+
+#: ../src/gnome-screensaver-dialog.c:67
+msgid "Message to show in the dialog"
+msgstr "在对话框中显示的消息"
+
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
+#: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
+msgid "MESSAGE"
+msgstr "MESSAGE"
+
+#: ../src/gnome-screensaver-dialog.c:71
+msgid "Not used"
+msgstr "没有使用"
+
+#. login: is whacked always translate to Username:
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
+msgid "Username:"
+msgstr "用户名："
+
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
+msgid "Password:"
+msgstr "密码："
+
+#: ../src/gnome-screensaver-dialog.c:190
+msgid "You are required to change your password immediately (password aged)"
+msgstr "您必须立即更改您的密码(密码到期)"
+
+#: ../src/gnome-screensaver-dialog.c:191
+msgid "You are required to change your password immediately (root enforced)"
+msgstr "您必须立即更改您的密码(root 强制)"
+
+#: ../src/gnome-screensaver-dialog.c:192
+msgid "Your account has expired; please contact your system administrator"
+msgstr "您的帐户已过期；请联系您的系统管理员"
+
+#: ../src/gnome-screensaver-dialog.c:193
+msgid "No password supplied"
+msgstr "没有提供密码"
+
+#: ../src/gnome-screensaver-dialog.c:194
+msgid "Password unchanged"
+msgstr "密码未改变"
+
+#: ../src/gnome-screensaver-dialog.c:195
+msgid "Cannot get username"
+msgstr "无法获取用户名"
+
+#: ../src/gnome-screensaver-dialog.c:196
+msgid "Retype new Unix password:"
+msgstr "重新输入新 UNIX 密码："
+
+#: ../src/gnome-screensaver-dialog.c:197
+msgid "Enter new Unix password:"
+msgstr "输入新 UNIX 密码："
+
+#: ../src/gnome-screensaver-dialog.c:198
+msgid "(current) Unix password:"
+msgstr "当前 UNIX 密码："
+
+#: ../src/gnome-screensaver-dialog.c:199
+msgid "Error while changing NIS password."
+msgstr "更改 NIS 密码出错。"
+
+#: ../src/gnome-screensaver-dialog.c:200
+msgid "You must choose a longer password"
+msgstr "你必须选择一个更长些的密码"
+
+#: ../src/gnome-screensaver-dialog.c:201
+msgid "Password has been already used. Choose another."
+msgstr "密码已经被使用。请重新选择。"
+
+#: ../src/gnome-screensaver-dialog.c:202
+msgid "You must wait longer to change your password"
+msgstr "您必须等待更久以修改您的密码"
+
+#: ../src/gnome-screensaver-dialog.c:203
+msgid "Sorry, passwords do not match"
+msgstr "对不起，密码不匹配"
+
+#: ../src/gnome-screensaver-dialog.c:269
+msgid "Checking…"
+msgstr "正在检查..."
+
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
+msgid "Authentication failed."
+msgstr "验证失败。"
+
+#: ../src/gs-listener-dbus.c:1302
+msgid "failed to register with the message bus"
+msgstr "注册到消息总线失败"
+
+#: ../src/gs-listener-dbus.c:1312
+msgid "not connected to the message bus"
+msgstr "未连接到消息总线"
+
+#: ../src/gs-listener-dbus.c:1339
+msgid "screensaver already running in this session"
+msgstr "本会话中屏幕保护程序已经运行"
+
+#: ../src/gs-lock-plug.c:293
+msgid "Time has expired."
+msgstr "时间已到。"
+
+#: ../src/gs-lock-plug.c:324
+msgid "You have the Caps Lock key on."
+msgstr "您打开了 Caps Lock 键。"
+
+#: ../src/gs-lock-plug.c:1406
+msgid "S_witch User…"
+msgstr "切换用户(_W)"
+
+#: ../src/gs-lock-plug.c:1415
+msgid "Log _Out"
+msgstr "注销(_O)"
+
+#: ../src/gs-lock-plug.c:1422
+msgid "_Unlock"
+msgstr "解锁(_U)"
+
+#: ../src/gs-lock-plug.c:1593
+msgid "_Password:"
+msgstr "密码(_P)："
+
+#: ../src/gs-auth-pam.c:380
+#, c-format
+msgid "Unable to establish service %s: %s\n"
+msgstr "无法建立服务 %s：%s\n"
+
+#: ../src/gs-auth-pam.c:406
+#, c-format
+msgid "Can't set PAM_TTY=%s"
+msgstr "不能设置 PAM_TTY=%s"
+
+#: ../src/gs-auth-pam.c:436
+msgid "Incorrect password."
+msgstr "密码不正确。"
+
+#: ../src/gs-auth-pam.c:452
+msgid "Not permitted to gain access at this time."
+msgstr "目前不允许获得访问。"
+
+#: ../src/gs-auth-pam.c:458
+msgid "No longer permitted to access the system."
+msgstr "不再允许访问系统。"
+
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr ""
+
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr ""

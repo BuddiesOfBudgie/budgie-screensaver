@@ -1,26 +1,38 @@
-# translation of gnome-screensaver.master.te.po to Telugu
-# Telugu translation of gnome-screensaver.
-# Copyright (C) 2011 Gnome-Screensaver
-# This file is distributed under the same license as the gnome-screensaver package.
-#
-# Srinivas Chary <srinu.kolpur@gmail.com>, 2007.
-# Krishna Babu K <kkrothap@redhat.com>, 2008, 2009.
-# Praveen Illa <mail2ipn@gmail.com>, 2011.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the budgie-screensaver package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Campbell Jones, 2022
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-screensaver.master.te\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"screensaver&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-20 09:45+0000\n"
-"PO-Revision-Date: 2011-07-12 10:41+0530\n"
-"Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
-"Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
-"Language: te\n"
+"Project-Id-Version: budgie-screensaver 1.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-30 17:40-0500\n"
+"PO-Revision-Date: 2022-12-30 21:31+0000\n"
+"Last-Translator: Campbell Jones, 2022\n"
+"Language-Team: Telugu (https://www.transifex.com/buddiesofbudgie/teams/129844/te/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: te\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../src/gnome-screensaver.c:76 ../src/gnome-screensaver-command.c:58
+#: ../src/gnome-screensaver-dialog.c:59
+msgid "Version of this application"
+msgstr "ఈ అనువర్తనము యొక్క రూపాంతరం"
+
+#: ../src/gnome-screensaver.c:77
+msgid "Don't become a daemon"
+msgstr "సూత్రదారి అవ్వకు"
+
+#: ../src/gnome-screensaver.c:78
+msgid "Enable debugging code"
+msgstr "దోషనిర్మూలన కోడ్‌ని చేతనపరుచు"
 
 #: ../src/gnome-screensaver-command.c:46
 msgid "Causes the screensaver to exit gracefully"
@@ -44,20 +56,15 @@ msgstr "తెరకాపరిని ఆన్ చేయి (ఖాళీ త�
 
 #: ../src/gnome-screensaver-command.c:56
 msgid "If the screensaver is active then deactivate it (un-blank the screen)"
-msgstr "ఒకవేళ తెరకాపరి క్రియాశీలముగా ఉంటే అపుడు దానిని అక్రియాత్మకము చేయి (ఖాళీ తెర కాదు)"
-
-#: ../src/gnome-screensaver-command.c:58 ../src/gnome-screensaver-dialog.c:59
-#: ../src/gnome-screensaver.c:56
-msgid "Version of this application"
-msgstr "ఈ అనువర్తనము యొక్క రూపాంతరం"
+msgstr ""
+"ఒకవేళ తెరకాపరి క్రియాశీలముగా ఉంటే అపుడు దానిని అక్రియాత్మకము చేయి (ఖాళీ తెర "
+"కాదు)"
 
 #: ../src/gnome-screensaver-command.c:224
-#, c-format
 msgid "The screensaver is active\n"
 msgstr "తెరకాపరి క్రియాశీలముగా ఉన్నది\n"
 
 #: ../src/gnome-screensaver-command.c:226
-#, c-format
 msgid "The screensaver is inactive\n"
 msgstr "తెరకాపరి అక్రియాత్మకముగా ఉన్నది\n"
 
@@ -69,7 +76,6 @@ msgstr[0] "తెరకాపరి %d సెకను క్రియాశీ�
 msgstr[1] "తెరకాపరి %d సెకన్లు క్రియాశీలముగా ఉంది.\n"
 
 #: ../src/gnome-screensaver-command.c:258
-#, c-format
 msgid "The screensaver is not currently active.\n"
 msgstr "తెరకాపరి ప్రస్తుతం క్రియాశీలముగా లేదు.\n"
 
@@ -93,8 +99,10 @@ msgstr "వాడుకరిని మార్చే బటన్ని చూ
 msgid "Message to show in the dialog"
 msgstr "వివరణలో చూపటానికి సందేశం"
 
-#. Translators: This is the example input for the --status-message command line option.
-#. Translators: This is the example input for the --away-message command line option.
+#. Translators: This is the example input for the --status-message command
+#. line option.
+#. Translators: This is the example input for the --away-message command line
+#. option.
 #: ../src/gnome-screensaver-dialog.c:69 ../src/gnome-screensaver-dialog.c:73
 msgid "MESSAGE"
 msgstr "సందేశం"
@@ -104,158 +112,142 @@ msgid "Not used"
 msgstr "వాడబడలేదు"
 
 #. login: is whacked always translate to Username:
-#: ../src/gnome-screensaver-dialog.c:183 ../src/gnome-screensaver-dialog.c:184
-#: ../src/gnome-screensaver-dialog.c:185 ../src/gs-auth-pam.c:698
+#: ../src/gnome-screensaver-dialog.c:185 ../src/gnome-screensaver-dialog.c:186
+#: ../src/gnome-screensaver-dialog.c:187 ../src/gs-auth-pam.c:691
 msgid "Username:"
 msgstr "వాడుకరి పేరు:"
 
-#: ../src/gnome-screensaver-dialog.c:186 ../src/gnome-screensaver-dialog.c:187
-#: ../src/gs-auth-pam.c:166
+#: ../src/gnome-screensaver-dialog.c:188 ../src/gnome-screensaver-dialog.c:189
+#: ../src/gs-auth-pam.c:156
 msgid "Password:"
 msgstr "సంకేతపదం:"
 
-#: ../src/gnome-screensaver-dialog.c:188
+#: ../src/gnome-screensaver-dialog.c:190
 msgid "You are required to change your password immediately (password aged)"
 msgstr "మీరు వెంటనే సంకేతపదాన్ని మార్చమని కోరడమైనది (సంకేతపదము పాతదైనది)"
 
-#: ../src/gnome-screensaver-dialog.c:189
+#: ../src/gnome-screensaver-dialog.c:191
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "మీ సంకేతపదాన్ని సత్వరమే మార్చుకోమని కోరడమైనది (మూలం బలవంతంగా )"
 
-#: ../src/gnome-screensaver-dialog.c:190
+#: ../src/gnome-screensaver-dialog.c:192
 msgid "Your account has expired; please contact your system administrator"
 msgstr "మీ ఖాతా కాలం ముగిసినది; దయచేసి మీ వ్యవస్థ నిర్వాహకుడిని సంప్రదించండి"
 
-#: ../src/gnome-screensaver-dialog.c:191
+#: ../src/gnome-screensaver-dialog.c:193
 msgid "No password supplied"
 msgstr "ఏ సంకేతపదం ఇవ్వబడలేదు"
 
-#: ../src/gnome-screensaver-dialog.c:192
+#: ../src/gnome-screensaver-dialog.c:194
 msgid "Password unchanged"
 msgstr "సంకేతపదం మార్చబడలేదు"
 
-#: ../src/gnome-screensaver-dialog.c:193
+#: ../src/gnome-screensaver-dialog.c:195
 msgid "Cannot get username"
 msgstr "వాడుకరి పేరు పొందలేదు"
 
-#: ../src/gnome-screensaver-dialog.c:194
+#: ../src/gnome-screensaver-dialog.c:196
 msgid "Retype new Unix password:"
 msgstr "కొత్త యూనిక్స్  సంకేతపదాన్ని మళ్ళీ టైపుచేయండి:"
 
-#: ../src/gnome-screensaver-dialog.c:195
+#: ../src/gnome-screensaver-dialog.c:197
 msgid "Enter new Unix password:"
 msgstr "కొత్త యూనిక్స్  సంకేతపదాన్ని ప్రవేశపెట్టండి:"
 
-#: ../src/gnome-screensaver-dialog.c:196
+#: ../src/gnome-screensaver-dialog.c:198
 msgid "(current) Unix password:"
 msgstr "(ప్రస్తుత) యూనిక్స్  సంకేతపదం:"
 
-#: ../src/gnome-screensaver-dialog.c:197
+#: ../src/gnome-screensaver-dialog.c:199
 msgid "Error while changing NIS password."
 msgstr "NIS సంకేతపదాన్ని మార్చేటప్పుడు దోషము జరిగినది."
 
-#: ../src/gnome-screensaver-dialog.c:198
+#: ../src/gnome-screensaver-dialog.c:200
 msgid "You must choose a longer password"
 msgstr "మీరు ఒక పెద్ద సంకేతపదాన్ని ఎంచుకోవాలి"
 
-#: ../src/gnome-screensaver-dialog.c:199
+#: ../src/gnome-screensaver-dialog.c:201
 msgid "Password has been already used. Choose another."
 msgstr "సంకేతపదం ఇదివరకే వాడుకలో ఉంది. వేరేదాన్ని ఎంచుకోండి."
 
-#: ../src/gnome-screensaver-dialog.c:200
+#: ../src/gnome-screensaver-dialog.c:202
 msgid "You must wait longer to change your password"
 msgstr "మీ సంకేతపదాన్ని మార్చుకోవటానికి చాలా సమయం నిరీక్షించివుండాలి"
 
-#: ../src/gnome-screensaver-dialog.c:201
+#: ../src/gnome-screensaver-dialog.c:203
 msgid "Sorry, passwords do not match"
 msgstr "క్షమించండి, సంకేతపదాలు సరిపోలడం లేదు"
 
-#: ../src/gnome-screensaver-dialog.c:267
+#: ../src/gnome-screensaver-dialog.c:269
 msgid "Checking…"
 msgstr "తనిఖీచేస్తోంది..."
 
-#: ../src/gnome-screensaver-dialog.c:309 ../src/gs-auth-pam.c:457
+#: ../src/gnome-screensaver-dialog.c:311 ../src/gs-auth-pam.c:438
 msgid "Authentication failed."
 msgstr "ప్రామాణీకరణ విఫలమైంది."
 
-#: ../src/gnome-screensaver.c:57
-msgid "Don't become a daemon"
-msgstr "సూత్రదారి అవ్వకు"
+#: ../src/gs-listener-dbus.c:1302
+msgid "failed to register with the message bus"
+msgstr "సందేశ వాహకముతో నమోదు చేయలేకపోయింది"
 
-#: ../src/gnome-screensaver.c:58
-msgid "Enable debugging code"
-msgstr "దోషనిర్మూలన కోడ్‌ని చేతనపరుచు"
+#: ../src/gs-listener-dbus.c:1312
+msgid "not connected to the message bus"
+msgstr "సందేశ వాహకానికి అనుసంధానించబడిలేదు"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:1
-msgid "Launch screensaver and locker program"
-msgstr "తెరకాపరిని మరియు తాళంవేయు ప్రోగ్రామును ప్రారంభించు"
+#: ../src/gs-listener-dbus.c:1339
+msgid "screensaver already running in this session"
+msgstr "ఈ చర్యాకాలంలో తెరకాపరి ఇంతకుముందు నుంచే నడుస్తున్నది"
 
-#: ../src/gnome-screensaver.desktop.in.in.h:2
-msgid "Screensaver"
-msgstr "తెరకాపరి"
+#: ../src/gs-lock-plug.c:293
+msgid "Time has expired."
+msgstr "సమయం ముగిసినది"
 
-#: ../src/gs-auth-pam.c:397
+#: ../src/gs-lock-plug.c:324
+msgid "You have the Caps Lock key on."
+msgstr "Caps Lock key ఆన్‌లో ఉంది"
+
+#: ../src/gs-lock-plug.c:1406
+msgid "S_witch User…"
+msgstr "వాడుకరిని మార్చు...(_w)"
+
+#: ../src/gs-lock-plug.c:1415
+msgid "Log _Out"
+msgstr "నిష్క్రమించు (_O)"
+
+#: ../src/gs-lock-plug.c:1422
+msgid "_Unlock"
+msgstr "తెరువు (_U)"
+
+#: ../src/gs-lock-plug.c:1593
+msgid "_Password:"
+msgstr "సంకేతపదం (_P):"
+
+#: ../src/gs-auth-pam.c:380
 #, c-format
 msgid "Unable to establish service %s: %s\n"
 msgstr "%s సేవను స్థాపించలేకపోతుంది: %s\n"
 
-#: ../src/gs-auth-pam.c:423
+#: ../src/gs-auth-pam.c:406
 #, c-format
 msgid "Can't set PAM_TTY=%s"
 msgstr "PAM_TTY=%s అమర్చుట వీలుకాదు"
 
-#: ../src/gs-auth-pam.c:455
+#: ../src/gs-auth-pam.c:436
 msgid "Incorrect password."
 msgstr "సంకేతపదం తప్పు."
 
-#: ../src/gs-auth-pam.c:471
+#: ../src/gs-auth-pam.c:452
 msgid "Not permitted to gain access at this time."
 msgstr "ఈ సమయంలో ప్రవేశసౌలభ్యతను పొందుట అనుమతించబడదు."
 
-#: ../src/gs-auth-pam.c:477
+#: ../src/gs-auth-pam.c:458
 msgid "No longer permitted to access the system."
 msgstr "ఇక ఏ మాత్రము వ్యవస్థ ప్రవేశసౌలభ్యతకు అనుమతించబడదు."
 
-#: ../src/gs-listener-dbus.c:1148
-msgid "failed to register with the message bus"
-msgstr "సందేశ వాహకముతో నమోదు చేయలేకపోయింది"
+#: ../data/budgie-screensaver.desktop.in.h:1
+msgid "Screensaver"
+msgstr "తెరకాపరి"
 
-#: ../src/gs-listener-dbus.c:1158
-msgid "not connected to the message bus"
-msgstr "సందేశ వాహకానికి అనుసంధానించబడిలేదు"
-
-#: ../src/gs-listener-dbus.c:1167 ../src/gs-listener-dbus.c:1197
-msgid "screensaver already running in this session"
-msgstr "ఈ చర్యాకాలంలో తెరకాపరి ఇంతకుముందు నుంచే నడుస్తున్నది"
-
-#: ../src/gs-lock-plug.c:256
-msgid "Time has expired."
-msgstr "సమయం ముగిసినది"
-
-#: ../src/gs-lock-plug.c:287
-msgid "You have the Caps & Num Lock keys on."
-msgstr "Caps & Num Lock keys ఆన్‌లో ఉన్నాయి."
-
-#: ../src/gs-lock-plug.c:290
-msgid "You have the Caps Lock key on."
-msgstr "Caps Lock key ఆన్‌లో ఉంది"
-
-#: ../src/gs-lock-plug.c:293
-msgid "You have the Num Lock key on."
-msgstr "Num Lock key ఆన్‌లో ఉంది"
-
-#: ../src/gs-lock-plug.c:1350
-msgid "S_witch User…"
-msgstr "వాడుకరిని మార్చు...(_w)"
-
-#: ../src/gs-lock-plug.c:1359
-msgid "Log _Out"
-msgstr "నిష్క్రమించు (_O)"
-
-#: ../src/gs-lock-plug.c:1366
-msgid "_Unlock"
-msgstr "తెరువు (_U)"
-
-#: ../src/gs-lock-plug.c:1405
-msgid "_Password:"
-msgstr "సంకేతపదం (_P):"
+#: ../data/budgie-screensaver.desktop.in.h:2
+msgid "Launch screensaver and locker program"
+msgstr "తెరకాపరిని మరియు తాళంవేయు ప్రోగ్రామును ప్రారంభించు"
