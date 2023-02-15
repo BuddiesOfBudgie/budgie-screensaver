@@ -9,12 +9,17 @@ screensaver_command_sources = [
 
 screensaver_dialog_sources = [
     'gnome-screensaver-dialog.c',
-    'gs-auth-pam.c',
     'gs-lock-plug.c',
     'gs-debug.c',
     'setuid.c',
     'subprocs.c',
 ]
+
+if with_bsd_auth == false
+    screensaver_dialog_sources += 'gs-auth-pam.c'
+else
+    screensaver_dialog_sources += 'gs-auth-bsdauth.c'
+endif
 
 screensaver_sources = [
     'gnome-screensaver.c',
@@ -34,7 +39,11 @@ screensaver_sources = [
 
 screensaver_command_deps = [dep_glib, dep_gio]
 
-screensaver_dialog_deps = [dep_pam, dep_gthread, dep_gtk3, dep_gnomedesktop]
+screensaver_dialog_deps = [dep_gthread, dep_gtk3, dep_gnomedesktop]
+
+if with_bsd_auth == false
+    screensaver_dialog_deps += dep_pam
+endif
 
 screensaver_deps = [dep_x11, dep_gtk3, dep_dbus, dep_gnomedesktop, dep_gsettings]
 

@@ -42,7 +42,13 @@ if with_xf86gamma_ext
 endif
 
 c = meson.get_compiler('c')
-dep_pam = c.find_library('pam', required: true)
+
+with_bsd_auth = get_option('with-bsd_auth')
+
+if with_bsd_auth == false
+    # BSDs don't have linux PAM
+    dep_pam = c.find_library('pam', required: true)
+endif
 
 # Inspired by https://github.com/GNOME/recipes/blob/master/meson.build
 package_version = meson.project_version()
